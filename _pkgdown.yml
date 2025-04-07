@@ -1,0 +1,6 @@
+url: https://swissclinicaltrialorganisation.github.io/powergrid/
+template:
+  bootstrap: 5
+navbar:
+  structure:
+    right: [search, github]
