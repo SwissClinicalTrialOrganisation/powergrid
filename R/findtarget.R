@@ -99,6 +99,9 @@ FindTarget = function(power_slice,
   if (method == 'lm') {
     ## Implementation of fabbrot's interpolation through
     ## transformation trick.
+    if(!minimal_target | !find_min) {
+      stop("Currently the lm method only supports defaults for minimal_target and find_min")
+    }
     SSETrans <- function(x) {
       ## older versions: 0.5 * log((1 + x) / (1 - x)) # <== this line is
       ## a literal copy of the comment fabbrot in sse
@@ -109,9 +112,11 @@ FindTarget = function(power_slice,
       trans_pow = SSETrans(x)
       lm_out = stats::lm(pred_n[!is.infinite(trans_pow)] ~
                            trans_pow[!is.infinite(trans_pow)])
-      lm_pred = ceiling(stats::predict(lm_out,
+      lm_pred = stats::predict(lm_out,
                                        newdata = data.frame(
-                                         trans_pow = SSETrans(target))))
+                                         trans_pow = SSETrans(target)))
+      if(lm_pred %% 1 != 1) warning(paste("The output with method = 'lm' is rounded up, this makes sense for n but may not for parameters"))
+      lm_pred = ceiling(lm_pred)
       return(lm_pred)
     }
   }

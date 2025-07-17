@@ -136,9 +136,10 @@ PowerGrid = function(pars, fun, more_args = NULL, n_iter = NA,
   ##'
   ## =================================
   ## Simulation ('n_iter' supplied)
+  #' allenr - TODO: Surely this should be if the parallel argument is TRUE
+  #'    currently you are only testing for parallel if the parallel argument is
+  #'    FALSE.
   if (!is.na(n_iter) && !parallel) {
-    if (!requireNamespace("future.apply", quietly = TRUE)) {
-      stop("Setting argument `parallel' to TRUE requires installation of future.apply", call. = FALSE)}
     e1d42fl5z7b6 =
       drop(replicate(
         n_iter, sapply( # reshape mapply result
@@ -153,6 +154,8 @@ PowerGrid = function(pars, fun, more_args = NULL, n_iter = NA,
   ##'
   ## parallel using future_replicate
   if (!is.na(n_iter) && parallel) {
+    if (!requireNamespace("future.apply", quietly = TRUE)) {
+      stop("Setting argument `parallel' to TRUE requires installation of future.apply", call. = FALSE)}
     ## plan(strategy = future_args$plan$strategy, # 'multisession'
     ##      workers = future_args$plan$workers) # future::availableCores() - 1)
     future::plan("future::multisession", workers = n_cores)

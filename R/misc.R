@@ -3,11 +3,14 @@
 ##' @description Linear scaling of a vector to a vector with a required range.
 ##' @param x A vector
 ##' @param a The desired minimum
-##' @param b The desired maxmum
+##' @param b The desired maximum
 ##' @return a vector with the desired minimum and maximum
 ##' @author Gilles Dutilh
 ##' @export
 ScaleRange = function(x, a, b){
+
+  if(a > b) stop("a should be less than b")
+
   (b - a) * (x - min(x)) / (max(x) - min(x)) + a
 }
 
@@ -37,7 +40,7 @@ PrintWrap = function(x,
 ##' @title Draw a line of dashes, or something else with a certain width.
 ##' @description Draw a line of dashes, or something else with a certain
 ##'   width. Is used in package in combination with PrintWrap.
-##' @param symbol Symbol to repeat `width` times. 
+##' @param symbol Symbol to repeat `width` times.
 ##' @param width The desired width (number of symbols)
 ##' @param ... Further arguments passed to 'strwrap()'
 ##' @return a character string of nchar `width`
@@ -47,5 +50,5 @@ PrintDashes = function(symbol = '=', width = 48, ...)
 {
   paste(rep(symbol, width), collapse = '')
 }
-  
+
 

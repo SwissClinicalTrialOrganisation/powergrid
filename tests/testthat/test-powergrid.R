@@ -1,3 +1,9 @@
+
+#' TODO: naming of test files should be consistent (either camelcaps or lowercase)
+
+## ===============================================================
+#' TODO: I think this should be in test-SummariseSims no?
+
 ## Test warning summarizing summarized object
 PowFun <- function(n, delta, sd){
   x1 = rnorm(n = n/2, sd = sd)
@@ -13,9 +19,8 @@ n_iter = 20
 power_array = PowerGrid(pars = sse_pars, fun = PowFun,
                         n_iter = n_iter, summarize = TRUE)
 test_that(
-  "trying to summarize an objects that is already summarized throws a warning",
+  "trying to summarize an object that is already summarized throws a warning",
   {expect_error(
     SummarizeSims(power_array, summary_function = mean)
   )}
 )
-
