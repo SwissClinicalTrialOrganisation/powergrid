@@ -63,6 +63,7 @@ parameters deemed most likely.</p>
 <span>  minimal_target <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  summary_function <span class="op">=</span> <span class="va">mean</span>,</span>
 <span>  target_levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.8</span>, <span class="fl">0.9</span>, <span class="fl">0.95</span><span class="op">)</span>,</span>
+<span>  col <span class="op">=</span> <span class="fu">grDevices</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/grDevices/gray.colors.html" class="external-link">grey.colors</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">0.2</span>, <span class="fl">0.2</span><span class="op">)</span>,</span>
 <span>  shades_of_grey <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  shades_legend <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  title <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -109,10 +110,10 @@ for multiple examples.</p></dd>
 
 
 <dt id="arg-method">method<a class="anchor" aria-label="anchor" href="#arg-method"></a></dt>
-<dd><p>Method used for finding the required <code>search_par</code> needed
+<dd><p>Method used for finding the required <code>par_to_search</code> needed
 to achieve <code>target</code>. Either "step": walking in steps along
-<code>search_par</code> or "lm": Interpolating assuming a linear relation
-between <code>search_par</code> and <code>(qnorm(x) + qnorm(1 - 0.05)) ^ 2</code>. The
+<code>par_to_search</code> or "lm": Interpolating assuming a linear relation
+between <code>par_to_search</code> and <code>(qnorm(x) + qnorm(1 - 0.05)) ^ 2</code>. The
 setting "lm" is inspired on the implementation in the <code>sse</code> package
 by Thomas Fabbro.</p></dd>
 
@@ -137,6 +138,11 @@ summarized across sims using this function.</p></dd>
 <dt id="arg-target-levels">target_levels<a class="anchor" aria-label="anchor" href="#arg-target-levels"></a></dt>
 <dd><p>For which levels of power (or whichever variable is
 contained in x) lines are drawn.</p></dd>
+
+
+<dt id="arg-col">col<a class="anchor" aria-label="anchor" href="#arg-col"></a></dt>
+<dd><p>Color for the contour lines. Does not effect eventual example
+arrows. Therefore, use AddExample.</p></dd>
 
 
 <dt id="arg-shades-of-grey">shades_of_grey<a class="anchor" aria-label="anchor" href="#arg-shades-of-grey"></a></dt>

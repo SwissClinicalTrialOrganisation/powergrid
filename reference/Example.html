@@ -59,7 +59,7 @@ value) in an object of class "power_array".</p>
 
 
 <dl><dt id="arg-x">x<a class="anchor" aria-label="anchor" href="#arg-x"></a></dt>
-<dd><p>Object of class <code>power_array</code> or <code>power</code></p></dd>
+<dd><p>Object of class <code>power_array</code></p></dd>
 
 
 <dt id="arg-example">example<a class="anchor" aria-label="anchor" href="#arg-example"></a></dt>
@@ -76,9 +76,9 @@ example.</p></dd>
 
 <dt id="arg-minimal-target">minimal_target<a class="anchor" aria-label="anchor" href="#arg-minimal-target"></a></dt>
 <dd><p>Logical. Set to TRUE if you aim to achieve a minimum
-value (e.g., a power of <em>at least</em> 90%), or FALSE if you want to allow a
-maximum value (e.g., the width of the expected CI may be <em>at most</em> a
-certain value).</p></dd>
+value (e.g., a power must be <em>at least</em> 90%), or FALSE if you want to
+allow a maximum value (e.g., the width of the expected CI may be <em>at most</em>
+a certain value).</p></dd>
 
 
 <dt id="arg-find-min">find_min<a class="anchor" aria-label="anchor" href="#arg-find-min"></a></dt>
@@ -90,10 +90,10 @@ minimizes a parameter (typically: minimal required n) to achieve the
 <dt id="arg-method">method<a class="anchor" aria-label="anchor" href="#arg-method"></a></dt>
 <dd><p>Character string, indicating how the location of the example
 is found, passed on internally to <code>FindTarget</code>. Either "step": walking in
-steps along <code>search_par</code> or "lm": Interpolating assuming a linear relation
-between <code>search_par</code> and (qnorm(x) + qnorm(1 - 0.05)) ^ 2. This method
-"lm" is inspired on the implementation in the sse package by Thomas
-Fabbro.</p></dd>
+steps along the parameter of interest or "lm": Interpolating assuming a
+linear relation between the parameter of interest and (qnorm(x) + qnorm(1</p><ul><li><p>0.05)) ^ 2. This method "lm" is inspired on the implementation in the
+sse package by Thomas Fabbro.</p></li>
+</ul></dd>
 
 
 <dt id="arg-summary-function">summary_function<a class="anchor" aria-label="anchor" href="#arg-summary-function"></a></dt>
@@ -103,19 +103,19 @@ summarized across sims using this function before searching the example.</p></dd
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>Returns a list containing:</p><ul><li><p>"requested_example": the parameters at which the power (or whatever the
-values represent) was searched to achieve level <code>target</code> (typically
-the minimal power, e.g., .9), searching along parameter <code>required name</code> (typically n).</p></li>
+    <p>Example returns a list containing:</p><ul><li><p>"requested_example": the parameter combination at which the power (or
+whatever the values represent) was searched to achieve level <code>target</code>
+(typically the minimal power, e.g., .9), searching along parameter <code>required name</code> (typically n).</p></li>
 <li><p>"objective": was <code>required_name</code> searched to find the "min" or "max" of
-x.</p></li>
-<li><p>"target": which value should the power (or any other value) have.</p></li>
+x?</p></li>
+<li><p>"target": which value should the power (or any other value) have?</p></li>
 <li><p>"required_name": the parameter searched along to find the minimum (or
 maximized if slot <code>searched</code> = 'max') to achieve objective. (typically n)</p></li>
 <li><p>"required_value": the minimum (or maximum if <code>searched</code> = "max") for
 parameter <code>required_name</code> (which is typically n)</p></li>
 <li><p>"searched": was the "min" or "max" for <code>required_name</code> searched?</p></li>
 <li><p>"minimal_target": Is the target a minimum (TRUE, as typical for power) or a
-maximum (FALSE, e.g., an expected uncertainty level)</p></li>
+maximum (FALSE, e.g., an expected uncertainty level)?</p></li>
 </ul></div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
@@ -139,7 +139,15 @@ possible to find a desirable power.</p></li>
 setting <code>minimal_target</code> to FALSE. This allows to search, for example, for
 the minimal sample size where the expected confidence interval is smaller
 than a certain desired width.</p></li>
-</ol></div>
+</ol><p>Example searches for the minimum or maximum on one parameters (say, the
+minimum n) given <em>one single constellation</em> of further parameters. However,
+you may want to study how, say, the required n (or any other value) depends
+on the value of further parameters. The functions PowerPlot and GridPlot
+offer plotting functionalities to graphically illustrate such
+dependencies. If you want to find "Examples" as a function of parameter
+settings and work with these, you can use the workhorse behind 'Example',
+PowerPlot and Gridplot, <code><a href="FindTarget.html">FindTarget</a></code></p>
+    </div>
     <div class="section level2">
     <h2 id="author">Author<a class="anchor" aria-label="anchor" href="#author"></a></h2>
     <p>Gilles Dutilh</p>
@@ -148,7 +156,7 @@ than a certain desired width.</p></li>
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co">## ============================================</span></span></span>
-<span class="r-in"><span><span class="co">## Typical use case: find lowest n for power</span></span></span>
+<span class="r-in"><span><span class="co">## Typical use case: find lowest n for a certain target power</span></span></span>
 <span class="r-in"><span><span class="co">## ============================================</span></span></span>
 <span class="r-in"><span><span class="va">sse_pars</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>  n <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span>from <span class="op">=</span> <span class="fl">10</span>, to <span class="op">=</span> <span class="fl">60</span>, by <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>,</span></span>
