@@ -78,7 +78,7 @@ parameters deemed most likely.</p>
 
 
 <dl><dt id="arg-x">x<a class="anchor" aria-label="anchor" href="#arg-x"></a></dt>
-<dd><p>An object of class "power_array" (from powergrid).</p></dd>
+<dd><p>An object of class <code>power_array</code> (from powergrid).</p></dd>
 
 
 <dt id="arg-slicer">slicer<a class="anchor" aria-label="anchor" href="#arg-slicer"></a></dt>
@@ -110,12 +110,12 @@ for multiple examples.</p></dd>
 
 
 <dt id="arg-method">method<a class="anchor" aria-label="anchor" href="#arg-method"></a></dt>
-<dd><p>Method used for finding the required <code>par_to_search</code> needed
-to achieve <code>target</code>. Either "step": walking in steps along
-<code>par_to_search</code> or "lm": Interpolating assuming a linear relation
-between <code>par_to_search</code> and <code>(qnorm(x) + qnorm(1 - 0.05)) ^ 2</code>. The
-setting "lm" is inspired on the implementation in the <code>sse</code> package
-by Thomas Fabbro.</p></dd>
+<dd><p>Method used for finding the required <code>par_to_search</code>
+needed to achieve <code>target</code>. Either <code>step</code>: walking in steps
+along <code>par_to_search</code> or <code>lm</code>: Interpolating assuming a linear
+relation between <code>par_to_search</code> and <code>(qnorm(x) + qnorm(1 -
+  0.05)) ^ 2</code>. The setting <code>lm</code> is inspired on the implementation in
+the <code>sse</code> package by Thomas Fabbro.</p></dd>
 
 
 <dt id="arg-target">target<a class="anchor" aria-label="anchor" href="#arg-target"></a></dt>
@@ -189,18 +189,49 @@ internally. Most useful for zooming with xlim and ylim.</p></dd>
     <p>The most common use case may be plotting the required n (on the
 y-axis) as a function of some other parameter (e.g., effect size, on the
 x-axis) for achieving a certain level of statistical power. The default
-argument settings reflect this use case.</p>
-<p>The plotting is, however, more flexible. For example, one may flip the
-axes by setting a different <code>par_to_search</code> (which defines the
-y-axis). One may also search not the minimum, as in the case of sample
+argument settings reflect this use case.</p><div class="section">
+<h3 id="flexible-plotting">Flexible plotting<a class="anchor" aria-label="anchor" href="#flexible-plotting"></a></h3>
+
+
+<p>The plotting is, however, more flexible.</p><div class="section">
+<h4 id="any-variable-on-the-axes">Any variable on the axes<a class="anchor" aria-label="anchor" href="#any-variable-on-the-axes"></a></h4>
+
+
+<p>You can flip the axes by setting a different <code>par_to_search</code> (which
+defines the y-axis). The other parameter is automatically chosen to be
+drawn on the x-axis.</p>
+</div>
+
+<div class="section">
+<h4 id="maximizing-a-parameter">Maximizing a parameter<a class="anchor" aria-label="anchor" href="#maximizing-a-parameter"></a></h4>
+
+
+<p>One may also search not the minimum, as in the case of sample
 size, but the maximum, e.g., the highest sd at which a certain power may
 still be achieved. In this case, the <code>par_to_search</code> is sd, and
 <code>find_min = FALSE</code>.</p>
-<p>Further, in the classic use case, one aims at a <em>minimal</em> level of
-power. One may however also aim at, e.g., a <em>maximal</em> width of a
-confidence interval. For this purpose, set <code>minimal_target</code> to
-<code>FALSE</code>. See Example for more details about <code>find_min</code> and
+</div>
+
+<div class="section">
+<h4 id="when-smaller-is-better">When smaller is better<a class="anchor" aria-label="anchor" href="#when-smaller-is-better"></a></h4>
+
+
+<p>In the standard case of power, higher is better, so you search for a
+<em>minimal</em> level of power. One may however also aim at, e.g., a <em>maximal</em>
+width of a confidence interval. For this purpose, set <code>minimal_target</code>
+to <code>FALSE</code>. See Example for more details about <code>find_min</code> and
 <code>minimal_target</code>.</p>
+</div>
+
+
+</div>
+
+    </div>
+    <div class="section level2">
+    <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
+    <div class="dont-index"><p><code><a href="PowerGrid.html">PowerGrid</a></code>, <code><a href="AddExample.html">AddExample</a></code>,
+<code><a href="Example.html">Example</a></code>, <code><a href="GridPlot.html">GridPlot</a></code> for plotting
+interdependencies of 3 parameters.</p></div>
     </div>
     <div class="section level2">
     <h2 id="author">Author<a class="anchor" aria-label="anchor" href="#author"></a></h2>
@@ -212,23 +243,32 @@ confidence interval. For this purpose, set <code>minimal_target</code> to
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co">## ============================================</span></span></span>
 <span class="r-in"><span><span class="co">## Typical use case: minimal n for power</span></span></span>
 <span class="r-in"><span><span class="co">## ============================================</span></span></span>
+<span class="r-in"><span><span class="co">## What's the minimal sample size n, given the combination of sd and delta.</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Set up a grid of n, delta and sd:</span></span></span>
 <span class="r-in"><span><span class="va">sse_pars</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>  n <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span>from <span class="op">=</span> <span class="fl">10</span>, to <span class="op">=</span> <span class="fl">60</span>, by <span class="op">=</span> <span class="fl">4</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>  delta <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span>from <span class="op">=</span> <span class="fl">0.5</span>, to <span class="op">=</span> <span class="fl">1.5</span>, by <span class="op">=</span> <span class="fl">0.1</span><span class="op">)</span>, <span class="co">## effect size</span></span></span>
-<span class="r-in"><span>  sd <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">.1</span>, <span class="fl">1.1</span>, <span class="fl">.2</span><span class="op">)</span><span class="op">)</span> <span class="co">## Standard deviation</span></span></span>
+<span class="r-in"><span>  delta <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span>from <span class="op">=</span> <span class="fl">0.5</span>, to <span class="op">=</span> <span class="fl">1.5</span>, by <span class="op">=</span> <span class="fl">0.1</span><span class="op">)</span>, <span class="co"># effect size</span></span></span>
+<span class="r-in"><span>  sd <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">.1</span>, <span class="fl">1.1</span>, <span class="fl">.2</span><span class="op">)</span><span class="op">)</span> <span class="co"># Standard deviation</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Define a power function using these parameters:</span></span></span>
 <span class="r-in"><span><span class="va">PowFun</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">n</span>, <span class="va">delta</span>, <span class="va">sd</span><span class="op">)</span><span class="op">{</span> <span class="co"># power for a t-test at alpha = .05</span></span></span>
 <span class="r-in"><span>  <span class="va">ptt</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/power.t.test.html" class="external-link">power.t.test</a></span><span class="op">(</span>n <span class="op">=</span> <span class="va">n</span><span class="op">/</span><span class="fl">2</span>, delta <span class="op">=</span> <span class="va">delta</span>, sd <span class="op">=</span> <span class="va">sd</span>,</span></span>
 <span class="r-in"><span>                     sig.level <span class="op">=</span> <span class="fl">0.05</span><span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="kw"><a href="https://rdrr.io/r/base/function.html" class="external-link">return</a></span><span class="op">(</span><span class="va">ptt</span><span class="op">$</span><span class="va">power</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Evaluat PowFun across the grid defined by sse_pars:</span></span></span>
 <span class="r-in"><span><span class="va">power_array</span> <span class="op">=</span> <span class="fu"><a href="PowerGrid.html">PowerGrid</a></span><span class="op">(</span>pars <span class="op">=</span> <span class="va">sse_pars</span>, fun <span class="op">=</span> <span class="va">PowFun</span>, n_iter <span class="op">=</span> <span class="cn">NA</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="co">## explore power graphically in teh situation where sd = .7, including example</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## explore power graphically in the situation where sd = .7, including an</span></span></span>
+<span class="r-in"><span><span class="co">## example situation where delta is .9:</span></span></span>
 <span class="r-in"><span><span class="fu">PowerPlot</span><span class="op">(</span><span class="va">power_array</span>,</span></span>
 <span class="r-in"><span>          slicer <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>sd <span class="op">=</span> <span class="fl">.7</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>          example <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>delta <span class="op">=</span> <span class="fl">.9</span><span class="op">)</span></span></span>
 <span class="r-in"><span>          <span class="op">)</span></span></span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>The object 'x' you supplied to PowerPlot contains individual iterations. For sensible plotting, these were automatically summarized across simulations using the function given in argument `summary_function`.</span>
 <span class="r-plt img"><img src="PowerPlot-1.png" alt="" width="700" height="433"></span>
+<span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## Some graphical adjustments. Note that example is drawn on top of</span></span></span>
 <span class="r-in"><span><span class="co">## PowerPlot now.</span></span></span>
 <span class="r-in"><span><span class="fu">PowerPlot</span><span class="op">(</span><span class="va">power_array</span>,</span></span>
@@ -239,39 +279,47 @@ confidence interval. For this purpose, set <code>minimal_target</code> to
 <span class="r-in"><span>          target_levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">.8</span>, <span class="fl">.9</span><span class="op">)</span>, <span class="co"># draw fewer power isolines</span></span></span>
 <span class="r-in"><span>          target <span class="op">=</span> <span class="cn">NA</span> <span class="co"># no specific power target (no line thicker)</span></span></span>
 <span class="r-in"><span>          <span class="op">)</span></span></span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>The object 'x' you supplied to PowerPlot contains individual iterations. For sensible plotting, these were automatically summarized across simulations using the function given in argument `summary_function`.</span>
 <span class="r-in"><span><span class="fu"><a href="AddExample.html">AddExample</a></span><span class="op">(</span><span class="va">power_array</span>,</span></span>
 <span class="r-in"><span>           slicer <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>sd <span class="op">=</span> <span class="fl">.7</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>           example <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>delta <span class="op">=</span> <span class="fl">.9</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>           method <span class="op">=</span> <span class="st">'lm'</span>,</span></span>
 <span class="r-in"><span>           target <span class="op">=</span> <span class="fl">.9</span>,</span></span>
 <span class="r-in"><span>           col <span class="op">=</span> <span class="st">'Orange'</span>, lwd <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span></span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>The output with method = 'lm' is rounded up, this makes sense for n but may not for parameters</span>
 <span class="r-plt img"><img src="PowerPlot-2.png" alt="" width="700" height="433"></span>
+<span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## ============================================</span></span></span>
 <span class="r-in"><span><span class="co">## Less typical use case:</span></span></span>
 <span class="r-in"><span><span class="co">## minimal delta for power, given sd, as a function of n</span></span></span>
 <span class="r-in"><span><span class="co">## ============================================</span></span></span>
-<span class="r-in"><span><span class="co">## note that you can easily change what you search for: At each n, what would be</span></span></span>
-<span class="r-in"><span><span class="co">## the minimal delta?</span></span></span>
+<span class="r-in"><span><span class="co">## You can easily change what you search for. For example: At each sample size n,</span></span></span>
+<span class="r-in"><span><span class="co">## what would be the minimal effect size delta there must be for the target</span></span></span>
+<span class="r-in"><span><span class="co">## power to be achieved?</span></span></span>
+<span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">PowerPlot</span><span class="op">(</span><span class="va">power_array</span>,</span></span>
 <span class="r-in"><span>          par_to_search <span class="op">=</span> <span class="st">'delta'</span>,</span></span>
 <span class="r-in"><span>          slicer <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>sd <span class="op">=</span> <span class="fl">.7</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>The object 'x' you supplied to PowerPlot contains individual iterations. For sensible plotting, these were automatically summarized across simulations using the function given in argument `summary_function`.</span>
 <span class="r-plt img"><img src="PowerPlot-3.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## ============================================</span></span></span>
 <span class="r-in"><span><span class="co">## Less typical use case:</span></span></span>
 <span class="r-in"><span><span class="co">## *maximum sd* for power, given n, as a function of delta</span></span></span>
 <span class="r-in"><span><span class="co">## ============================================</span></span></span>
-<span class="r-in"><span><span class="co">## You're not limited to study n at all, nor to searching a minimum: If n is 30, what</span></span></span>
-<span class="r-in"><span><span class="co">## is the largest sd at which we still find enough power? (as a function of</span></span></span>
-<span class="r-in"><span><span class="co">## delta on the y-axis)</span></span></span>
+<span class="r-in"><span><span class="co">## You're not limited to study n at all, nor to searching a minimum: When</span></span></span>
+<span class="r-in"><span><span class="co">## your n is given to be 30, what is the largest sd at which we still find</span></span></span>
+<span class="r-in"><span><span class="co">## enough power? (as a function of delta on the x-axis)</span></span></span>
+<span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">PowerPlot</span><span class="op">(</span><span class="va">power_array</span>,</span></span>
 <span class="r-in"><span>          par_to_search <span class="op">=</span> <span class="st">'sd'</span>,</span></span>
 <span class="r-in"><span>          find_min <span class="op">=</span> <span class="cn">FALSE</span>,</span></span>
 <span class="r-in"><span>          slicer <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">30</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>The object 'x' you supplied to PowerPlot contains individual iterations. For sensible plotting, these were automatically summarized across simulations using the function given in argument `summary_function`.</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Adding an example works the same: If we expect a delta of 1, and the n =</span></span></span>
+<span class="r-in"><span><span class="co">## 30, what is the maximal SD we can have still yielding 90% power?</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu"><a href="AddExample.html">AddExample</a></span><span class="op">(</span><span class="va">power_array</span>,</span></span>
+<span class="r-in"><span>           find_min <span class="op">=</span> <span class="cn">FALSE</span>,</span></span>
+<span class="r-in"><span>           slicer <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">30</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>           example <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>delta <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>           target <span class="op">=</span> <span class="fl">.9</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="PowerPlot-4.png" alt="" width="700" height="433"></span>
 </code></pre></div>
     </div>
