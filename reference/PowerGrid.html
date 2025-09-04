@@ -78,10 +78,11 @@ the values of each of these parameters.</p></dd>
 
 
 <dt id="arg-fun">fun<a class="anchor" aria-label="anchor" href="#arg-fun"></a></dt>
-<dd><p>Function applied at each combination of <code>pars</code>. Arguments
-may contain all element names of <code>pars</code> and <code>more_args</code>. Output
-should be a vector, typically of length one, but more outputs are
-generally handled properly in further functions of powergrid.</p></dd>
+<dd><p>A function to be applied at each combination of
+<code>pars</code>. Arguments may contain all element names of <code>pars</code> and
+<code>more_args</code>. Output should always be a numeric vector, typically of
+length one. However, a if you want to work with multiple outpus, each can
+be an element of the returned numeric vector.</p></dd>
 
 
 <dt id="arg-more-args">more_args<a class="anchor" aria-label="anchor" href="#arg-more-args"></a></dt>
@@ -189,8 +190,8 @@ attr(&lt;your_power_array&gt;, which = 'random.seed')[[2]]</code>, etc.</p>
     <div class="dont-index"><p><code><a href="Refine.html">Refine()</a></code> for adding iterations or parameter combinations to
 exsiting <code>power_array</code> object, <code><a href="SummarizeSims.html">SummarizeSims()</a></code> for summarizing a
 <code>power_array</code> object containing individual iterations, <code><a href="ArraySlicer.html">ArraySlicer()</a></code> and
-<code>[.power_array</code> for reducing the dimenstiona of a
-<code>power_array</code> object, correctly updating its attributes.</p></div>
+<code>[.power_array</code> for reducing the dimenstiona of a <code>power_array</code> object,
+correctly updating its attributes.</p></div>
     </div>
     <div class="section level2">
     <h2 id="author">Author<a class="anchor" aria-label="anchor" href="#author"></a></h2>
@@ -391,11 +392,7 @@ exsiting <code>power_array</code> object, <code><a href="SummarizeSims.html">Sum
 <span class="r-in"><span><span class="co">## Note that Example and Powerplot detect when a `power_array` object is not</span></span></span>
 <span class="r-in"><span><span class="co">#summarized, and behave sensibly with a warning:</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="Example.html">Example</a></span><span class="op">(</span><span class="va">powarr_no_summary</span>, example <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>delta <span class="op">=</span> <span class="fl">.7</span>, sd <span class="op">=</span> <span class="fl">.5</span><span class="op">)</span>, target <span class="op">=</span> <span class="fl">.9</span><span class="op">)</span></span></span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>The object 'x' you supplied to Example()</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> contains individual iterations. For finding an</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> example, these were automatically summarized</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> across simulations using the function given in</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> argument `summary_function`.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>The object 'x' you supplied to Example() contains individual iterations. For finding an example, these were automatically summarized across simulations using the function given in argument `summary_function`.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ================================================</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> To achieve the target of at least 0.9 assuming</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> delta = 0.7</span>
@@ -413,6 +410,7 @@ exsiting <code>power_array</code> object, <code><a href="SummarizeSims.html">Sum
 <span class="r-in"><span>          example <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>delta <span class="op">=</span> <span class="fl">.7</span><span class="op">)</span> <span class="co"># Highlight the example with arrow</span></span></span>
 <span class="r-in"><span>          <span class="op">)</span></span></span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>The object 'x' you supplied to PowerPlot contains individual iterations. For sensible plotting, these were automatically summarized across simulations using the function given in argument `summary_function`.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>The object 'x' you supplied to Example() contains individual iterations. For finding an example, these were automatically summarized across simulations using the function given in argument `summary_function`.</span>
 <span class="r-plt img"><img src="PowerGrid-2.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">#=======================================================</span></span></span>

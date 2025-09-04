@@ -240,7 +240,9 @@ figure shows “isolines” connecting points where power is .8, .9, and
 <span>  <span class="va">power</span>, <span class="co"># the power_array containing power estimates</span></span>
 <span>  slicer <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>sd <span class="op">=</span> <span class="fl">.9</span><span class="op">)</span>, <span class="co"># "cut out" the relevant slice from power.</span></span>
 <span>  example <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>delta <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="co"># draw an arrow pointing at the situation at delta = 1</span></span>
-<span>  <span class="op">)</span></span></code></pre></div>
+<span>  <span class="op">)</span></span>
+<span><span class="co">#&gt; Warning in Example(sliced_x, example = cur_example, target = target, minimal_target = minimal_target, : No value of n evaluated where target of NA was achieved.</span></span>
+<span><span class="co">#&gt; Consider using method = "lm" for extrapolation.</span></span></code></pre></div>
 <p><img src="powergrid_files/figure-html/basic%20PowerPlot-1.png" width="600" style="display: block; margin: auto;"></p>
 <p>Some things to note:</p>
 <ul>
