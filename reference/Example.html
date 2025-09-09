@@ -46,9 +46,9 @@ value) in an object of class "power_array".</p>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">Example</span><span class="op">(</span></span>
 <span>  <span class="va">x</span>,</span>
 <span>  example <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  target <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  minimal_target <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  find_min <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  target_value <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  target_at_least <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  find_lowest <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  method <span class="op">=</span> <span class="st">"step"</span>,</span>
 <span>  summary_function <span class="op">=</span> <span class="va">mean</span></span>
 <span><span class="op">)</span></span></code></pre></div>
@@ -69,22 +69,22 @@ list should match the dimension names of <code>x</code>, their values should be 
 values available at these dimensions. See example for an illustration.</p></dd>
 
 
-<dt id="arg-target">target<a class="anchor" aria-label="anchor" href="#arg-target"></a></dt>
-<dd><p>Which value (of typically power) should be achieved at the
-example.</p></dd>
+<dt id="arg-target-value">target_value<a class="anchor" aria-label="anchor" href="#arg-target-value"></a></dt>
+<dd><p>Which value (of typically power) should be achieved at
+the example.</p></dd>
 
 
-<dt id="arg-minimal-target">minimal_target<a class="anchor" aria-label="anchor" href="#arg-minimal-target"></a></dt>
+<dt id="arg-target-at-least">target_at_least<a class="anchor" aria-label="anchor" href="#arg-target-at-least"></a></dt>
 <dd><p>Logical. Set to TRUE if you aim to achieve a minimum
 value (e.g., a power must be <em>at least</em> 90%), or FALSE if you want to
 allow a maximum value (e.g., the width of the expected CI may be <em>at most</em>
 a certain value).</p></dd>
 
 
-<dt id="arg-find-min">find_min<a class="anchor" aria-label="anchor" href="#arg-find-min"></a></dt>
-<dd><p>Logical, indicating whether the example should be found that
-minimizes a parameter (typically: minimal required n) to achieve the
-<code>target</code> or maximizes this assumption (e.g., maximal allowed SD).</p></dd>
+<dt id="arg-find-lowest">find_lowest<a class="anchor" aria-label="anchor" href="#arg-find-lowest"></a></dt>
+<dd><p>Logical, indicating whether the example should be found
+that minimizes a parameter (typically: minimal required n) to achieve the
+<code>target_value</code> or maximizes this assumption (e.g., maximal allowed SD).</p></dd>
 
 
 <dt id="arg-method">method<a class="anchor" aria-label="anchor" href="#arg-method"></a></dt>
@@ -98,23 +98,24 @@ sse package by Thomas Fabbro.</p></li>
 
 <dt id="arg-summary-function">summary_function<a class="anchor" aria-label="anchor" href="#arg-summary-function"></a></dt>
 <dd><p>When x' attribute <code>summarized</code> is FALSE, x is
-summarized across sims using this function before searching the example.</p></dd>
+summarized across iterations using this function before searching the
+example.</p></dd>
 
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     <p>Example returns a list containing:</p><ul><li><p>"requested_example": the parameter combination at which the power (or
-whatever the values represent) was searched to achieve level <code>target</code>
+whatever the values represent) was searched to achieve level <code>target_value</code>
 (typically the minimal power, e.g., .9), searching along parameter <code>required name</code> (typically n).</p></li>
 <li><p>"objective": was <code>required_name</code> searched to find the "min" or "max" of
 x?</p></li>
-<li><p>"target": which value should the power (or any other value) have?</p></li>
+<li><p>"target_value": which value should the power (or any other value) have?</p></li>
 <li><p>"required_name": the parameter searched along to find the minimum (or
 maximized if slot <code>searched</code> = 'max') to achieve objective. (typically n)</p></li>
 <li><p>"required_value": the minimum (or maximum if <code>searched</code> = "max") for
 parameter <code>required_name</code> (which is typically n)</p></li>
 <li><p>"searched": was the "min" or "max" for <code>required_name</code> searched?</p></li>
-<li><p>"minimal_target": Is the target a minimum (TRUE, as typical for power) or a
+<li><p>"target_at_least": Is the target_value a minimum (TRUE, as typical for power) or a
 maximum (FALSE, e.g., an expected uncertainty level)?</p></li>
 </ul></div>
     <div class="section level2">
@@ -132,11 +133,11 @@ to <code>target</code>. Thus, if the sliced out vector contains values of "power
 the parameter "effect size", it searches the minimal effect size at which
 the target power is achieved.</p>
 <p>Two complications are made to allow for complete flexibility:</p><ol><li><p>In the above description, <em>minimal</em> can be changed to <em>maximal</em> by
-setting argument <code>find_min</code> to FALSE. This is useful in the situation where
+setting argument <code>find_lowest</code> to FALSE. This is useful in the situation where
 one, e.g., searches for the highest standard deviation at which it is still
 possible to find a desirable power.</p></li>
 <li><p>In the above description, <em>at least</em> can be changed to <em>at most</em> by
-setting <code>minimal_target</code> to FALSE. This allows to search, for example, for
+setting <code>target_at_least</code> to FALSE. This allows to search, for example, for
 the minimal sample size where the expected confidence interval is smaller
 than a certain desired width.</p></li>
 </ol><p>Example searches for the minimum or maximum on one parameters (say, the
@@ -176,43 +177,43 @@ PowerPlot and Gridplot, <code><a href="FindTarget.html">FindTarget</a></code></p
 <span class="r-in"><span><span class="co">##'</span></span></span>
 <span class="r-in"><span><span class="va">ex_out</span> <span class="op">=</span> <span class="fu">Example</span><span class="op">(</span><span class="va">power_array</span>,</span></span>
 <span class="r-in"><span>                 example <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>delta <span class="op">=</span> <span class="fl">.7</span>, sd <span class="op">=</span> <span class="fl">.7</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>                 target <span class="op">=</span> <span class="fl">.9</span><span class="op">)</span></span></span>
+<span class="r-in"><span>                 target_value <span class="op">=</span> <span class="fl">.9</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">ex_out</span> <span class="co">#</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ================================================</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> To achieve the target of at least 0.9 assuming</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> To achieve the target value of at most 0.9 assuming</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> delta = 0.7</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> sd = 0.7,</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> the minimal required n = 46</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ------------------------------------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Description: Method "step" was used to find the</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> lowest n in the searched grid that yields a</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> target (typically power) of at least 0.9.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> target_value (typically power) of at least 0.9.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ================================================</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## ============================================</span></span></span>
-<span class="r-in"><span><span class="co">## Illustration argument `find_min`</span></span></span>
+<span class="r-in"><span><span class="co">## Illustration argument `find_lowest`</span></span></span>
 <span class="r-in"><span><span class="co">## ============================================</span></span></span>
 <span class="r-in"><span><span class="co">##</span></span></span>
 <span class="r-in"><span><span class="co">## In this example, we search for the *highest sd* for which the power is at</span></span></span>
 <span class="r-in"><span><span class="co">## least .9.</span></span></span>
 <span class="r-in"><span><span class="va">ex_out</span> <span class="op">=</span> <span class="fu">Example</span><span class="op">(</span><span class="va">power_array</span>,</span></span>
 <span class="r-in"><span>                 example <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">40</span>, delta <span class="op">=</span> <span class="fl">.7</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>                 target <span class="op">=</span> <span class="fl">.9</span>, find_min <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
+<span class="r-in"><span>                 target_value <span class="op">=</span> <span class="fl">.9</span>, find_lowest <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">ex_out</span> <span class="co"># note how the printed result indicates it searched for a maximal</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ================================================</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> To achieve the target of at least 0.9 assuming</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> To achieve the target value of at most 0.9 assuming</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> n = 40</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> delta = 0.7,</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> maximal permissible sd = 0.5</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ------------------------------------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Description: Method "step" was used to find the</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> highest sd in the searched grid that yields a</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> target (typically power) of at least 0.9.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> target_value (typically power) of at least 0.9.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ================================================</span>
 <span class="r-in"><span>                                        <span class="co"># permissible sd.</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## ============================================</span></span></span>
-<span class="r-in"><span><span class="co">## Illustration argument `minimal_target`</span></span></span>
+<span class="r-in"><span><span class="co">## Illustration argument `target_at_least`</span></span></span>
 <span class="r-in"><span><span class="co">## ============================================</span></span></span>
 <span class="r-in"><span><span class="co">##</span></span></span>
 <span class="r-in"><span><span class="co">## In the example below, we search for the lowest n where the expected CI-width</span></span></span>
@@ -244,45 +245,45 @@ PowerPlot and Gridplot, <code><a href="FindTarget.html">FindTarget</a></code></p
 <span class="r-in"><span><span class="co">## Now, find lowest n for which the average CI width is *smaller than .88*.</span></span></span>
 <span class="r-in"><span><span class="va">ex_out</span> <span class="op">=</span> <span class="fu">Example</span><span class="op">(</span><span class="va">power_array</span>,</span></span>
 <span class="r-in"><span>                 example <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>delta <span class="op">=</span> <span class="fl">.7</span>, sd <span class="op">=</span> <span class="fl">.7</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>                 target <span class="op">=</span> <span class="fl">.88</span>,</span></span>
-<span class="r-in"><span>                 find_min <span class="op">=</span> <span class="cn">TRUE</span>, <span class="co"># we search the *lowest* n</span></span></span>
-<span class="r-in"><span>                 minimal_target <span class="op">=</span> <span class="cn">FALSE</span> <span class="co"># for a *maximal* mean CI width</span></span></span>
+<span class="r-in"><span>                 target_value <span class="op">=</span> <span class="fl">.88</span>,</span></span>
+<span class="r-in"><span>                 find_lowest <span class="op">=</span> <span class="cn">TRUE</span>, <span class="co"># we search the *lowest* n</span></span></span>
+<span class="r-in"><span>                 target_at_least <span class="op">=</span> <span class="cn">FALSE</span> <span class="co"># for a *maximal* mean CI width</span></span></span>
 <span class="r-in"><span>                 <span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">ex_out</span> <span class="co"># note how the printed result indicates the target CI is a maximum.</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ================================================</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> To achieve the target of at most 0.88 assuming</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> To achieve the target value of at most 0.88 assuming</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> delta = 0.7</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> sd = 0.7,</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> the minimal required n = 45</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ------------------------------------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Description: Method "step" was used to find the</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> lowest n in the searched grid that yields a</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> target (typically power) of at most 0.88.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> target_value (typically power) of at most 0.88.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ================================================</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## ============================================</span></span></span>
-<span class="r-in"><span><span class="co">## When both `find_min` and `minimal_target` are FALSE</span></span></span>
+<span class="r-in"><span><span class="co">## When both `find_lowest` and `target_at_least` are FALSE</span></span></span>
 <span class="r-in"><span><span class="co">## ============================================</span></span></span>
 <span class="r-in"><span><span class="co">##</span></span></span>
 <span class="r-in"><span><span class="co">## In this example, we search for the *highest sd* for which the average CI</span></span></span>
 <span class="r-in"><span><span class="co">## width is still *smaller than or equal to .88*.</span></span></span>
 <span class="r-in"><span><span class="va">ex_out</span> <span class="op">=</span> <span class="fu">Example</span><span class="op">(</span><span class="va">power_array</span>,</span></span>
 <span class="r-in"><span>                 example <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>delta <span class="op">=</span> <span class="fl">.7</span>, n <span class="op">=</span> <span class="fl">60</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>                 target <span class="op">=</span> <span class="fl">.88</span>,</span></span>
-<span class="r-in"><span>                 find_min <span class="op">=</span> <span class="cn">FALSE</span>, <span class="co"># we search the *highest* sd</span></span></span>
-<span class="r-in"><span>                 minimal_target <span class="op">=</span> <span class="cn">FALSE</span> <span class="co"># for a *maximal* mean CI width</span></span></span>
+<span class="r-in"><span>                 target_value <span class="op">=</span> <span class="fl">.88</span>,</span></span>
+<span class="r-in"><span>                 find_lowest <span class="op">=</span> <span class="cn">FALSE</span>, <span class="co"># we search the *highest* sd</span></span></span>
+<span class="r-in"><span>                 target_at_least <span class="op">=</span> <span class="cn">FALSE</span> <span class="co"># for a *maximal* mean CI width</span></span></span>
 <span class="r-in"><span>                 <span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">ex_out</span> <span class="co"># note how the printed result indicates that the *maximal permissible SD*</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ================================================</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> To achieve the target of at most 0.88 assuming</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> To achieve the target value of at most 0.88 assuming</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> delta = 0.7</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> n = 60,</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> maximal permissible sd = 0.7</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ------------------------------------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Description: Method "step" was used to find the</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> highest sd in the searched grid that yields a</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> target (typically power) of at most 0.88.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> target_value (typically power) of at most 0.88.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ================================================</span>
 <span class="r-in"><span>       <span class="co"># was found for a CI of *at most .88*.</span></span></span>
 <span class="r-in"><span></span></span>

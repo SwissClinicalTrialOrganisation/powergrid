@@ -88,7 +88,7 @@ participants under various scenarios.</p>
 <ul>
 <li>
 <code>PowerGrid</code> for evaluating the power across a grid, with
-and without simualtion</li>
+and without iterations</li>
 <li>
 <code>Example</code> for inspecting the relation between power and
 sample size in a specific scenario</li>
@@ -117,9 +117,17 @@ line of R code:</p>
 <code class="sourceCode R"><span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"SwissClinicalTrialOrganisation/powergrid"</span>,</span>
 <span>                         ref <span class="op">=</span> <span class="st">"v0.1.0"</span>, <span class="co"># the current beta</span></span>
 <span>                         build_vignette <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<div class="section level3">
+<h3 id="outline">Outline<a class="anchor" aria-label="anchor" href="#outline"></a>
+</h3>
+<p>In the next section, I start by showing a technical example that
+should illustrate the essence of PowerGrid and FindTarget. Then, in the
+third section, I show 4 actual use cases exploiting the flexibility of
+powergrid.</p>
+</div>
 </div>
 <div class="section level2">
-<h2 id="raw-functionality-in-powergrid">Raw functionality in powergrid<a class="anchor" aria-label="anchor" href="#raw-functionality-in-powergrid"></a>
+<h2 id="technical-example">Technical example<a class="anchor" aria-label="anchor" href="#technical-example"></a>
 </h2>
 <p>Before turning to a real-world example, I show an example
 illustrating general working of the core functions of powergrid:
@@ -130,10 +138,14 @@ FindTarget.</p>
 FindTarget is in essence a combination of <code>apply</code> +
 <code>match</code> + <code>min</code> + <code>which.min</code>.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co">## create an array with the product of three numbers</span></span>
+<code class="sourceCode R"><span><span class="co">## I aim to create an array with the product of three numbers</span></span>
+<span></span>
+<span><span class="co">## A function taking the product of three numbers:</span></span>
 <span><span class="va">Prod</span> <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span>, <span class="va">z</span><span class="op">)</span><span class="op">{</span></span>
 <span>  <span class="va">x</span> <span class="op">*</span> <span class="va">y</span> <span class="op">*</span> <span class="va">z</span></span>
 <span><span class="op">}</span></span>
+<span><span class="co">## A grid of numbers I want to calculate the products of. Note that the names of</span></span>
+<span><span class="co">## the list equal the argument names in Prod()</span></span>
 <span><span class="va">par</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">10</span>,</span>
 <span>           y <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">3</span>,</span>
 <span>           z <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">10</span><span class="op">)</span><span class="op">)</span></span>
@@ -174,19 +186,21 @@ FindTarget is in essence a combination of <code>apply</code> +
 <span><span class="co">#&gt;  Resulting dimensions:</span></span>
 <span><span class="co">#&gt;  x, y, z.</span></span>
 <span></span>
-<span><span class="co">## what is, for each combination of y and z, the lowest x where the product is</span></span>
-<span><span class="co">## at least 20?</span></span>
+<span><span class="co">## Now, I can ask: for each combination of y and z, what is the lowest x where</span></span>
+<span><span class="co">## the product is at least 20?</span></span>
 <span><span class="fu"><a href="../reference/FindTarget.html">FindTarget</a></span><span class="op">(</span><span class="va">products</span>,</span>
 <span>           par_to_search <span class="op">=</span> <span class="st">'x'</span>,</span>
-<span>           find_min <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>           minimal_target <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>           target <span class="op">=</span> <span class="fl">20</span><span class="op">)</span></span>
+<span>           find_lowest <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>           target_at_least <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>           target_value <span class="op">=</span> <span class="fl">20</span><span class="op">)</span></span>
 <span><span class="co">#&gt;    z</span></span>
 <span><span class="co">#&gt; y    1 10</span></span>
 <span><span class="co">#&gt;   1 NA  2</span></span>
 <span><span class="co">#&gt;   2 10  1</span></span>
 <span><span class="co">#&gt;   3  7  1</span></span>
 <span><span class="co">## Note: when both y and z are 1, there is no x so that the product becomes 20.</span></span></code></pre></div>
+<p>If you understand the R chunk above, you understand the essence of
+powergrid.</p>
 <div class="section level4">
 <h4 id="now-forget-about-findtarget">Now, forget about FindTarget!<a class="anchor" aria-label="anchor" href="#now-forget-about-findtarget"></a>
 </h4>
@@ -198,17 +212,16 @@ GridPlot() and AddExample(), which rely on FindTarget internally.</p>
 <h2 id="four-use-cases">Four use cases<a class="anchor" aria-label="anchor" href="#four-use-cases"></a>
 </h2>
 <p>I describe two basic use cases here, and two slightly more fancy
-once. The first two concern the relation between power, sample size, and
-two further parameters. In the <a href="#Power%20and%20sample%20size%20for%20a%20t-test">first
-situation</a>, a function for calculating the power is available. In the
-<a href="#Power%20evaluation%20using%20simulation%20and%20resampling">second
-situation</a>, the power needs to be found through (re-)sampling. The <a href="#Target%20a%20maximum%20CI95-width">third example</a> concerns a
-situation where the objective is not a minimal power, but a CI-width
-that must be at most a certain value. In the <a href="#Find%20the%20upper%20boundary">fourth example</a>, we do not
-search the <em>lowest required</em> sample size, but the <em>highest
+ones. The first two concern the relation between power, sample size, and
+two further parameters. In the <a href="#ex1">first situation</a>, a
+function for calculating the power is available. In the <a href="#ex2">second situation</a>, the power needs to be found through
+(re-)sampling. The <a href="#ex3">third example</a> concerns a situation
+where the objective is not a minimal power, but a CI-width that must be
+at most a certain value. In the <a href="#ex4">fourth example</a>, we do
+not search the <em>lowest required</em> sample size, but the <em>highest
 permissible</em> standard deviation to achieve a target power.</p>
 <div class="section level3">
-<h3 id="power-and-sample-size-for-a-t-test">Power and sample size for a t-test<a class="anchor" aria-label="anchor" href="#power-and-sample-size-for-a-t-test"></a>
+<h3 id="ex1">Power and sample size for a t-test<a class="anchor" aria-label="anchor" href="#ex1"></a>
 </h3>
 <p>Assume we aim to collect data in a two-armed RCT and plan to perform
 a simple t-test. In this situation, the situation concerning power can
@@ -266,16 +279,16 @@ calculate this example:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/Example.html">Example</a></span><span class="op">(</span><span class="va">power</span>,</span>
 <span>        example <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>delta <span class="op">=</span> <span class="fl">1.1</span>, sd <span class="op">=</span> <span class="fl">.7</span><span class="op">)</span>,</span>
-<span>        target <span class="op">=</span> <span class="fl">.9</span><span class="op">)</span> <span class="co"># power = 90%</span></span>
+<span>        target_value <span class="op">=</span> <span class="fl">.9</span><span class="op">)</span> <span class="co"># power = 90%</span></span>
 <span><span class="co">#&gt; ================================================</span></span>
-<span><span class="co">#&gt; To achieve the target of at least 0.9 assuming</span></span>
+<span><span class="co">#&gt; To achieve the target value of at most 0.9 assuming</span></span>
 <span><span class="co">#&gt; delta = 1.1</span></span>
 <span><span class="co">#&gt; sd = 0.7,</span></span>
 <span><span class="co">#&gt; the minimal required n = 25</span></span>
 <span><span class="co">#&gt; ------------------------------------------------</span></span>
 <span><span class="co">#&gt; Description: Method "step" was used to find the</span></span>
 <span><span class="co">#&gt; lowest n in the searched grid that yields a</span></span>
-<span><span class="co">#&gt; target (typically power) of at least 0.9.</span></span>
+<span><span class="co">#&gt; target_value (typically power) of at least 0.9.</span></span>
 <span><span class="co">#&gt; ================================================</span></span></code></pre></div>
 <div class="section level5">
 <h5 id="draw-a-figure-with-example">Draw a figure with example<a class="anchor" aria-label="anchor" href="#draw-a-figure-with-example"></a>
@@ -284,7 +297,7 @@ calculate this example:</p>
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/PowerPlot.html">PowerPlot</a></span><span class="op">(</span><span class="va">power</span>,</span>
 <span>          slicer <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>sd <span class="op">=</span> <span class="fl">.7</span><span class="op">)</span>,</span>
 <span>          example <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>delta <span class="op">=</span> <span class="fl">1.1</span><span class="op">)</span>,</span>
-<span>          target <span class="op">=</span> <span class="fl">.9</span></span>
+<span>          target_value <span class="op">=</span> <span class="fl">.9</span></span>
 <span>          <span class="op">)</span></span></code></pre></div>
 <p><img src="powergrid_files/figure-html/basic%20PowerPlot-1.png" width="550" style="display: block; margin: auto;"></p>
 <p>Some things to note in the figure code:</p>
@@ -292,10 +305,10 @@ calculate this example:</p>
 <li>You need to “slice out” one plain from your power_array. In this
 case, this the slice where <code>sd = .9</code>. The slice has the form
 of the figure: delta by n.</li>
-<li>Note that in the figure, that the example is a bit above the power =
-90% line. This is because of the resolution of parameter n: at the
-example value of delta, the arrow points at the lowest n in pars, for
-which the power is at least 90%.</li>
+<li>Note that the example is a bit above the power = 90% line. This is
+because of the resolution of parameter n: at the example value of delta,
+the arrow points at the lowest n in pars, for which the power is at
+least 90%.</li>
 <li>You could also slice out a plain where <code>delta = .8</code> and
 show how the relation between power and n depends on the standard
 deviation. Or slice out a plain where <code>n = 50</code>, and see how
@@ -312,12 +325,12 @@ to learn about in the help files.</li>
 <div class="section level5">
 <h5 id="why-target-not-power">Why target, not power?<a class="anchor" aria-label="anchor" href="#why-target-not-power"></a>
 </h5>
-<p>The wording “target” in both the function argument and the printed
-result may be a bit confusing at first. ‘Why not “power”?’, you may ask.
-The reason is, that there is nothing that keeps you from optimizing
-other things with the functionality of <code>powergrid</code>. Indeed,
-instead of finding a target power, you may be looking for a target
-precision.</p>
+<p>The wording “target_value” in both the function argument and the
+printed result may be a bit confusing at first. ‘Why not “power”?’, you
+may ask. The reason is, that there is nothing that keeps you from
+optimizing other things with the functionality of
+<code>powergrid</code>. Indeed, instead of finding a target power, you
+may be looking for a target precision.</p>
 </div>
 </div>
 <div class="section level4">
@@ -337,16 +350,21 @@ than 2 dimensions in our <code>pars</code> argument.</p>
 sd when the goals is the achieve 90% power.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/GridPlot.html">GridPlot</a></span><span class="op">(</span><span class="va">power</span>,</span>
-<span>         target <span class="op">=</span> <span class="fl">.9</span>, <span class="co"># you need to choose one target level of power</span></span>
-<span>         example <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>delta <span class="op">=</span> <span class="fl">1</span>, sd <span class="op">=</span> <span class="fl">.7</span><span class="op">)</span><span class="op">)</span> <span class="co"># defined by two parameters now.</span></span></code></pre></div>
+<span>         target_value <span class="op">=</span> <span class="fl">.9</span>, <span class="co"># you need to choose one target level of power</span></span>
+<span>         example <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>delta <span class="op">=</span> <span class="fl">1</span>, sd <span class="op">=</span> <span class="fl">.7</span><span class="op">)</span><span class="op">)</span> <span class="co"># defined by two parameters now.</span></span>
+<span><span class="co">#&gt; Warning: At some combinations of `x_par` and `l_par`, no `y_par` was found that</span></span>
+<span><span class="co">#&gt; yielded the required target value, which may result in lines ending abruptly.</span></span>
+<span><span class="co">#&gt; In most common use cases, you may want to increasing the range of n.</span></span></code></pre></div>
 <p><img src="powergrid_files/figure-html/GridPlot-1.png" width="550" style="display: block; margin: auto;"></p>
 <p>Note that there are many options in this plot. See the help file of
-<code>GridPlot</code> for more info.</p>
+<code>GridPlot</code> for more info. Importantly, any dimension of the
+the <code>power_array</code> in argument x may be mapped to the x- or
+y-axis, or to the different lines.</p>
 </div>
 </div>
 </div>
 <div class="section level3">
-<h3 id="power-evaluation-using-simulation-and-resampling">Power evaluation using simulation and resampling<a class="anchor" aria-label="anchor" href="#power-evaluation-using-simulation-and-resampling"></a>
+<h3 id="ex2">Power evaluation using simulation and resampling<a class="anchor" aria-label="anchor" href="#ex2"></a>
 </h3>
 <p>Assume we have about the same situation as above, but we do not have
 a simple solution to calculate the power: we only have a limited pilot
@@ -394,18 +412,21 @@ approach to the exploration of power:</p>
 <ul>
 <li>The power in the example above is calculated by simulating TRUE’s
 and FALSE’s for significance. These were then automatically summarized
-by <code>mean</code> to yield the power. You may, however, want to keep
-the simulated outcomes of your function. To do so, set
-<code>summarize = FALSE</code>. If you choose to keep the individual
-iterations, be aware that plotting functions and <code>Example</code>
-automatically summarize these taking the mean. You can, however, choose
-a different <code>summary_function</code>.</li>
+by <code>mean</code> to yield the power.</li>
+<li>You may want to keep the outcomes of individual iterations of your
+function. To do so, set <code>summarize = FALSE</code>. In this
+situation, the resulting array will have one additional dimension,
+“iter”.</li>
+<li>If you choose to keep the individual iterations, be aware that
+plotting functions and <code>Example</code> automatically summarize
+these taking the mean. You can, however, choose a different
+<code>summary_function</code>.</li>
 <li>As in PowerPlot, any dimension of the <code>power_array</code> may
-be represented by the x-axis, y-axis, and lines.</li>
+be represented by the x-axis, y-axis.</li>
 </ul>
 </div>
 <div class="section level3">
-<h3 id="target-a-maximum-ci95-width">Target a maximum CI95-width<a class="anchor" aria-label="anchor" href="#target-a-maximum-ci95-width"></a>
+<h3 id="ex3">Target a maximum CI95-width<a class="anchor" aria-label="anchor" href="#ex3"></a>
 </h3>
 <p>The powergrid package allows to do more than finding a power of at
 least some value. Instead, we can target, for example, a 95% confidence
@@ -447,18 +468,18 @@ most that value:</p>
 <span></span>
 <span><span class="fu"><a href="../reference/Example.html">Example</a></span><span class="op">(</span><span class="va">CI_array</span>,</span>
 <span>        example <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>delta <span class="op">=</span> <span class="fl">.7</span>, sd <span class="op">=</span> <span class="fl">.8</span><span class="op">)</span>,</span>
-<span>        target <span class="op">=</span> <span class="fl">.7</span>,</span>
-<span>        minimal_target <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>        find_min <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span>        target_value <span class="op">=</span> <span class="fl">.7</span>,</span>
+<span>        target_at_least <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>        find_lowest <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="co">#&gt; ================================================</span></span>
-<span><span class="co">#&gt; To achieve the target of at most 0.7 assuming</span></span>
+<span><span class="co">#&gt; To achieve the target value of at most 0.7 assuming</span></span>
 <span><span class="co">#&gt; delta = 0.7</span></span>
 <span><span class="co">#&gt; sd = 0.8,</span></span>
 <span><span class="co">#&gt; the minimal required n = 45</span></span>
 <span><span class="co">#&gt; ------------------------------------------------</span></span>
 <span><span class="co">#&gt; Description: Method "step" was used to find the</span></span>
 <span><span class="co">#&gt; lowest n in the searched grid that yields a</span></span>
-<span><span class="co">#&gt; target (typically power) of at most 0.7.</span></span>
+<span><span class="co">#&gt; target_value (typically power) of at most 0.7.</span></span>
 <span><span class="co">#&gt; ================================================</span></span>
 <span><span class="co">## Show results</span></span>
 <span><span class="fu"><a href="../reference/PowerPlot.html">PowerPlot</a></span><span class="op">(</span><span class="va">CI_array</span>, slicer <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>delta <span class="op">=</span> <span class="fl">.7</span><span class="op">)</span>,</span>
@@ -469,16 +490,16 @@ most that value:</p>
 <span><span class="fu"><a href="../reference/AddExample.html">AddExample</a></span><span class="op">(</span><span class="va">CI_array</span>,</span>
 <span>           slicer <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>delta <span class="op">=</span> <span class="fl">.7</span><span class="op">)</span>,</span>
 <span>           example <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>sd <span class="op">=</span> <span class="fl">.8</span><span class="op">)</span>,</span>
-<span>           target <span class="op">=</span> <span class="fl">.7</span>,</span>
-<span>           minimal_target <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
+<span>           target_value <span class="op">=</span> <span class="fl">.7</span>,</span>
+<span>           target_at_least <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
 <p><img src="powergrid_files/figure-html/CI%20example-1.png" width="550" style="display: block; margin: auto;"></p>
-<p>A couple of things to observe: * We set “minimal_target” to FALSE,
+<p>A couple of things to observe: * We set “target_at_least” to FALSE,
 since we are looking for a CI of <em>at most</em> .7 * The lines in the
 figure now connect situations with the same CI-width (not power, as in
 the earlier examples) * We changed the title accordingly.</p>
 </div>
 <div class="section level3">
-<h3 id="find-the-upper-bound">Find the upper bound<a class="anchor" aria-label="anchor" href="#find-the-upper-bound"></a>
+<h3 id="ex4">Find the upper bound<a class="anchor" aria-label="anchor" href="#ex4"></a>
 </h3>
 <p>We have the same situation as in the first use case, where we plan a
 t-test and aim for a power of 90%. In the current situation, however, we
@@ -489,7 +510,7 @@ must be for our study to have desirable power.</p>
 <summary in numbers here><ul>
 <li>we look for the largest acceptable SD (not the smallest n) where we
 can achieve the target value of .7. Therefore, we set
-<code>find_min = FALSE</code>.</li>
+<code>find_lowest = FALSE</code>.</li>
 </ul>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">sse_pars</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
@@ -504,21 +525,21 @@ can achieve the target value of .7. Therefore, we set
 <span><span class="va">power_array</span> <span class="op">=</span> <span class="fu"><a href="../reference/PowerGrid.html">PowerGrid</a></span><span class="op">(</span>pars <span class="op">=</span> <span class="va">sse_pars</span>, fun <span class="op">=</span> <span class="va">PowFun</span>, n_iter <span class="op">=</span> <span class="cn">NA</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/Example.html">Example</a></span><span class="op">(</span><span class="va">power_array</span>,</span>
 <span>        example <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">30</span>, delta <span class="op">=</span> <span class="fl">.8</span><span class="op">)</span>,</span>
-<span>        find_min <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>        target <span class="op">=</span> <span class="fl">.9</span><span class="op">)</span></span>
+<span>        find_lowest <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>        target_value <span class="op">=</span> <span class="fl">.9</span><span class="op">)</span></span>
 <span><span class="co">#&gt; ================================================</span></span>
-<span><span class="co">#&gt; To achieve the target of at least 0.9 assuming</span></span>
+<span><span class="co">#&gt; To achieve the target value of at most 0.9 assuming</span></span>
 <span><span class="co">#&gt; n = 30</span></span>
 <span><span class="co">#&gt; delta = 0.8,</span></span>
 <span><span class="co">#&gt; maximal permissible sd = 0.65</span></span>
 <span><span class="co">#&gt; ------------------------------------------------</span></span>
 <span><span class="co">#&gt; Description: Method "step" was used to find the</span></span>
 <span><span class="co">#&gt; highest sd in the searched grid that yields a</span></span>
-<span><span class="co">#&gt; target (typically power) of at least 0.9.</span></span>
+<span><span class="co">#&gt; target_value (typically power) of at least 0.9.</span></span>
 <span><span class="co">#&gt; ================================================</span></span></code></pre></div>
-<p>We see that, by setting <code>find_min = FALSE</code> Example() shows
-us the “maximal permissible” value that sd may take in order to achieve
-the set target.</p>
+<p>We see that, by setting <code>find_lowest = FALSE</code> Example()
+shows us the “maximal permissible” value that sd may take in order to
+achieve the set target.</p>
 <p>Below, inspect the situation in graphic form. Note that the argument
 <code>par_to_search</code> is set to “sd”, putting that parameter on the
 y-axis.</p>
@@ -527,17 +548,9 @@ y-axis.</p>
 <span>          slicer <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">30</span><span class="op">)</span>,</span>
 <span>          par_to_search <span class="op">=</span> <span class="st">'sd'</span>,</span>
 <span>          example <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>delta <span class="op">=</span> <span class="fl">.8</span><span class="op">)</span>,</span>
-<span>          find_min <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>          target <span class="op">=</span> <span class="fl">.9</span><span class="op">)</span></span></code></pre></div>
+<span>          find_lowest <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>          target_value <span class="op">=</span> <span class="fl">.9</span><span class="op">)</span></span></code></pre></div>
 <p><img src="powergrid_files/figure-html/maximum%20SD%20PowerPlot-1.png" width="550" style="display: block; margin: auto;"></p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/GridPlot.html">GridPlot</a></span><span class="op">(</span><span class="va">power_array</span>,</span>
-<span>         y_par <span class="op">=</span> <span class="st">'sd'</span>,</span>
-<span>         x_par <span class="op">=</span> <span class="st">'delta'</span>,</span>
-<span>         l_par <span class="op">=</span> <span class="st">'n'</span>,</span>
-<span>         target <span class="op">=</span> <span class="fl">.9</span>, find_min <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>         ylim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">.3</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p><img src="powergrid_files/figure-html/maximum%20SD%20GridPlot-1.png" width="550" style="display: block; margin: auto;"></p>
 </summary>
 </div>
 </div>

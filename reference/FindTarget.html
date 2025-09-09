@@ -93,10 +93,10 @@ n's yielding acceptable power.</p>
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">FindTarget</span><span class="op">(</span></span>
 <span>  <span class="va">x</span>,</span>
-<span>  target <span class="op">=</span> <span class="fl">0.9</span>,</span>
-<span>  minimal_target <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  par_to_search <span class="op">=</span> <span class="st">"n"</span>,</span>
-<span>  find_min <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  find_lowest <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  target_value <span class="op">=</span> <span class="fl">0.9</span>,</span>
+<span>  target_at_least <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  method <span class="op">=</span> <span class="st">"step"</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -106,27 +106,17 @@ n's yielding acceptable power.</p>
 
 
 <dl><dt id="arg-x">x<a class="anchor" aria-label="anchor" href="#arg-x"></a></dt>
-<dd><p>An array, most commonly of class <code>power_array</code>, possibly
-the result of taking a slice of an object of class <code>power_array</code>
-using <code><a href="ArraySlicer.html">ArraySlicer</a></code> or the power_array []-indexing method.</p></dd>
-
-
-<dt id="arg-target">target<a class="anchor" aria-label="anchor" href="#arg-target"></a></dt>
-<dd><p>The required value in x (e.g., .9, if the values
-represent power)</p></dd>
-
-
-<dt id="arg-minimal-target">minimal_target<a class="anchor" aria-label="anchor" href="#arg-minimal-target"></a></dt>
-<dd><p>Is the target a minimum (e.g., the power) or a maximum
-(e.g., the size of a confidence interval)</p></dd>
+<dd><p>An array, most commonly of class <code>power_array</code>, possibly the result
+of taking a slice of an object of class <code>power_array</code> using
+<code><a href="ArraySlicer.html">ArraySlicer</a></code> or the power_array []-indexing method.</p></dd>
 
 
 <dt id="arg-par-to-search">par_to_search<a class="anchor" aria-label="anchor" href="#arg-par-to-search"></a></dt>
 <dd><p>Which parameter should be searched to achieve the
-required target. In the typical power analysis case, this is n.</p></dd>
+required target value. In the typical power analysis case, this is n.</p></dd>
 
 
-<dt id="arg-find-min">find_min<a class="anchor" aria-label="anchor" href="#arg-find-min"></a></dt>
+<dt id="arg-find-lowest">find_lowest<a class="anchor" aria-label="anchor" href="#arg-find-lowest"></a></dt>
 <dd><p>If TRUE, the lowest value of par_to_search is found that
 yields a value that meets the target. This is typical for n in a sample
 size estimation, where one searches the lowest n to achieve a certain
@@ -134,9 +124,19 @@ power. For, e.g. the variance, one would however search for the maximum
 where the target power can still be achieved.</p></dd>
 
 
+<dt id="arg-target-value">target_value<a class="anchor" aria-label="anchor" href="#arg-target-value"></a></dt>
+<dd><p>The required value in x (e.g., .9, if the values
+represent power)</p></dd>
+
+
+<dt id="arg-target-at-least">target_at_least<a class="anchor" aria-label="anchor" href="#arg-target-at-least"></a></dt>
+<dd><p>Is the <code>target_value</code> a minimum (e.g., the power) or
+a maximum (e.g., the size of a confidence interval)</p></dd>
+
+
 <dt id="arg-method">method<a class="anchor" aria-label="anchor" href="#arg-method"></a></dt>
 <dd><p>How is the required <code>par_to_search</code> to achieve
-<code>target</code> found. Either <code>'step'</code>: walking in steps along
+<code>target_value</code> found. Either <code>'step'</code>: walking in steps along
 <code>par_to_search</code> or <code>'lm'</code>: Interpolating assuming a linear
 relation between <code>par_to_search</code> and <code>(qnorm(x) + qnorm(1 -
   0.05)) ^ 2</code>. Setting 'lm' is inspired on the implementation in the sse
@@ -145,27 +145,28 @@ package by Thomas Fabbro.</p></dd>
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>Returns an array or vector: containing the value that is found for the
-par_to_search (say, n) meeting the target following above criteria (say,
-the lowest n for which the power is larger than .9), for each crossing of
-the levels of the other dimensions (say, delta, SD).</p>
+    <p>Returns an array or vector: containing the value that is found for
+the par_to_search (say, n) meeting the target following above criteria
+(say, the lowest n for which the power is larger than .9), for each
+crossing of the levels of the other dimensions (say, delta, SD).</p>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>By default FindTarget searches along the dimension called <code>n</code>
-(<code>par_to_search</code>), searching for the lowest value (<code>find_min</code> =
-TRUE) where the array contains a value of at least (<code>minimal_target</code>
-= TRUE) .9 (the <code>target</code>), thus finding the minimal sample size
-required to achieve a power of 90%. These arguments may seem a bit
-confusing at first, but they allow for three additional purposes:</p>
+(<code>par_to_search</code>), searching for the lowest value (<code>find_lowest</code>
+= TRUE) where the array contains a value of at least
+(<code>target_at_least</code> = TRUE) .9 (the <code>target_value</code>), thus finding the
+minimal sample size required to achieve a power of 90%. These arguments
+may seem a bit confusing at first, but they allow for three additional
+purposes:</p>
 <p>First, the implementation also allows to search for a value that is <em>at
-most</em> the <code>target</code>, by setting <code>minimal_target</code> to FALSE. This may
+most</em> the <code>target_value</code>, by setting <code>target_at_least</code> to FALSE. This may
 be used, for example, when the aim is to find a sample size yielding a
 confidence interval that is not bigger than some maximum width.</p>
 <p>Second, the implementation allows to search along another <em>named</em> dimension
 of x than n.</p>
-<p>Third, the implementation allows to search for a certain target to be
-achieved by maximizing (find_min = FALSE) the parameter on the searched
+<p>Third, the implementation allows to search for a certain target value to be
+achieved by maximizing (find_lowest = FALSE) the parameter on the searched
 dimension. This may be used, for example, when the aim is to find the
 maximum standard deviation at which a study's power is still acceptable.</p>
 <p><code>FindTarget</code> is most often called as the workhorse of
@@ -173,7 +174,8 @@ maximum standard deviation at which a study's power is still acceptable.</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
-    <div class="dont-index"><p><code><a href="PowerGrid.html">PowerGrid</a></code>, <code><a href="Example.html">Example</a></code>, <code><a href="PowerPlot.html">PowerPlot</a></code></p></div>
+    <div class="dont-index"><p><code><a href="PowerGrid.html">PowerGrid</a></code>, <code><a href="Example.html">Example</a></code>,
+<code><a href="PowerPlot.html">PowerPlot</a></code></p></div>
     </div>
     <div class="section level2">
     <h2 id="author">Author<a class="anchor" aria-label="anchor" href="#author"></a></h2>
@@ -212,9 +214,9 @@ maximum standard deviation at which a study's power is still acceptable.</p>
 <span class="r-in"><span><span class="co">## We can use Example so find the required sample size, but only for one example:</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="Example.html">Example</a></span><span class="op">(</span><span class="va">power_array</span>,</span></span>
 <span class="r-in"><span>        example <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>delta <span class="op">=</span> <span class="fl">.7</span>, sd <span class="op">=</span> <span class="fl">.7</span>, sig_level <span class="op">=</span> <span class="fl">.05</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>        target <span class="op">=</span> <span class="fl">.9</span><span class="op">)</span></span></span>
+<span class="r-in"><span>        target_value <span class="op">=</span> <span class="fl">.9</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ================================================</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> To achieve the target of at least 0.9 assuming</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> To achieve the target value of at most 0.9 assuming</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> delta = 0.7</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> sd = 0.7</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> sig_level = 0.05,</span>
@@ -222,7 +224,7 @@ maximum standard deviation at which a study's power is still acceptable.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ------------------------------------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Description: Method "step" was used to find the</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> lowest n in the searched grid that yields a</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> target (typically power) of at least 0.9.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> target_value (typically power) of at least 0.9.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ================================================</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## If we want to see the required sample size for all delta's, we can use</span></span></span>
@@ -230,7 +232,7 @@ maximum standard deviation at which a study's power is still acceptable.</p>
 <span class="r-in"><span><span class="co">## .3:</span></span></span>
 <span class="r-in"><span><span class="va">n_by_delta_sd_03</span> <span class="op">=</span> <span class="fu">FindTarget</span><span class="op">(</span><span class="va">power_array</span><span class="op">[</span>, sig_level <span class="op">=</span> <span class="st">'0.05'</span>, , sd <span class="op">=</span> <span class="st">'0.3'</span><span class="op">]</span>,</span></span>
 <span class="r-in"><span>                              par_to_search <span class="op">=</span> <span class="st">'n'</span>,</span></span>
-<span class="r-in"><span>                              target <span class="op">=</span> <span class="fl">.9</span><span class="op">)</span></span></span>
+<span class="r-in"><span>                              target_value <span class="op">=</span> <span class="fl">.9</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">n_by_delta_sd_03</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 0.5 0.7 0.9 1.1 1.3 1.5 </span>
@@ -248,7 +250,7 @@ maximum standard deviation at which a study's power is still acceptable.</p>
 <span class="r-in"><span><span class="co">## The function works also for higher dimensionality:</span></span></span>
 <span class="r-in"><span><span class="va">n_by_delta_sd</span> <span class="op">=</span> <span class="fu">FindTarget</span><span class="op">(</span><span class="va">power_array</span>,</span></span>
 <span class="r-in"><span>                           par_to_search <span class="op">=</span> <span class="st">'n'</span>,</span></span>
-<span class="r-in"><span>                           target <span class="op">=</span> <span class="fl">.85</span><span class="op">)</span></span></span>
+<span class="r-in"><span>                           target_value <span class="op">=</span> <span class="fl">.85</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="co">## what is the minimum n to achieve .85 for different values of delta, sd,</span></span></span>
 <span class="r-in"><span><span class="co">## when  sig_level = 0.05:</span></span></span>
 <span class="r-in"><span><span class="va">n_by_delta_sd</span><span class="op">[</span><span class="fl">5</span>, , <span class="op">]</span> <span class="co"># note that for some combinations of delta and sd, there is</span></span></span>

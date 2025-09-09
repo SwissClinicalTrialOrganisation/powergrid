@@ -56,11 +56,11 @@ parameters deemed most likely.</p>
 <span>  <span class="va">x</span>,</span>
 <span>  slicer <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  par_to_search <span class="op">=</span> <span class="st">"n"</span>,</span>
-<span>  find_min <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  example <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  find_lowest <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  target_value <span class="op">=</span> <span class="fl">0.9</span>,</span>
+<span>  target_at_least <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  method <span class="op">=</span> <span class="st">"step"</span>,</span>
-<span>  target <span class="op">=</span> <span class="fl">0.9</span>,</span>
-<span>  minimal_target <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  summary_function <span class="op">=</span> <span class="va">mean</span>,</span>
 <span>  target_levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.8</span>, <span class="fl">0.9</span>, <span class="fl">0.95</span><span class="op">)</span>,</span>
 <span>  col <span class="op">=</span> <span class="fu">grDevices</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/grDevices/gray.colors.html" class="external-link">grey.colors</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">0.2</span>, <span class="fl">0.2</span><span class="op">)</span>,</span>
@@ -92,48 +92,51 @@ should be cut out.</p></dd>
 
 <dt id="arg-par-to-search">par_to_search<a class="anchor" aria-label="anchor" href="#arg-par-to-search"></a></dt>
 <dd><p>The variable whose minimum (or maximum, when
-<code>find_min == FALSE</code>) is searched for achieving the
+<code>find_lowest == FALSE</code>) is searched for achieving the
 <code>target_levels</code>.</p></dd>
-
-
-<dt id="arg-find-min">find_min<a class="anchor" aria-label="anchor" href="#arg-find-min"></a></dt>
-<dd><p>Logical, indicating whether the example should be found that
-minimizes an assumption (e.g., minimal required n) to achieve the
-<code>target</code> or an example that maximizes this assumption (e.g.,
-maximally allowed SD).</p></dd>
 
 
 <dt id="arg-example">example<a class="anchor" aria-label="anchor" href="#arg-example"></a></dt>
 <dd><p>If not NULL, a list of length one, defining at which value
 (list element value) of which parameter (list element name) the example is
-drawn for a power of <code>target</code>. You may supply a vector longer than 1
+drawn for a power of <code>target_value</code>. You may supply a vector longer than 1
 for multiple examples.</p></dd>
+
+
+<dt id="arg-find-lowest">find_lowest<a class="anchor" aria-label="anchor" href="#arg-find-lowest"></a></dt>
+<dd><p>Logical, indicating whether the example should be found
+that minimizes an assumption (e.g., minimal required n) to achieve the
+<code>target_value</code> or an example that maximizes this assumption (e.g.,
+maximally allowed SD).</p></dd>
+
+
+<dt id="arg-target-value">target_value<a class="anchor" aria-label="anchor" href="#arg-target-value"></a></dt>
+<dd><p>The power (or whatever the target is) for which the
+example, if requested, is drawn. Also defines which of the power lines is
+drawn with a thicker line width, among or in addition to the power lines
+defined by target_levels.</p></dd>
+
+
+<dt id="arg-target-at-least">target_at_least<a class="anchor" aria-label="anchor" href="#arg-target-at-least"></a></dt>
+<dd><p>Logical. Should the target value be minimally
+achieved (e.g., power), or maximially allowed (e.g., estimation
+uncertainty).</p></dd>
 
 
 <dt id="arg-method">method<a class="anchor" aria-label="anchor" href="#arg-method"></a></dt>
 <dd><p>Method used for finding the required <code>par_to_search</code>
-needed to achieve <code>target</code>. Either <code>step</code>: walking in steps
+needed to achieve <code>target_value</code>. Either <code>step</code>: walking in steps
 along <code>par_to_search</code> or <code>lm</code>: Interpolating assuming a linear
 relation between <code>par_to_search</code> and <code>(qnorm(x) + qnorm(1 -
   0.05)) ^ 2</code>. The setting <code>lm</code> is inspired on the implementation in
 the <code>sse</code> package by Thomas Fabbro.</p></dd>
 
 
-<dt id="arg-target">target<a class="anchor" aria-label="anchor" href="#arg-target"></a></dt>
-<dd><p>The power (or whatever the target is) for which the example,
-if requested, is drawn. Also defines which of the power lines is drawn
-with a thicker line width, among or in addition to the power lines defined
-by target_levels.</p></dd>
-
-
-<dt id="arg-minimal-target">minimal_target<a class="anchor" aria-label="anchor" href="#arg-minimal-target"></a></dt>
-<dd><p>Logical. Should target be minimally achieved (e.g.,
-power), or maximially allowed (e.g., estimation uncertainty).</p></dd>
-
-
 <dt id="arg-summary-function">summary_function<a class="anchor" aria-label="anchor" href="#arg-summary-function"></a></dt>
-<dd><p>When x' attribute <code>summarized</code> is FALSE, x is
-summarized across sims using this function.</p></dd>
+<dd><p>If <code>x</code> is an object of class <code>power_array</code>
+where attribute <code>summarized</code> is FALSE (and individual iterations are
+stored in dimension <code>iter</code>, the iterations dimension is aggregated by
+<code>summary_fun</code>. Otherwise ignored.</p></dd>
 
 
 <dt id="arg-target-levels">target_levels<a class="anchor" aria-label="anchor" href="#arg-target-levels"></a></dt>
@@ -215,7 +218,7 @@ drawn on the x-axis.</p>
 <p>One may also search not the minimum, as in the case of sample
 size, but the maximum, e.g., the highest sd at which a certain power may
 still be achieved. In this case, the <code>par_to_search</code> is sd, and
-<code>find_min = FALSE</code>.</p>
+<code>find_lowest = FALSE</code>.</p>
 </div>
 
 <div class="section">
@@ -224,9 +227,9 @@ still be achieved. In this case, the <code>par_to_search</code> is sd, and
 
 <p>In the standard case of power, higher is better, so you search for a
 <em>minimal</em> level of power. One may however also aim at, e.g., a <em>maximal</em>
-width of a confidence interval. For this purpose, set <code>minimal_target</code>
-to <code>FALSE</code>. See Example for more details about <code>find_min</code> and
-<code>minimal_target</code>.</p>
+width of a confidence interval. For this purpose, set <code>target_at_least</code>
+to <code>FALSE</code>. See Example for more details about <code>find_lowest</code> and
+<code>target_at_least</code>.</p>
 </div>
 
 
@@ -272,7 +275,7 @@ interdependencies of 3 parameters.</p></div>
 <span class="r-in"><span><span class="fu">PowerPlot</span><span class="op">(</span><span class="va">power_array</span>,</span></span>
 <span class="r-in"><span>          slicer <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>sd <span class="op">=</span> <span class="fl">.7</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>          example <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>delta <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">.7</span>, <span class="fl">.9</span><span class="op">)</span><span class="op">)</span>, <span class="co"># two examples</span></span></span>
-<span class="r-in"><span>          target <span class="op">=</span> <span class="fl">.9</span> <span class="co"># 90% power</span></span></span>
+<span class="r-in"><span>          target_value <span class="op">=</span> <span class="fl">.9</span> <span class="co"># 90% power</span></span></span>
 <span class="r-in"><span>          <span class="op">)</span></span></span>
 <span class="r-plt img"><img src="PowerPlot-1.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span></span></span>
@@ -284,12 +287,12 @@ interdependencies of 3 parameters.</p></div>
 <span class="r-in"><span>                         delta <span class="op">=</span> <span class="st">'Effect Size'</span>,</span></span>
 <span class="r-in"><span>                         sd <span class="op">=</span> <span class="st">'Standard Deviation'</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>          target_levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">.8</span>, <span class="fl">.9</span><span class="op">)</span>, <span class="co"># draw fewer power isolines</span></span></span>
-<span class="r-in"><span>          target <span class="op">=</span> <span class="cn">NA</span> <span class="co"># no specific power target (no line thicker)</span></span></span>
+<span class="r-in"><span>          target_value <span class="op">=</span> <span class="cn">NA</span> <span class="co"># no specific power target (no line thicker)</span></span></span>
 <span class="r-in"><span>          <span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="AddExample.html">AddExample</a></span><span class="op">(</span><span class="va">power_array</span>,</span></span>
 <span class="r-in"><span>           slicer <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>sd <span class="op">=</span> <span class="fl">.7</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>           example <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>delta <span class="op">=</span> <span class="fl">.9</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>           target <span class="op">=</span> <span class="fl">.9</span>,</span></span>
+<span class="r-in"><span>           target_value <span class="op">=</span> <span class="fl">.9</span>,</span></span>
 <span class="r-in"><span>           col <span class="op">=</span> <span class="st">'Orange'</span>, lwd <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="PowerPlot-2.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span></span></span>
@@ -316,17 +319,17 @@ interdependencies of 3 parameters.</p></div>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">PowerPlot</span><span class="op">(</span><span class="va">power_array</span>,</span></span>
 <span class="r-in"><span>          par_to_search <span class="op">=</span> <span class="st">'sd'</span>,</span></span>
-<span class="r-in"><span>          find_min <span class="op">=</span> <span class="cn">FALSE</span>,</span></span>
+<span class="r-in"><span>          find_lowest <span class="op">=</span> <span class="cn">FALSE</span>,</span></span>
 <span class="r-in"><span>          slicer <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">30</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## Adding an example works the same: If we expect a delta of 1, and the n =</span></span></span>
 <span class="r-in"><span><span class="co">## 30, what is the maximal SD we can have still yielding 90% power?</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu"><a href="AddExample.html">AddExample</a></span><span class="op">(</span><span class="va">power_array</span>,</span></span>
-<span class="r-in"><span>           find_min <span class="op">=</span> <span class="cn">FALSE</span>,</span></span>
+<span class="r-in"><span>           find_lowest <span class="op">=</span> <span class="cn">FALSE</span>,</span></span>
 <span class="r-in"><span>           slicer <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">30</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>           example <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>delta <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>           target <span class="op">=</span> <span class="fl">.9</span><span class="op">)</span></span></span>
+<span class="r-in"><span>           target_value <span class="op">=</span> <span class="fl">.9</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="PowerPlot-4.png" alt="" width="700" height="433"></span>
 </code></pre></div>
     </div>

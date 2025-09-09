@@ -72,9 +72,10 @@ is for evaluating statistical power at a grid of assumed parameters.</p>
 
 
 <dl><dt id="arg-pars">pars<a class="anchor" aria-label="anchor" href="#arg-pars"></a></dt>
-<dd><p>A list where each element is a vector of values named as one of
-the arguments of <code>fun</code>. <code>fun</code> is applied to the full grid crossing
-the values of each of these parameters.</p></dd>
+<dd><p>A list where each element is a numeric vector of values named as
+one of the arguments of <code>fun</code>. <code>fun</code> is applied to the full grid
+crossing the values of each of these parameters. If you aim to study other
+than numeric parameters, see details.</p></dd>
 
 
 <dt id="arg-fun">fun<a class="anchor" aria-label="anchor" href="#arg-fun"></a></dt>
@@ -103,7 +104,7 @@ given) are to be summarized by <code>summary_function</code>.</p></dd>
 
 <dt id="arg-summary-function">summary_function<a class="anchor" aria-label="anchor" href="#arg-summary-function"></a></dt>
 <dd><p>A function to be applied to aggregate across
-simulations. Defaults to <code>mean</code>, ignored when <code>keep_sims</code> ==
+iterations. Defaults to <code>mean</code>, ignored when <code>keep_iters</code> ==
 TRUE or when <code>is.na(n_iter)</code>.</p></dd>
 
 
@@ -152,16 +153,28 @@ return vector (if given).</p>
 </div>
 
 <div class="section">
+<h3 id="non-numeric-parameters">Non-numeric parameters<a class="anchor" aria-label="anchor" href="#non-numeric-parameters"></a></h3>
+
+
+<p>You may want to study the effect of non-numeric parameters. This option is
+not supported for the argument <code>pars</code>, since the essential powergrid
+functions <code>link{Example}</code>, <code>link{PowerPlot}</code>, and
+<code>link{GridPlot}</code> need a direction to search. Nonetheless, you can study
+non-numeric parameters by having function <code>fun</code> returning multiple values,
+as described above.</p>
+</div>
+
+<div class="section">
 <h3 id="evaluating-a-function-over-iterations">Evaluating a function over iterations<a class="anchor" aria-label="anchor" href="#evaluating-a-function-over-iterations"></a></h3>
 
 
 <p>If <code>n_iter</code> is not NA (the default) but an integer, function <code>fun</code>
-is evaluated n_iter times. This will add an additional dimension 'sim' to
+is evaluated n_iter times. This will add an additional dimension 'iter' to
 the resulting array of class <code>power_array</code>. If your simulation is heavy, you
 may wanna set <code>parallel = TRUE</code> and choose the <code>n_cores</code>, invoking
 parallel computing using t<code>future::future_replicate</code>.</p>
 <p>You may summarize the object with individual iterations across these
-iterations using function <code><a href="SummarizeSims.html">SummarizeSims</a></code>. Note that both
+iterations using function <code><a href="SummarizeIterations.html">SummarizeIterations</a></code>. Note that both
 summarized and non-summarized output of <code>PowerGrid</code> have class
 <code>power_array</code>. The summary status is saved in the attributes. This allows
 the <code>powergrid</code> utilities <code><a href="Example.html">Example</a></code>, <code><a href="PowerPlot.html">PowerPlot</a></code>,
@@ -188,7 +201,7 @@ attr(&lt;your_power_array&gt;, which = 'random.seed')[[2]]</code>, etc.</p>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
     <div class="dont-index"><p><code><a href="Refine.html">Refine()</a></code> for adding iterations or parameter combinations to
-exsiting <code>power_array</code> object, <code><a href="SummarizeSims.html">SummarizeSims()</a></code> for summarizing a
+exsiting <code>power_array</code> object, <code><a href="SummarizeIterations.html">SummarizeIterations()</a></code> for summarizing a
 <code>power_array</code> object containing individual iterations, <code><a href="ArraySlicer.html">ArraySlicer()</a></code> and
 <code>[.power_array</code> for reducing the dimenstiona of a <code>power_array</code> object,
 correctly updating its attributes.</p></div>
@@ -237,23 +250,23 @@ correctly updating its attributes.</p></div>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## get required sample size n, when delta is .7, sd = .5, for achieving a</span></span></span>
 <span class="r-in"><span><span class="co">## power of 90%:</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="Example.html">Example</a></span><span class="op">(</span><span class="va">powarr</span>, example <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>delta <span class="op">=</span> <span class="fl">.7</span>, sd <span class="op">=</span> <span class="fl">.5</span><span class="op">)</span>, target <span class="op">=</span> <span class="fl">.9</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="Example.html">Example</a></span><span class="op">(</span><span class="va">powarr</span>, example <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>delta <span class="op">=</span> <span class="fl">.7</span>, sd <span class="op">=</span> <span class="fl">.5</span><span class="op">)</span>, target_value <span class="op">=</span> <span class="fl">.9</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ================================================</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> To achieve the target of at least 0.9 assuming</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> To achieve the target value of at most 0.9 assuming</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> delta = 0.7</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> sd = 0.5,</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> the minimal required n = 24</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ------------------------------------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Description: Method "step" was used to find the</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> lowest n in the searched grid that yields a</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> target (typically power) of at least 0.9.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> target_value (typically power) of at least 0.9.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ================================================</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## Draw a figure illustrating how the required n depends on delta (given an</span></span></span>
 <span class="r-in"><span><span class="co">## sd of .7):</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="PowerPlot.html">PowerPlot</a></span><span class="op">(</span><span class="va">powarr</span>,</span></span>
 <span class="r-in"><span>          slicer <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>sd <span class="op">=</span> <span class="fl">.7</span><span class="op">)</span>, <span class="co"># slice out the plane with sd = .7</span></span></span>
-<span class="r-in"><span>          target <span class="op">=</span> <span class="fl">.9</span>, <span class="co"># set target power to 90%, defining the thick line</span></span></span>
+<span class="r-in"><span>          target_value <span class="op">=</span> <span class="fl">.9</span>, <span class="co"># set target power to 90%, defining the thick line</span></span></span>
 <span class="r-in"><span>          example <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>delta <span class="op">=</span> <span class="fl">.7</span><span class="op">)</span> <span class="co"># Highlight the example with arrow</span></span></span>
 <span class="r-in"><span>          <span class="op">)</span></span></span>
 <span class="r-plt img"><img src="PowerGrid-1.png" alt="" width="700" height="433"></span>
@@ -336,7 +349,7 @@ correctly updating its attributes.</p></div>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">powarr_no_summary</span> <span class="op">=</span> <span class="fu">PowerGrid</span><span class="op">(</span>pars <span class="op">=</span> <span class="va">sse_pars</span>, fun <span class="op">=</span> <span class="va">PowFun</span>,</span></span>
 <span class="r-in"><span>                                    n_iter <span class="op">=</span> <span class="va">n_iter</span> , summarize <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/dimnames.html" class="external-link">dimnames</a></span><span class="op">(</span><span class="va">powarr_no_summary</span><span class="op">)</span> <span class="co"># additional dimension "sim"</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/dimnames.html" class="external-link">dimnames</a></span><span class="op">(</span><span class="va">powarr_no_summary</span><span class="op">)</span> <span class="co"># additional dimension "iter"</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $n</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [1] "10" "15" "20" "25" "30" "35" "40" "45" "50" "55" "60"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -346,7 +359,7 @@ correctly updating its attributes.</p></div>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $sd</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "0.5" "0.7" "0.9" "1.1" "1.3" "1.5"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $sim</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $iter</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [1] "1"  "2"  "3"  "4"  "5"  "6"  "7"  "8"  "9"  "10" "11" "12" "13" "14" "15"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [16] "16" "17" "18" "19" "20"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -359,12 +372,12 @@ correctly updating its attributes.</p></div>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   delta 0.5, 0.7, 0.9, 1.1, 1.3, 1.5</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      sd 0.5, 0.7, 0.9, 1.1, 1.3, 1.5</span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co">## To summarize this object containing iterations, use the SummarizeSims</span></span></span>
+<span class="r-in"><span><span class="co">## To summarize this object containing iterations, use the SummarizeIterations</span></span></span>
 <span class="r-in"><span><span class="co">## function. Among other things, this assures that attributes relevant for</span></span></span>
 <span class="r-in"><span><span class="co">## further use in powergrid's functionality are kept intact.</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">powarr_summarized</span> <span class="op">=</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="SummarizeSims.html">SummarizeSims</a></span><span class="op">(</span><span class="va">powarr_no_summary</span>, summary_function <span class="op">=</span> <span class="va">mean</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="SummarizeIterations.html">SummarizeIterations</a></span><span class="op">(</span><span class="va">powarr_no_summary</span>, summary_function <span class="op">=</span> <span class="va">mean</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/dimnames.html" class="external-link">dimnames</a></span><span class="op">(</span><span class="va">powarr_summarized</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $n</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [1] "10" "15" "20" "25" "30" "35" "40" "45" "50" "55" "60"</span>
@@ -391,26 +404,26 @@ correctly updating its attributes.</p></div>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## Note that Example and Powerplot detect when a `power_array` object is not</span></span></span>
 <span class="r-in"><span><span class="co">#summarized, and behave sensibly with a warning:</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="Example.html">Example</a></span><span class="op">(</span><span class="va">powarr_no_summary</span>, example <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>delta <span class="op">=</span> <span class="fl">.7</span>, sd <span class="op">=</span> <span class="fl">.5</span><span class="op">)</span>, target <span class="op">=</span> <span class="fl">.9</span><span class="op">)</span></span></span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>The object 'x' you supplied to Example() contains individual iterations. For finding an example, these were automatically summarized across simulations using the function given in argument `summary_function`.</span>
+<span class="r-in"><span><span class="fu"><a href="Example.html">Example</a></span><span class="op">(</span><span class="va">powarr_no_summary</span>, example <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>delta <span class="op">=</span> <span class="fl">.7</span>, sd <span class="op">=</span> <span class="fl">.5</span><span class="op">)</span>, target_value <span class="op">=</span> <span class="fl">.9</span><span class="op">)</span></span></span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>The object 'x' you supplied to Example() contains individual iterations. For finding an example, these were automatically summarized across iterations using the function given in argument `summary_function`.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ================================================</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> To achieve the target of at least 0.9 assuming</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> To achieve the target value of at most 0.9 assuming</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> delta = 0.7</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> sd = 0.5,</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> the minimal required n = 30</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ------------------------------------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Description: Method "step" was used to find the</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> lowest n in the searched grid that yields a</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> target (typically power) of at least 0.9.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> target_value (typically power) of at least 0.9.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ================================================</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu"><a href="PowerPlot.html">PowerPlot</a></span><span class="op">(</span><span class="va">powarr_no_summary</span>,</span></span>
 <span class="r-in"><span>          slicer <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>sd <span class="op">=</span> <span class="fl">.7</span><span class="op">)</span>, <span class="co"># slice out the plane with sd = .7</span></span></span>
-<span class="r-in"><span>          target <span class="op">=</span> <span class="fl">.9</span>, <span class="co"># set target power to 90%, defining the thick line</span></span></span>
+<span class="r-in"><span>          target_value <span class="op">=</span> <span class="fl">.9</span>, <span class="co"># set target power to 90%, defining the thick line</span></span></span>
 <span class="r-in"><span>          example <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>delta <span class="op">=</span> <span class="fl">.7</span><span class="op">)</span> <span class="co"># Highlight the example with arrow</span></span></span>
 <span class="r-in"><span>          <span class="op">)</span></span></span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>The object 'x' you supplied to PowerPlot contains individual iterations. For sensible plotting, these were automatically summarized across simulations using the function given in argument `summary_function`.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>The object 'x' you supplied to Example() contains individual iterations. For finding an example, these were automatically summarized across simulations using the function given in argument `summary_function`.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>The object 'x' you supplied to PowerPlot contains individual iterations. For sensible plotting, these were automatically summarized across iterations using the function given in argument `summary_function`.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>The object 'x' you supplied to Example() contains individual iterations. For finding an example, these were automatically summarized across iterations using the function given in argument `summary_function`.</span>
 <span class="r-plt img"><img src="PowerGrid-2.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">#=======================================================</span></span></span>
@@ -463,9 +476,9 @@ correctly updating its attributes.</p></div>
 <span class="r-in"><span><span class="co">## note that you need to tell Example and other powergrid functions, which</span></span></span>
 <span class="r-in"><span><span class="co">## of the outputs you are interested in:</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="Example.html">Example</a></span><span class="op">(</span><span class="va">powarr_two_returns</span>, example <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>delta <span class="op">=</span> <span class="fl">.7</span>, sd <span class="op">=</span> <span class="fl">.5</span>, fun_out <span class="op">=</span> <span class="st">'p1'</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>        target <span class="op">=</span> <span class="fl">.9</span><span class="op">)</span></span></span>
+<span class="r-in"><span>        target_value <span class="op">=</span> <span class="fl">.9</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ================================================</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> To achieve the target of at least 0.9 assuming</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> To achieve the target value of at most 0.9 assuming</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> delta = 0.7</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> sd = 0.5</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> fun_out = p1,</span>
@@ -473,13 +486,13 @@ correctly updating its attributes.</p></div>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ------------------------------------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Description: Method "step" was used to find the</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> lowest n in the searched grid that yields a</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> target (typically power) of at least 0.9.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> target_value (typically power) of at least 0.9.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ================================================</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu"><a href="PowerPlot.html">PowerPlot</a></span><span class="op">(</span><span class="va">powarr_two_returns</span>,</span></span>
 <span class="r-in"><span>          slicer <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>sd <span class="op">=</span> <span class="fl">.7</span>, fun_out <span class="op">=</span> <span class="st">'p1'</span><span class="op">)</span>, <span class="co"># slice out the plane with the</span></span></span>
 <span class="r-in"><span>                                                  <span class="co"># output of interest</span></span></span>
-<span class="r-in"><span>          target <span class="op">=</span> <span class="fl">.9</span>, <span class="co"># set target power to 90%, defining the thick line</span></span></span>
+<span class="r-in"><span>          target_value <span class="op">=</span> <span class="fl">.9</span>, <span class="co"># set target power to 90%, defining the thick line</span></span></span>
 <span class="r-in"><span>          example <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>delta <span class="op">=</span> <span class="fl">.7</span><span class="op">)</span> <span class="co"># Highlight the example with arrow</span></span></span>
 <span class="r-in"><span>          <span class="op">)</span></span></span>
 <span class="r-plt img"><img src="PowerGrid-3.png" alt="" width="700" height="433"></span>
