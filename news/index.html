@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">powergrid</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -34,10 +34,45 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.1.0" id="powergrid-010">powergrid 0.1.0<a class="anchor" aria-label="anchor" href="#powergrid-010"></a></h2>
-<ul><li>Initial beta release. Use <code>remotes::install_github("SwissClinicalTrialOrganisation/powergrid", ref = "v0.1.0")</code> to install that specific release.</li>
+<h2 class="pkg-version" data-toc-text="0.2.0" id="powergrid-020">powergrid 0.2.0<a class="anchor" aria-label="anchor" href="#powergrid-020"></a></h2>
+<p>This is a large, but still minor update. Some arguments have been renames and one function has a new name. Vignette has been improved greatly, and all documentation has been updated and extended. Cross-referencing in Documentation is * This is a Beta release. Use <code>remotes::install_github("SwissClinicalTrialOrganisation/powergrid", ref =   "v0.2.0")</code> to install this release.</p>
+<div class="section level3">
+<h3 id="breaking-changes-0-2-0">Breaking Changes<a class="anchor" aria-label="anchor" href="#breaking-changes-0-2-0"></a></h3>
+<ul><li>
+<code><a href="../reference/SummarizeIterations.html">SummarizeIterations()</a></code> replaces the older <code>SummarizeSims</code>. Iterations may, but must not be simulations. Language is consistency adjusted throughout the package. In documentation, as well as in attributes of <code>power_array</code> objects, “sim” is, where relevant, replaced by “iter”.</li>
+<li>Central argument names have changed in Example, PowerPlot, GridPlot, AddExample and FindTarget:
+<ul><li>
+<code>find_lowest</code> replaces <code>find_min</code>
+</li>
+<li>
+<code>target_at_least</code> replaces <code>minimal_target</code>
+</li>
+<li>
+<code>target_value</code> replaces <code>target</code>
+</li>
+</ul></li>
+<li>Compatibility with sse package was omitted. see is offline and is not updated. Keeping all working with eventual sse output was too error-prone for little use.</li>
 </ul></div>
-  </main></div>
+<div class="section level3">
+<h3 id="improvements-user-level-0-2-0">Improvements user level<a class="anchor" aria-label="anchor" href="#improvements-user-level-0-2-0"></a></h3>
+<ul><li>All help files were improved</li>
+<li>Vignette was extended and improved</li>
+<li>Tests included! (thanks Richard!)</li>
+<li>Input handling of all functions and respective errors and warnings was improved.</li>
+<li>PowerPlot and Example naturally deal with one-dimensional <code>power_array</code> object. PowerPlot has a special figure to represent the one-dimensional situation.</li>
+</ul></div>
+<div class="section level3">
+<h3 id="improvements-under-the-hood-0-2-0">Improvements under the hood<a class="anchor" aria-label="anchor" href="#improvements-under-the-hood-0-2-0"></a></h3>
+<ul><li>The plotting of examples inside <code><a href="../reference/PowerPlot.html">PowerPlot()</a></code> is now handled by <code>AddExample</code>.</li>
+<li>Summarizing across dimenstions inside <code>power_grid</code> is now performed by <code><a href="../reference/SummarizeIterations.html">SummarizeIterations()</a></code> (Thanks Richard!)</li>
+</ul></div>
+<div class="section level3">
+<h3 id="bug-fixes-0-2-0">bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-2-0"></a></h3>
+<ul><li>A multitude of bugs were fixed</li>
+</ul></div>
+</div>
+  </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
+    </nav></aside></div>
 
 
     <footer><div class="pkgdown-footer-left">
