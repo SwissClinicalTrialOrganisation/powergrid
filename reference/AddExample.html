@@ -93,21 +93,21 @@ the arrow starts. To be sure of a sensible result, use the argument
 <dt id="arg-slicer">slicer<a class="anchor" aria-label="anchor" href="#arg-slicer"></a></dt>
 <dd><p>A list, internally passed on to <code><a href="ArraySlicer.html">ArraySlicer</a></code> to
 cut out a (multidimensional) slice from x. You can achieve the same by
-appending the vector (s) in <code>slicer</code> to argument <code>example</code>. However, to
-make sure the result of AddExample is consistent with a figure previously
-created using PowerPlot or GridPlot, you may copy the arguments <code>slicer</code>
-and <code>example</code> given to those functions to AddExample.</p></dd>
+appending "slicing" inside argument <code>example</code>. However, to assure that the
+result of AddExample is consistent with the figure it draws on top of
+(PowerPlot or GridPlot), copy the arguments <code>x</code> and <code>slicer</code> given to
+PowerPlot or GridPlot to AddTarget.</p></dd>
 
 
 <dt id="arg-example">example<a class="anchor" aria-label="anchor" href="#arg-example"></a></dt>
 <dd><p>A list, defining at which value (list element value) of which
 parameter(s) (list element name(s)) the example is drawn for a power of
-<code>target_value</code>. You may supply par vector(s) longer than 1 for multiple
-examples. If <code>example</code> contains multiple parameters to define the example,
-all must contain a vector of the same length. Be aware that the first
-element of <code>example</code> defines the parameter x-axis, so this function is not
-fool proof. See argument <code>slicer</code> above. If x has only one dimention, the
-example needs not be defined.</p></dd>
+<code>target_value</code>. You may supply par vector(s) longer than 1 for
+multiple examples. If <code>example</code> contains multiple parameters to define the
+example, all must contain a vector of the same length. Be aware that the
+first element of <code>example</code> defines the parameter x-axis, so this function
+is not fool proof. See argument <code>slicer</code> above. If x has only one
+dimention, the example needs not be defined.</p></dd>
 
 
 <dt id="arg-col">col<a class="anchor" aria-label="anchor" href="#arg-col"></a></dt>

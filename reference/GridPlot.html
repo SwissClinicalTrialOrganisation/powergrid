@@ -73,8 +73,7 @@ parameters.</p>
 
 
 <dl><dt id="arg-x">x<a class="anchor" aria-label="anchor" href="#arg-x"></a></dt>
-<dd><p>An object of class "power_array" (from <code>powergrid</code>), "power" (from
-sse::powEx) or "powCalc" (from sse::powCalc).</p></dd>
+<dd><p>An object of class "power_array" (from <code>powergrid</code>).</p></dd>
 
 
 <dt id="arg-slicer">slicer<a class="anchor" aria-label="anchor" href="#arg-slicer"></a></dt>
@@ -86,11 +85,11 @@ parameter (the list element name) the slice should be cut.</p></dd>
 
 <dt id="arg-y-par">y_par<a class="anchor" aria-label="anchor" href="#arg-y-par"></a></dt>
 <dd><p>Which parameter is searched for the minimum (or maximum if
-find_lowest == FALSE) yielding the target value; and shown on the y-axis. If
-NULL, <code>y_par</code> is set to the first, <code>x_par</code> to the second, and
-<code>l_par</code> to the third dimension name of 3-dimensional array
-<code>x</code>. If you want another than the first dimension as <code>y_par</code>, you
-need to see <code>y_par</code>, <code>x_par</code>, and <code>l_par</code> explicitly.</p></dd>
+find_lowest == FALSE) yielding the target value; and shown on the
+y-axis. If NULL, <code>y_par</code> is set to the first, <code>x_par</code> to the
+second, and <code>l_par</code> to the third dimension name of 3-dimensional
+array <code>x</code>. If you want another than the first dimension as <code>y_par</code>,
+you need to see <code>y_par</code>, <code>x_par</code>, and <code>l_par</code> explicitly.</p></dd>
 
 
 <dt id="arg-x-par-l-par">x_par, l_par<a class="anchor" aria-label="anchor" href="#arg-x-par-l-par"></a></dt>
@@ -108,8 +107,8 @@ which the example is drawn.</p></dd>
 
 
 <dt id="arg-find-lowest">find_lowest<a class="anchor" aria-label="anchor" href="#arg-find-lowest"></a></dt>
-<dd><p>Logical, indicating whether the example should be found that
-minimizes an assumption (e.g., minimal required n) to achieve the
+<dd><p>Logical, indicating whether the example should be found
+that minimizes an assumption (e.g., minimal required n) to achieve the
 <code>target_value</code> or an example that maximizes this assumption (e.g.,
 maximally allowed SD).</p></dd>
 
@@ -132,9 +131,9 @@ uncertainty).</p></dd>
 
 <dt id="arg-summary-function">summary_function<a class="anchor" aria-label="anchor" href="#arg-summary-function"></a></dt>
 <dd><p>If <code>x</code> is an object of class <code>power_array</code>
-where attribute <code>summarized</code> is FALSE (and individual iterations are
-stored in dimension <code>iter</code>, the iterations dimension is aggregated by
-<code>summary_fun</code>. Otherwise ignored.</p></dd>
+where attribute <code>summarized</code> is FALSE (indicating individual
+iterations are stored in dimension <code>iter</code>, the iterations dimension
+is aggregated by <code>summary_fun</code>. Otherwise ignored.</p></dd>
 
 
 <dt id="arg-col">col<a class="anchor" aria-label="anchor" href="#arg-col"></a></dt>
@@ -179,6 +178,9 @@ parameter represented by each line.</p>
 <p>The use of this function is, however, not limited to finding a minimum n to
 achieve at least a certain power. See help of <code>Example</code> to understand the
 use of <code>target_at_least</code> and <code>fin_min</code>.</p>
+<p>If the input to argument x (class <code>power_array</code>) contains iterations that
+are not summarized, it will be summarized by <code>summary_function</code> with default
+<code>mean</code>.</p>
 <p>Note that a line may stop in a corner of the plotting region, not reaching
 the margin. This is often correct behavior, when the <code>target_value</code>
 level is not reached anywhere in that corner of the parameter range. In case
