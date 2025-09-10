@@ -5,14 +5,14 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Tools for Power Analyis Using Simulations • powergrid</title>
+<title>Power Analyis Across a Grid of Assumptions • powergrid</title>
 <script src="deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
-<script src="deps/headroom-0.11.0/headroom.min.js"></script><script src="deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="deps/search-1.0.0/fuse.min.js"></script><script src="deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="Tools for Power Analyis Using Simulations">
-<meta name="description" content="Package powergrid allows users to easily evaluate a function across a grid of input parameters. At each crossing in the grid, a function may be evaluated once, or many times for simulation. Parallel computing is available. Utilities are aimed at performing analyses of power and sample size, allowing for easy search of minimum n (or min/max of any other parameter) to achieve a desired a minimal level of power (or maximum of any other objective). Also, plotting functions are included that present the dependency of n and power in relation to further parameters.">
-<meta property="og:description" content="Package powergrid allows users to easily evaluate a function across a grid of input parameters. At each crossing in the grid, a function may be evaluated once, or many times for simulation. Parallel computing is available. Utilities are aimed at performing analyses of power and sample size, allowing for easy search of minimum n (or min/max of any other parameter) to achieve a desired a minimal level of power (or maximum of any other objective). Also, plotting functions are included that present the dependency of n and power in relation to further parameters.">
+<script src="deps/headroom-0.11.0/headroom.min.js"></script><script src="deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="deps/search-1.0.0/fuse.min.js"></script><script src="deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="Power Analyis Across a Grid of Assumptions">
+<meta name="description" content="Evaluate a function across a grid of parameters. The function may be evaluated once, or many times for simulation. Parallel computing is facilitated. Utilities aim at performing analyses of power and sample size, allowing for easy search of minimum n (or min/max of any other parameter) to achieve a desired a minimal level of power (or maximum of any other objective). Plotting functions are included that present the dependency of n and power in relation to further parameters.">
+<meta property="og:description" content="Evaluate a function across a grid of parameters. The function may be evaluated once, or many times for simulation. Parallel computing is facilitated. Utilities aim at performing analyses of power and sample size, allowing for easy search of minimum n (or min/max of any other parameter) to achieve a desired a minimal level of power (or maximum of any other objective). Plotting functions are included that present the dependency of n and power in relation to further parameters.">
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
@@ -48,15 +48,16 @@
 </nav><div class="container template-home">
 <div class="row">
   <main id="main" class="col-md-9"><div class="section level1">
-<div class="page-header"><h1 id="powergrid">powergrid<a class="anchor" aria-label="anchor" href="#powergrid"></a>
+<div class="page-header"><h1 id="powergrid-">powergrid <img src="reference/figures/powergrid_color_floor.png" align="right" width="200"><a class="anchor" aria-label="anchor" href="#powergrid-"></a>
 </h1></div>
-<p>Powergrid is a package developed by <a href="https://www.gillesdutilh.com" class="external-link">Gilles Dutilh</a>, partly funded by a <a href="https://www.sctoplatforms.ch/en/scto-platforms/statistics-methodology-5.html" class="external-link">Statistical programming grant</a> from the SCTO.</p>
-<p>The package is intended to allow users to easily evaluate a function across a grid of input parameters. The package’ utilities are aimed at performing analyses of <em>power and sample size</em>, allowing for easy search of minimum n (or min/max of any other parameter) to achieve a desired level of power (or any other objective). Also, plotting functions are included that present the dependency of n and power in relation to further parameters.</p>
-<p>Note that the package is currently in (a late stage of) development. Development may be followed at <a href="https://www.github.com/gillesdutilh/powergrid" class="external-link">Gilles’ github</a>. You are encouraged to use the package released here on SCTO’s github, currently version v0.1.0. For replicability, make sure you explicitly refer to the current release when loading the package in your code:</p>
+<p>The powergrid package is intended to allow users to easily evaluate a function across a grid of input parameters. The utilities in the package are aimed at performing analyses of <em>power and sample size</em>, allowing for easy search of minimum n (or min/max of any other parameter) to achieve a minimal level of power (or a maximum of any value). Also, plotting functions are included that present the dependency of n and power in relation to further parameters.</p>
+<p>Note that the package is currently in a late stage of development. You are encouraged to use the package released here on SCTO’s github, currently version v0.2.0. For replicability, make sure you explicitly refer to the current release when loading the package in your code:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"SwissClinicalTrialOrganisation/powergrid"</span>,</span>
+<span>                         ref <span class="op">=</span> <span class="st">"v0.2.0"</span>,</span>
 <span>                         build_vignette <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/SwissClinicalTrialOrganisation/powergrid" class="external-link">powergrid</a></span><span class="op">)</span></span></code></pre></div>
+<p>Powergrid is a package mainly developed by <a href="https://www.gillesdutilh.com/statistics" class="external-link">Gilles Dutilh</a>, partly funded by a <a href="https://www.sctoplatforms.ch/en/scto-platforms/statistics-methodology-5.html" class="external-link">Statistical programming grant</a> from the SCTO. Valuable contributions have been made by <a href="https://dkf.unibas.ch/de/team-data-analysis-statistik/" class="external-link">Richard Allen</a> of the statistics team at DKF basel.</p>
 <div class="section level2">
 <h2 id="example-usage">Example usage<a class="anchor" aria-label="anchor" href="#example-usage"></a>
 </h2>
@@ -81,7 +82,7 @@
 <p>Display the results:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/PowerPlot.html">PowerPlot</a></span><span class="op">(</span><span class="va">power</span><span class="op">)</span></span></code></pre></div>
-<p><img src="reference/figures/readmeplot-1.png"><!-- --></p>
+<p><img src="README-basic%20PowerPlot-1.png" style="display: block; margin: auto;"></p>
 <p>See the vignette for more details on how to use the package and its functions.</p>
 <p>Please don’t hesitate making an issue above or contributing through a pull request. You may also contact Gilles by <a href="mailto:info@gillesdutilh.com">email</a>.</p>
 </div>
@@ -111,7 +112,7 @@
 <div class="developers">
 <h2 data-toc-skip>Developers</h2>
 <ul class="list-unstyled">
-<li>Gilles Dutilh <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0002-6719-2508" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a>  </li>
+<li>Gilles Dutilh <br><small class="roles"> Author, maintainer, copyright holder </small> <a href="https://orcid.org/0000-0002-6719-2508" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a>  </li>
 </ul>
 </div>
 

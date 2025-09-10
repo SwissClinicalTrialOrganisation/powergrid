@@ -76,6 +76,72 @@ iterations saved.</p>
     <p>Gilles Dutilh</p>
     </div>
 
+    <div class="section level2">
+    <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co">## iterative sse example</span></span></span>
+<span class="r-in"><span><span class="va">sse_pars</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  n <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span>from <span class="op">=</span> <span class="fl">10</span>, to <span class="op">=</span> <span class="fl">60</span>, by <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  delta <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span>from <span class="op">=</span> <span class="fl">0.5</span>, to <span class="op">=</span> <span class="fl">1.5</span>, by <span class="op">=</span> <span class="fl">0.2</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  sd <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">.5</span>, <span class="fl">1.5</span>, <span class="fl">.2</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Define a function that results in TRUE or FALSE for a successful or</span></span></span>
+<span class="r-in"><span><span class="co">## non-successful (5% significant) simulated trial:</span></span></span>
+<span class="r-in"><span><span class="va">PowFun</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">n</span>, <span class="va">delta</span>, <span class="va">sd</span><span class="op">)</span><span class="op">{</span></span></span>
+<span class="r-in"><span>  <span class="va">x1</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span>n <span class="op">=</span> <span class="va">n</span><span class="op">/</span><span class="fl">2</span>, sd <span class="op">=</span> <span class="va">sd</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="va">x2</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span>n <span class="op">=</span> <span class="va">n</span><span class="op">/</span><span class="fl">2</span>, mean <span class="op">=</span> <span class="va">delta</span>, sd <span class="op">=</span> <span class="va">sd</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/stats/t.test.html" class="external-link">t.test</a></span><span class="op">(</span><span class="va">x1</span>, <span class="va">x2</span><span class="op">)</span><span class="op">$</span><span class="va">p.value</span> <span class="op">&lt;</span> <span class="fl">.05</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">n_iter</span> <span class="op">=</span> <span class="fl">20</span></span></span>
+<span class="r-in"><span><span class="va">powarr</span> <span class="op">=</span> <span class="fu"><a href="PowerGrid.html">PowerGrid</a></span><span class="op">(</span>pars <span class="op">=</span> <span class="va">sse_pars</span>, fun <span class="op">=</span> <span class="va">PowFun</span>,</span></span>
+<span class="r-in"><span>                        n_iter <span class="op">=</span> <span class="va">n_iter</span>, summarize <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/dimnames.html" class="external-link">dimnames</a></span><span class="op">(</span><span class="va">powarr</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $n</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] "10" "15" "20" "25" "30" "35" "40" "45" "50" "55" "60"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $delta</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "0.5" "0.7" "0.9" "1.1" "1.3" "1.5"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $sd</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "0.5" "0.7" "0.9" "1.1" "1.3" "1.5"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $iter</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] "1"  "2"  "3"  "4"  "5"  "6"  "7"  "8"  "9"  "10" "11" "12" "13" "14" "15"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [16] "16" "17" "18" "19" "20"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">powarr</span><span class="op">)</span> <span class="co"># indicates that iterations were not</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  Object of class: power_array</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Containing output of 20 individual iterations.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  Range of values: [0, 1] </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  Evaluated at:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       n 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   delta 0.5, 0.7, 0.9, 1.1, 1.3, 1.5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      sd 0.5, 0.7, 0.9, 1.1, 1.3, 1.5</span>
+<span class="r-in"><span><span class="co">## now summarize</span></span></span>
+<span class="r-in"><span><span class="va">powarr_summarized</span> <span class="op">=</span> <span class="fu">SummarizeIterations</span><span class="op">(</span><span class="va">powarr</span>, summary_function <span class="op">=</span> <span class="va">mean</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/dimnames.html" class="external-link">dimnames</a></span><span class="op">(</span><span class="va">powarr_summarized</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $n</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] "10" "15" "20" "25" "30" "35" "40" "45" "50" "55" "60"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $delta</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "0.5" "0.7" "0.9" "1.1" "1.3" "1.5"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $sd</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "0.5" "0.7" "0.9" "1.1" "1.3" "1.5"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">powarr_summarized</span><span class="op">)</span> <span class="co"># indicates that iterations are now summarized</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  Object of class: power_array</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Containing summary over 20 iterations,</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> summarized by function `mean` (for function</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> definition, see attribute `summary_function`).</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  Range of values: [0, 1] </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  Evaluated at:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       n 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   delta 0.5, 0.7, 0.9, 1.1, 1.3, 1.5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      sd 0.5, 0.7, 0.9, 1.1, 1.3, 1.5</span>
+</code></pre></div>
+    </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside></div>
 

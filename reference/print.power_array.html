@@ -66,6 +66,10 @@ its contents.</p>
 
 </dl></div>
     <div class="section level2">
+    <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
+    <p>Nothing</p>
+    </div>
+    <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
     <div class="dont-index"><p><code><a href="PowerGrid.html">PowerGrid</a></code></p></div>
     </div>
@@ -74,6 +78,63 @@ its contents.</p>
     <p>Gilles Dutilh</p>
     </div>
 
+    <div class="section level2">
+    <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co">## Define grid of assumptions to study:</span></span></span>
+<span class="r-in"><span><span class="va">sse_pars</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  n <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span>from <span class="op">=</span> <span class="fl">10</span>, to <span class="op">=</span> <span class="fl">50</span>, by <span class="op">=</span> <span class="fl">20</span><span class="op">)</span>,         <span class="co"># sample size</span></span></span>
+<span class="r-in"><span>  delta <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span>from <span class="op">=</span> <span class="fl">0.5</span>, to <span class="op">=</span> <span class="fl">1.5</span>, by <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span>, <span class="co"># effect size</span></span></span>
+<span class="r-in"><span>  sd <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">.1</span>, <span class="fl">1</span>, <span class="fl">.3</span><span class="op">)</span><span class="op">)</span>                        <span class="co"># standard deviation</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Define function that calculates power based on these assumptions:</span></span></span>
+<span class="r-in"><span><span class="va">PowFun</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">n</span>, <span class="va">delta</span>, <span class="va">sd</span><span class="op">)</span><span class="op">{</span></span></span>
+<span class="r-in"><span>  <span class="va">ptt</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/power.t.test.html" class="external-link">power.t.test</a></span><span class="op">(</span>n <span class="op">=</span> <span class="va">n</span><span class="op">/</span><span class="fl">2</span>, delta <span class="op">=</span> <span class="va">delta</span>, sd <span class="op">=</span> <span class="va">sd</span>,</span></span>
+<span class="r-in"><span>                     sig.level <span class="op">=</span> <span class="fl">0.05</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="kw"><a href="https://rdrr.io/r/base/function.html" class="external-link">return</a></span><span class="op">(</span><span class="va">ptt</span><span class="op">$</span><span class="va">power</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Evaluate at each combination of assumptions: </span></span></span>
+<span class="r-in"><span><span class="va">powarr</span> <span class="op">=</span> <span class="fu"><a href="PowerGrid.html">PowerGrid</a></span><span class="op">(</span>pars <span class="op">=</span> <span class="va">sse_pars</span>, fun <span class="op">=</span> <span class="va">PowFun</span>, n_iter <span class="op">=</span> <span class="cn">NA</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">powarr</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> , , sd = 0.1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     delta</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> n          0.5         1       1.5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   10 0.9999993 1.0000000 1.0000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   30 1.0000000 1.0000000 1.0000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   50 1.0000000 1.0000000 1.0000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> , , sd = 0.4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     delta</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> n          0.5         1       1.5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   10 0.4129428 0.9315752 0.9992276</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   30 0.9104815 0.9999982 1.0000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   50 0.9910928 1.0000000 1.0000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> , , sd = 0.7</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     delta</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> n          0.5         1       1.5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   10 0.1681223 0.5103278 0.8420422</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   30 0.4716852 0.9652339 0.9998914</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   50 0.6965931 0.9985937 1.0000000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> , , sd = 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     delta</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> n          0.5         1       1.5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   10 0.1038399 0.2859276 0.5493642</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   30 0.2619313 0.7529210 0.9774319</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   50 0.4099896 0.9337076 0.9993912</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Array of class `power_array` created using</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> PowerGrid.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  Resulting dimensions:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  n, delta, sd.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+</code></pre></div>
+    </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside></div>
 

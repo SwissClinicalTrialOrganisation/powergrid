@@ -99,8 +99,8 @@ should be cut out.</p></dd>
 <dt id="arg-example">example<a class="anchor" aria-label="anchor" href="#arg-example"></a></dt>
 <dd><p>If not NULL, a list of length one, defining at which value
 (list element value) of which parameter (list element name) the example is
-drawn for a power of <code>target_value</code>. You may supply a vector longer than 1
-for multiple examples.</p></dd>
+drawn for a power of <code>target_value</code>. You may supply a vector longer
+than 1 for multiple examples.</p></dd>
 
 
 <dt id="arg-find-lowest">find_lowest<a class="anchor" aria-label="anchor" href="#arg-find-lowest"></a></dt>
@@ -125,10 +125,10 @@ uncertainty).</p></dd>
 
 <dt id="arg-method">method<a class="anchor" aria-label="anchor" href="#arg-method"></a></dt>
 <dd><p>Method used for finding the required <code>par_to_search</code>
-needed to achieve <code>target_value</code>. Either <code>step</code>: walking in steps
-along <code>par_to_search</code> or <code>lm</code>: Interpolating assuming a linear
-relation between <code>par_to_search</code> and <code>(qnorm(x) + qnorm(1 -
-  0.05)) ^ 2</code>. The setting <code>lm</code> is inspired on the implementation in
+needed to achieve <code>target_value</code>. Either <code>step</code>: walking in
+steps along <code>par_to_search</code> or <code>lm</code>: Interpolating assuming a
+linear relation between <code>par_to_search</code> and <code>(qnorm(x) + qnorm(1
+  - 0.05)) ^ 2</code>. The setting <code>lm</code> is inspired on the implementation in
 the <code>sse</code> package by Thomas Fabbro.</p></dd>
 
 
@@ -191,7 +191,8 @@ internally. Most useful for zooming with xlim and ylim.</p></dd>
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>Nothing</p>
+    <p>A list containing the coordinate arguments x, y, and z, as passed to
+<code><a href="https://rdrr.io/r/graphics/image.html" class="external-link">image()</a></code> internally.</p>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
