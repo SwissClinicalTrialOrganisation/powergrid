@@ -3,7 +3,7 @@ pkgdown: 2.1.3
 pkgdown_sha: ~
 articles:
   powergrid: powergrid.html
-last_built: 2025-09-11T13:25Z
+last_built: 2025-09-11T13:29Z
 urls:
   reference: https://swissclinicaltrialorganisation.github.io/powergrid/reference
   article: https://swissclinicaltrialorganisation.github.io/powergrid/articles
