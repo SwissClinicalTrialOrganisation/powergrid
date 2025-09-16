@@ -11,7 +11,7 @@ pars and/or larger n_iter."></head><body>
 
     <a class="navbar-brand me-2" href="../index.html">powergrid</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -174,29 +174,43 @@ plotting, however.</p>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>The object 'x' you supplied to PowerPlot contains individual iterations. For sensible plotting, these were automatically summarized across iterations using the function given in argument `summary_function`.</span>
 <span class="r-plt img"><img src="Refine-1.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span><span class="co">## Based on figure above, let's look at n between 50 and 100, delta around .9</span></span></span>
-<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span> <span class="co"># \dontrun{</span></span></span>
+<span class="r-in"><span><span class="co"># \donttest{</span></span></span>
 <span class="r-in"><span><span class="va">sse_pars</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>  n <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">50</span>, <span class="fl">100</span>, <span class="fl">5</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  delta <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">.7</span>, <span class="fl">1.1</span>, <span class="fl">.05</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">power_array_up</span> <span class="op">=</span> <span class="fu">Refine</span><span class="op">(</span><span class="va">power_array</span>, n_iter_add <span class="op">=</span> <span class="fl">555</span>, pars <span class="op">=</span> <span class="va">sse_pars</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">power_array_up</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  Object of class: power_array</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Containing output of 615 individual iterations.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  Range of values: [0, 1] </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  Evaluated at:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       n 10, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100,</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       n 200</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   delta 0.5, 0.7, 0.75, 0.8, 0.85, 0.9, 0.95, 1, 1.05,</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   delta 1.1, 1.5</span>
 <span class="r-in"><span><span class="fu"><a href="PowerPlot.html">PowerPlot</a></span><span class="op">(</span><span class="va">power_array_up</span><span class="op">)</span> <span class="co"># that looks funny! It's because the default summary</span></span></span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>The object 'x' you supplied to PowerPlot contains individual iterations. For sensible plotting, these were automatically summarized across iterations using the function given in argument `summary_function`.</span>
+<span class="r-plt img"><img src="Refine-2.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span>                          <span class="co"># mean does not deal with the empty value in the</span></span></span>
 <span class="r-in"><span>                          <span class="co"># grid. Solution is in illustration below.</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## A visual illustration of this zooming in, in three figures</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/layout.html" class="external-link">layout</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/t.html" class="external-link">t</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="PowerPlot.html">PowerPlot</a></span><span class="op">(</span><span class="va">power_array</span>, title <span class="op">=</span> <span class="st">'Course grid to start with'</span><span class="op">)</span></span></span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>The object 'x' you supplied to PowerPlot contains individual iterations. For sensible plotting, these were automatically summarized across iterations using the function given in argument `summary_function`.</span>
 <span class="r-in"><span><span class="fu"><a href="PowerPlot.html">PowerPlot</a></span><span class="op">(</span><span class="va">power_array_up</span>, summary_function <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">x</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>          title <span class="op">=</span> <span class="st">'Extra samples at finer parameter grid (does not look good)'</span><span class="op">)</span></span></span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>The object 'x' you supplied to PowerPlot contains individual iterations. For sensible plotting, these were automatically summarized across iterations using the function given in argument `summary_function`.</span>
 <span class="r-in"><span><span class="fu"><a href="PowerPlot.html">PowerPlot</a></span><span class="op">(</span><span class="va">power_array_up</span>,</span></span>
 <span class="r-in"><span>          slicer <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">50</span>, <span class="fl">100</span>, <span class="fl">5</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>                        delta <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">.7</span>, <span class="fl">1.1</span>, <span class="fl">.05</span><span class="op">)</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>          summary_function <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">x</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>          title <span class="op">=</span> <span class="st">'Zoomed in'</span><span class="op">)</span></span></span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>The object 'x' you supplied to PowerPlot contains individual iterations. For sensible plotting, these were automatically summarized across iterations using the function given in argument `summary_function`.</span>
+<span class="r-plt img"><img src="Refine-3.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/layout.html" class="external-link">layout</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="op">}</span> <span class="co"># }</span></span></span>
+<span class="r-in"><span><span class="co"># }</span></span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

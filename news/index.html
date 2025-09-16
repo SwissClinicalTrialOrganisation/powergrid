@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">powergrid</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -34,8 +34,11 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.3.0" id="powergrid-030">powergrid 0.3.0<a class="anchor" aria-label="anchor" href="#powergrid-030"></a></h2>
-<ul><li>performed all checks as listed in issue <a href="https://github.com/SwissClinicalTrialOrganisation/powergrid/issues/55" class="external-link">#55</a> Release powergrid 0.3.0</li>
+<h2 class="pkg-version" data-toc-text="0.4.0" id="powergrid-040">powergrid 0.4.0<a class="anchor" aria-label="anchor" href="#powergrid-040"></a></h2>
+<ul><li>Omitted all settings of par(), including graphics::layout() (PowerPlot and GridPlot)</li>
+<li>Argument shades_legend removed as argument to PowerPlot. The related function to add a legend to the grey scale is omitted too. This legend is difficult to position without setting par. Also, the use of such legend is very limited, since the eye is notoriously bad in seeing the equality or difference between shades when they do not share a border. (PowerPlot)</li>
+<li>Omitted (conditional) set.seed() in PowerGrid. This seed was set for cases where there happens to be no .Random.seed yet. Slightly tweaky circumvented by always drawing one uniform number before doing anything. # powergrid 0.3.0</li>
+<li>performed all checks as listed in issue <a href="https://github.com/SwissClinicalTrialOrganisation/powergrid/issues/55" class="external-link">#55</a> Release powergrid 0.3.0</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.2.1" id="powergrid-021">powergrid 0.2.1<a class="anchor" aria-label="anchor" href="#powergrid-021"></a></h2>
