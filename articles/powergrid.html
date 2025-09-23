@@ -20,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">powergrid</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -54,7 +54,7 @@
       <h1>powergrid</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/SwissClinicalTrialOrganisation/powergrid/blob/v0.4.0/vignettes/powergrid.Rmd" class="external-link"><code>vignettes/powergrid.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/SwissClinicalTrialOrganisation/powergrid/blob/main/vignettes/powergrid.Rmd" class="external-link"><code>vignettes/powergrid.Rmd</code></a></small>
       <div class="d-none name"><code>powergrid.Rmd</code></div>
     </div>
 
@@ -107,15 +107,6 @@ one other parameter for a setting yielding a target power (or other
 value)</li>
 </ul>
 </div>
-</div>
-<div class="section level2">
-<h2 id="installing-the-current-version-from-github">Installing the current version from Github<a class="anchor" aria-label="anchor" href="#installing-the-current-version-from-github"></a>
-</h2>
-<p>To install the current version from github, evaluate the following
-line of R code:</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"SwissClinicalTrialOrganisation/powergrid"</span>,</span>
-<span>                         build_vignette <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <div class="section level3">
 <h3 id="outline">Outline<a class="anchor" aria-label="anchor" href="#outline"></a>
 </h3>
@@ -136,7 +127,7 @@ FindTarget.</p>
 <code>dplyr::group_by1</code> + <code>dplyr::summarise</code>).
 FindTarget is in essence a combination of <code>apply</code> +
 <code>match</code> + <code>min</code> + <code>which.min</code>.</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">## I aim to create an array with the product of three numbers</span></span>
 <span></span>
 <span><span class="co">## A function taking the product of three numbers:</span></span>
@@ -236,7 +227,7 @@ be summarized in the following ingredients:</p>
 </h4>
 <p>I use the function <code>PowerGrid</code> to evaluate the situation
 sketched above. This is done as follows</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">## A function that returns the power as a function of three input parameters</span></span>
 <span><span class="va">PowFun</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">n</span>, <span class="va">delta</span>, <span class="va">sd</span><span class="op">)</span><span class="op">{</span></span>
 <span>  <span class="va">ptt</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/power.t.test.html" class="external-link">power.t.test</a></span><span class="op">(</span>n <span class="op">=</span> <span class="va">n</span><span class="op">/</span><span class="fl">2</span>,</span>
@@ -275,7 +266,7 @@ This is a requirement for PowerGrid to work.</p>
 <p>Now, say, you want to be pretty sure (say, power = 90%) to detect an
 effect size as small as 1.1, and the best guess for SD = .7. We can
 calculate this example:</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/Example.html">Example</a></span><span class="op">(</span><span class="va">power</span>,</span>
 <span>        example <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>delta <span class="op">=</span> <span class="fl">1.1</span>, sd <span class="op">=</span> <span class="fl">.7</span><span class="op">)</span>,</span>
 <span>        target_value <span class="op">=</span> <span class="fl">.9</span><span class="op">)</span> <span class="co"># power = 90%</span></span>
@@ -292,7 +283,7 @@ calculate this example:</p>
 <div class="section level5">
 <h5 id="draw-a-figure-with-example">Draw a figure with example<a class="anchor" aria-label="anchor" href="#draw-a-figure-with-example"></a>
 </h5>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/PowerPlot.html">PowerPlot</a></span><span class="op">(</span><span class="va">power</span>,</span>
 <span>          slicer <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>sd <span class="op">=</span> <span class="fl">.7</span><span class="op">)</span>,</span>
 <span>          example <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>delta <span class="op">=</span> <span class="fl">1.1</span><span class="op">)</span>,</span>
@@ -347,7 +338,7 @@ insightful picture, in particular when, as in this example, we have more
 than 2 dimensions in our <code>pars</code> argument.</p>
 <p>The code below shows how to plot the interplay between n, delta and
 sd when the goals is the achieve 90% power.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/GridPlot.html">GridPlot</a></span><span class="op">(</span><span class="va">power</span>,</span>
 <span>         target_value <span class="op">=</span> <span class="fl">.9</span>, <span class="co"># you need to choose one target level of power</span></span>
 <span>         example <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>delta <span class="op">=</span> <span class="fl">1</span>, sd <span class="op">=</span> <span class="fl">.7</span><span class="op">)</span><span class="op">)</span> <span class="co"># defined by two parameters now.</span></span>
@@ -368,7 +359,7 @@ y-axis, or to the different lines.</p>
 <p>Assume we have about the same situation as above, but we do not have
 a simple solution to calculate the power: we only have a limited pilot
 data set that looks as follows:</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">pilot_scores</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2.1</span>, <span class="fl">4.3</span>, <span class="fl">2.3</span>, <span class="fl">5.2</span>, <span class="fl">1.9</span>, <span class="fl">8.3</span>, <span class="fl">7</span>, <span class="fl">2.6</span>, <span class="fl">2.4</span>, <span class="fl">3.2</span>, <span class="fl">2.1</span>, <span class="fl">2.8</span>, <span class="fl">3.4</span><span class="op">)</span></span></code></pre></div>
 <p>Since we do not really understand the distribution (it looks pretty
 right-skewed), we plan to perform a Mann-Whitney U-test. We do not want
@@ -376,7 +367,7 @@ to simply simulate, but draw from our pilot sample to mimic the
 variability and distributional form. We do have an idea about effect
 size (somewhere in the range of .5 and 2). The following code my be our
 approach to the exploration of power:</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">sse_pars</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
 <span>  n <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">100</span>, <span class="fl">20</span><span class="op">)</span>,</span>
 <span>  delta <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">.5</span>, <span class="fl">2</span>, <span class="fl">.2</span><span class="op">)</span><span class="op">)</span> <span class="co"># only effect size</span></span>
@@ -437,7 +428,7 @@ the literature and when our estimates are not further than .7 points
 apart, we can’t really conclude anything. We can use the powergrid
 functionality to find the sample size that gives us an expected CI of at
 most that value:</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">CIFun</span> <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">n</span>, <span class="va">delta</span>, <span class="va">sd</span><span class="op">)</span><span class="op">{</span></span>
 <span>  <span class="va">x1</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="va">n</span>, mean <span class="op">=</span> <span class="fl">0</span>, sd <span class="op">=</span> <span class="va">sd</span><span class="op">)</span></span>
 <span>  <span class="va">x2</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="va">n</span>, mean <span class="op">=</span> <span class="va">delta</span>, sd <span class="op">=</span> <span class="va">sd</span><span class="op">)</span> </span>
@@ -511,7 +502,7 @@ must be for our study to have desirable power.</p>
 can achieve the target value of .7. Therefore, we set
 <code>find_lowest = FALSE</code>.</li>
 </ul>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">sse_pars</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
 <span>  n <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">30</span>, <span class="fl">40</span><span class="op">)</span>,</span>
 <span>  delta <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span>from <span class="op">=</span> <span class="fl">0.4</span>, to <span class="op">=</span> <span class="fl">1.2</span>, by <span class="op">=</span> <span class="fl">0.01</span><span class="op">)</span>, <span class="co">## effect size</span></span>
@@ -542,7 +533,7 @@ achieve the set target.</p>
 <p>Below, inspect the situation in graphic form. Note that the argument
 <code>par_to_search</code> is set to “sd”, putting that parameter on the
 y-axis.</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/PowerPlot.html">PowerPlot</a></span><span class="op">(</span><span class="va">power_array</span>,</span>
 <span>          slicer <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">30</span><span class="op">)</span>,</span>
 <span>          par_to_search <span class="op">=</span> <span class="st">'sd'</span>,</span>
@@ -560,7 +551,7 @@ y-axis.</p>
 
 
     <footer><div class="pkgdown-footer-left">
-  <p>Developed by Gilles Dutilh.</p>
+  <p>Developed by Gilles Dutilh, Richard Charles Allen.</p>
 </div>
 
 <div class="pkgdown-footer-right">
