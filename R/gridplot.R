@@ -191,7 +191,7 @@ GridPlot = function(x,
         "summarized across iterations using the function given in ",
         "argument `summary_function`."), call. = FALSE)
       summarize_text = " (after summarizing)"
-    }
+    } else {summarize_text = ""}
     ## Dimensionality
     if(length(dim(x)) != 3){
       stop(paste0(
