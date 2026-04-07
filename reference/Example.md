@@ -54,10 +54,8 @@ Example(
   passed on internally to `FindTarget`. Either "step": walking in steps
   along the parameter of interest or "lm": Interpolating assuming a
   linear relation between the parameter of interest and (qnorm(x) +
-  qnorm(1
-
-  - 0.05)) ^ 2. This method "lm" is inspired on the implementation in
-    the sse package by Thomas Fabbro.
+  qnorm(1 - 0.05)) ^ 2. This method "lm" is inspired on the
+  implementation in the sse package by Thomas Fabbro.
 
 - summary_function:
 
@@ -219,7 +217,7 @@ summary(power_array)
 #> summarized by function `summary_function` (for
 #> function definition, see attribute
 #> `summary_function`).
-#>  Range of values: [0.5, 4.66] 
+#>  Range of values: [0.51, 4.52] 
 #>  Evaluated at:
 #>       n 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60
 #>   delta 0.5, 0.7, 0.9, 1.1, 1.3, 1.5
@@ -236,7 +234,7 @@ ex_out # note how the printed result indicates the target CI is a maximum.
 #> To achieve the target value of at most 0.88 assuming
 #> delta = 0.7
 #> sd = 0.7,
-#> the minimal required n = 40
+#> the minimal required n = 45
 #> ------------------------------------------------
 #> Description: Method "step" was used to find the
 #> lowest n in the searched grid that yields a

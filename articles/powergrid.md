@@ -328,7 +328,7 @@ summary(power)
 #> summarized by function `summary_function` (for
 #> function definition, see attribute
 #> `summary_function`).
-#>  Range of values: [0.09, 1] 
+#>  Range of values: [0.1, 1] 
 #>  Evaluated at:
 #>       n 10, 30, 50, 70, 90
 #>   delta 0.5, 0.7, 0.9, 1.1, 1.3, 1.5, 1.7, 1.9
@@ -383,7 +383,7 @@ summary(CI_array)
 #> summarized by function `summary_function` (for
 #> function definition, see attribute
 #> `summary_function`).
-#>  Range of values: [0.35, 2.01] 
+#>  Range of values: [0.35, 2.04] 
 #>  Evaluated at:
 #>       n 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60
 #>   delta 0.5, 0.6, 0.7, 0.8, 0.9, 1, 1.1, 1.2, 1.3, 1.4,

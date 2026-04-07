@@ -61,7 +61,7 @@ PowFun <- function(n, delta, sd){
   return(ptt$power)
 }
 
-## Evaluate at each combination of assumptions: 
+## Evaluate at each combination of assumptions:
 powarr = PowerGrid(pars = sse_pars, fun = PowFun, n_iter = NA)
 powarr[2, 1, ] # gives the same as
 #> [1] 1.0000000 0.9104815 0.4716852 0.2619313

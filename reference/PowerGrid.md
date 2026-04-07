@@ -18,7 +18,8 @@ PowerGrid(
   summarize = TRUE,
   summary_function = mean,
   parallel = FALSE,
-  n_cores = future::availableCores() - 1
+  n_cores = future::availableCores() - 1,
+  progress_bar = FALSE
 )
 ```
 
@@ -68,6 +69,11 @@ PowerGrid(
 
   Passed on to future_replicate
 
+- progress_bar:
+
+  Logical argument to request output of iterations using a progress bar.
+  See details section.
+
 ## Value
 
 An array of class "power_array", with attributes containing informations
@@ -107,9 +113,14 @@ vector (if given).
 
 You may want to study the effect of non-numeric parameters. This option
 is not supported for the argument `pars`, since the essential powergrid
-functions `link{Example}`, `link{PowerPlot}`, and `link{GridPlot}` need
-a direction to search. Nonetheless, you can study non-numeric parameters
-by having function `fun` returning multiple values, as described above.
+functions
+[`Example`](https://swissclinicaltrialorganisation.github.io/powergrid/reference/Example.md),
+[`PowerPlot`](https://swissclinicaltrialorganisation.github.io/powergrid/reference/PowerPlot.md),
+and
+[`GridPlot`](https://swissclinicaltrialorganisation.github.io/powergrid/reference/GridPlot.md)
+need a direction to search. Nonetheless, you can study non-numeric
+parameters by having function `fun` returning multiple values, as
+described above.
 
 ### Evaluating a function over iterations
 
@@ -143,8 +154,17 @@ reconstruct a refined power_array, run the original call to `PowerGrid`
 after
 `.Random.seed = attr(<your_power_array>, which = 'random.seed')[[1]]`,
 and the the call to Refine after
-`.Random.seed = attr(<your_power_array>, which = 'random.seed')[[2]]`,
+`.Random_seed = attr(<your_power_array>, which = 'random.seed')[[2]]`,
 etc.
+
+### Progress bar
+
+By default PowerGrid does not report progress. To return the optional
+progress bar (`progress_bar = TRUE`), the `progressr` package must be
+installed. As required by the design of that package, the progress
+handler must be explicitly activated before running your simulation. For
+that, run `progressr::handlers(global = TRUE)` in the current R console
+(not sent to the console from quarto for example).
 
 ## See also
 
@@ -182,7 +202,7 @@ PowFun <- function(n, delta, sd){
   return(ptt$power)
 }
 
-## Evaluate at each combination of assumptions: 
+## Evaluate at each combination of assumptions:
 powarr = PowerGrid(pars = sse_pars, fun = PowFun, n_iter = NA)
 summary(powarr)
 #>  Object of class: power_array
@@ -361,7 +381,7 @@ Example(powarr_no_summary, example = list(delta = .7, sd = .5), target_value = .
 #> To achieve the target value of at most 0.9 assuming
 #> delta = 0.7
 #> sd = 0.5,
-#> the minimal required n = 25
+#> the minimal required n = 20
 #> ------------------------------------------------
 #> Description: Method "step" was used to find the
 #> lowest n in the searched grid that yields a

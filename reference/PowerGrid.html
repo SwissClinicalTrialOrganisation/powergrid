@@ -63,7 +63,8 @@ is for evaluating statistical power at a grid of assumed parameters.</p>
 <span>  summarize <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  summary_function <span class="op">=</span> <span class="va">mean</span>,</span>
 <span>  parallel <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  n_cores <span class="op">=</span> <span class="fu">future</span><span class="fu">::</span><span class="fu"><a href="https://parallelly.futureverse.org/reference/availableCores.html" class="external-link">availableCores</a></span><span class="op">(</span><span class="op">)</span> <span class="op">-</span> <span class="fl">1</span></span>
+<span>  n_cores <span class="op">=</span> <span class="fu">future</span><span class="fu">::</span><span class="fu"><a href="https://parallelly.futureverse.org/reference/availableCores.html" class="external-link">availableCores</a></span><span class="op">(</span><span class="op">)</span> <span class="op">-</span> <span class="fl">1</span>,</span>
+<span>  progress_bar <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -116,6 +117,11 @@ applied. If TRUE, future::future_replicate is used internally.</p></dd>
 <dt id="arg-n-cores">n_cores<a class="anchor" aria-label="anchor" href="#arg-n-cores"></a></dt>
 <dd><p>Passed on to future_replicate</p></dd>
 
+
+<dt id="arg-progress-bar">progress_bar<a class="anchor" aria-label="anchor" href="#arg-progress-bar"></a></dt>
+<dd><p>Logical argument to request output of iterations using
+a progress bar. See details section.</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
@@ -158,8 +164,8 @@ return vector (if given).</p>
 
 <p>You may want to study the effect of non-numeric parameters. This option is
 not supported for the argument <code>pars</code>, since the essential powergrid
-functions <code>link{Example}</code>, <code>link{PowerPlot}</code>, and
-<code>link{GridPlot}</code> need a direction to search. Nonetheless, you can study
+functions <code><a href="Example.html">Example</a></code>, <code><a href="PowerPlot.html">PowerPlot</a></code>, and
+<code><a href="GridPlot.html">GridPlot</a></code> need a direction to search. Nonetheless, you can study
 non-numeric parameters by having function <code>fun</code> returning multiple values,
 as described above.</p>
 </div>
@@ -193,8 +199,19 @@ which = 'random.seed')[[1]]</code>. Note that if you Refine() your power_array, 
 .Random.seed at the moment of updating is appended to the random.seed
 attribute. So, to reconstruct a refined power_array, run the original call
 to <code>PowerGrid</code> after <code>.Random.seed = attr(&lt;your_power_array&gt;, which =
-'random.seed')[[1]]</code>, and the the call to Refine after <code>.Random.seed =
+'random.seed')[[1]]</code>, and the the call to Refine after <code>.Random_seed =
 attr(&lt;your_power_array&gt;, which = 'random.seed')[[2]]</code>, etc.</p>
+</div>
+
+<div class="section">
+<h3 id="progress-bar">Progress bar<a class="anchor" aria-label="anchor" href="#progress-bar"></a></h3>
+
+
+<p>By default PowerGrid does not report progress. To return the optional progress bar (<code>progress_bar = TRUE</code>), the
+<code>progressr</code> package must be installed. As required by the design of that
+package, the progress handler must be explicitly activated before running
+your simulation. For that, run <code>progressr::handlers(global = TRUE)</code> in the
+current R console (not sent to the console from quarto for example).</p>
 </div>
 
     </div>
@@ -231,7 +248,7 @@ correctly updating its attributes.</p></div>
 <span class="r-in"><span>  <span class="kw"><a href="https://rdrr.io/r/base/function.html" class="external-link">return</a></span><span class="op">(</span><span class="va">ptt</span><span class="op">$</span><span class="va">power</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co">## Evaluate at each combination of assumptions: </span></span></span>
+<span class="r-in"><span><span class="co">## Evaluate at each combination of assumptions:</span></span></span>
 <span class="r-in"><span><span class="va">powarr</span> <span class="op">=</span> <span class="fu">PowerGrid</span><span class="op">(</span>pars <span class="op">=</span> <span class="va">sse_pars</span>, fun <span class="op">=</span> <span class="va">PowFun</span>, n_iter <span class="op">=</span> <span class="cn">NA</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">powarr</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  Object of class: power_array</span>
@@ -410,7 +427,7 @@ correctly updating its attributes.</p></div>
 <span class="r-out co"><span class="r-pr">#&gt;</span> To achieve the target value of at most 0.9 assuming</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> delta = 0.7</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> sd = 0.5,</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> the minimal required n = 25</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> the minimal required n = 20</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ------------------------------------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Description: Method "step" was used to find the</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> lowest n in the searched grid that yields a</span>

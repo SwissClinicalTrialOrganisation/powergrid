@@ -50,7 +50,7 @@ PowFun <- function(n, delta, sd){
   return(ptt$power)
 }
 
-## Evaluate at each combination of assumptions: 
+## Evaluate at each combination of assumptions:
 powarr = PowerGrid(pars = sse_pars, fun = PowFun, n_iter = NA)
 print(PowerDF(powarr))
 #>     n delta  sd         x
