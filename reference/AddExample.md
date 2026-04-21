@@ -33,10 +33,10 @@ AddExample(
 
 ## Arguments
 
-- x, target_value, target_at_least, find_lowest, method, example_text,
-  summary_function:
+- x:
 
-  See help for `PowerPlot`.
+  Either a power array, or a power_example produced by
+  [`Example`](https://swissclinicaltrialorganisation.github.io/powergrid/reference/Example.md).
 
 - slicer:
 
@@ -57,7 +57,13 @@ AddExample(
   the example, all must contain a vector of the same length. Be aware
   that the first element of `example` defines the parameter x-axis, so
   this function is not fool proof. See argument `slicer` above. If x has
-  only one dimention, the example needs not be defined.
+  only one dimension, the example needs not be defined. Ignored if x is
+  a power_example.
+
+- target_value, target_at_least, find_lowest, method, example_text,
+  summary_function:
+
+  See help for `PowerPlot`. Ignore if x is a power_example.
 
 - col:
 
@@ -65,9 +71,9 @@ AddExample(
 
 - ...:
 
-  Further arguments are passed to the two calls of function
-  [`graphics::arrows`](https://rdrr.io/r/graphics/arrows.html) drawing
-  the nicked arrow.
+  Further arguments to [`par`](https://rdrr.io/r/graphics/par.html), as
+  well as `length` and `angle` for arrows. These are passed to the
+  points, arrows and text. For the points `pch` is fixed.
 
 ## Value
 
@@ -121,7 +127,7 @@ sse_pars = list(
   delta = seq(from = 0.5, to = 1.5, by = 0.1), # effect size
   sd = seq(.1, 1.1, .2)) # Standard deviation
 ## Define a power function using these parameters:
-PowFun <- function(n, delta, sd){ # power for a t-test at alpha = .05
+PowFun = function(n, delta, sd){ # power for a t-test at alpha = .05
   ptt = power.t.test(n = n/2, delta = delta, sd = sd,
                      sig.level = 0.05)
   return(ptt$power)

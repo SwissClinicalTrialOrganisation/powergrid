@@ -22,9 +22,11 @@ GridPlot(
   example_text = TRUE,
   title = NULL,
   par_labels = NULL,
+  add_legend = TRUE,
   xlim = NULL,
   ylim = NULL,
-  smooth = FALSE
+  smooth = FALSE,
+  ...
 )
 ```
 
@@ -101,16 +103,22 @@ GridPlot(
 - example_text:
 
   When an example is drawn, should the the required par value, and the
-  line parameter value be printed alongside the arrow(s)
+  line parameter value be printed alongside the arrow(s).
 
 - title:
 
   Character string, if not `NULL`, replaces default figure title.
+  Replaces `main`if sepcifiec by `...`.
 
 - par_labels:
 
   Named vector where elements names represent the parameters that are
   plotted, and the values set the desired labels.
+
+- add_legend:
+
+  Should the legend be automatically generated (`default = TRUE`), set
+  to FALSE and add afterwards for more flexibility.
 
 - xlim, ylim:
 
@@ -120,6 +128,14 @@ GridPlot(
 
   Logical. If TRUE, a 5th order polynomial is fitted though the points
   constituting each line for smoothing.
+
+- ...:
+
+  Further arguments to [`par`](https://rdrr.io/r/graphics/par.html),
+  [`plot`](https://rdrr.io/r/graphics/plot.default.html),
+  [`axis`](https://rdrr.io/r/graphics/axis.html) and
+  [`lines`](https://rdrr.io/r/graphics/lines.html). A few exceptions
+  (e.g. `y`) are ignored with a warning.
 
 ## Value
 
@@ -167,7 +183,7 @@ sse_pars = list(
   n = seq(from = 2, to = 100, by = 2),
   delta = seq(from = 0.1, to = 1.5, by = 0.05), ## effect size
   sd = seq(.1, .9, .1)) ## Standard deviation
-PowFun <- function(n, delta, sd){
+PowFun = function(n, delta, sd){
   ptt = power.t.test(n = n/2, delta = delta, sd = sd,
                      sig.level = 0.05)
   return(ptt$power)

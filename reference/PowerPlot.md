@@ -24,6 +24,7 @@ PowerPlot(
   shades_of_grey = TRUE,
   example_text = TRUE,
   title = NULL,
+  labcex = 1.2,
   par_labels = NULL,
   smooth = NA,
   ...
@@ -115,6 +116,11 @@ PowerPlot(
 
   Character string, if not `NULL`, replaces default figure title.
 
+- labcex:
+
+  Numeric value passed to \`contour, specifying the size of the contour
+  labels.
+
 - par_labels:
 
   Named vector with elements named as the parameters plotted, with as
@@ -132,8 +138,12 @@ PowerPlot(
 
 - ...:
 
-  Further arguments are passed on to function `image` internally. Most
-  useful for zooming with xlim and ylim.
+  Further arguments to [`par`](https://rdrr.io/r/graphics/par.html),
+  [`axis`](https://rdrr.io/r/graphics/axis.html) and
+  [`image`](https://rdrr.io/r/graphics/image.html). A few exceptions
+  (e.g. `y`) are ignored with a warning. `...` is also passed directly
+  to
+  [`AddExample`](https://swissclinicaltrialorganisation.github.io/powergrid/reference/AddExample.md)
 
 ## Value
 
@@ -172,6 +182,17 @@ width of a confidence interval. For this purpose, set `target_at_least`
 to `FALSE`. See Example for more details about `find_lowest` and
 `target_at_least`.
 
+#### Graphical parameters
+
+The plot takes the
+[`graphical parameters`](https://rdrr.io/r/graphics/par.html) from
+`par`. If graphical parameters are given as arguments to the function
+they will be passed to the calls generating axes, titles and plotting.
+Grid lines are not modified by graphical parameters to PowerPlot. `lty`
+is only passed to the plotted contours (e.g. to prevent dashed axes).
+For further customisation of the axes `xaxt` and `yaxt` can be set to
+"n", and axes can be added afterwards.
+
 ## See also
 
 [`PowerGrid`](https://swissclinicaltrialorganisation.github.io/powergrid/reference/PowerGrid.md),
@@ -199,7 +220,7 @@ sse_pars = list(
   sd = seq(.1, 1.1, .2)) # Standard deviation
 
 ## Define a power function using these parameters:
-PowFun <- function(n, delta, sd){ # power for a t-test at alpha = .05
+PowFun = function(n, delta, sd){ # power for a t-test at alpha = .05
   ptt = power.t.test(n = n/2, delta = delta, sd = sd,
                      sig.level = 0.05)
   return(ptt$power)

@@ -86,8 +86,8 @@ the arrow starts. To be sure of a sensible result, use the argument
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
 
 
-<dl><dt id="arg-x-target-value-target-at-least-find-lowest-method-example-text-summary-function">x, target_value, target_at_least, find_lowest, method, example_text, summary_function<a class="anchor" aria-label="anchor" href="#arg-x-target-value-target-at-least-find-lowest-method-example-text-summary-function"></a></dt>
-<dd><p>See help for <code>PowerPlot</code>.</p></dd>
+<dl><dt id="arg-x">x<a class="anchor" aria-label="anchor" href="#arg-x"></a></dt>
+<dd><p>Either a power array, or a power_example produced by <code><a href="Example.html">Example</a></code>.</p></dd>
 
 
 <dt id="arg-slicer">slicer<a class="anchor" aria-label="anchor" href="#arg-slicer"></a></dt>
@@ -107,7 +107,11 @@ multiple examples. If <code>example</code> contains multiple parameters to defin
 example, all must contain a vector of the same length. Be aware that the
 first element of <code>example</code> defines the parameter x-axis, so this function
 is not fool proof. See argument <code>slicer</code> above. If x has only one
-dimention, the example needs not be defined.</p></dd>
+dimension, the example needs not be defined. Ignored if x is a power_example.</p></dd>
+
+
+<dt id="arg-target-value-target-at-least-find-lowest-method-example-text-summary-function">target_value, target_at_least, find_lowest, method, example_text, summary_function<a class="anchor" aria-label="anchor" href="#arg-target-value-target-at-least-find-lowest-method-example-text-summary-function"></a></dt>
+<dd><p>See help for <code>PowerPlot</code>. Ignore if x is a power_example.</p></dd>
 
 
 <dt id="arg-col">col<a class="anchor" aria-label="anchor" href="#arg-col"></a></dt>
@@ -115,8 +119,9 @@ dimention, the example needs not be defined.</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
-<dd><p>Further arguments are passed to the two calls of function
-<code><a href="https://rdrr.io/r/graphics/arrows.html" class="external-link">graphics::arrows</a></code> drawing the nicked arrow.</p></dd>
+<dd><p>Further arguments to <code><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></code>, as well as <code>length</code> and <code>angle</code>
+for arrows. These are passed to the points, arrows and text. For the points
+<code>pch</code> is fixed.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -173,7 +178,7 @@ draw multiple examples.</p>
 <span class="r-in"><span>  delta <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span>from <span class="op">=</span> <span class="fl">0.5</span>, to <span class="op">=</span> <span class="fl">1.5</span>, by <span class="op">=</span> <span class="fl">0.1</span><span class="op">)</span>, <span class="co"># effect size</span></span></span>
 <span class="r-in"><span>  sd <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">.1</span>, <span class="fl">1.1</span>, <span class="fl">.2</span><span class="op">)</span><span class="op">)</span> <span class="co"># Standard deviation</span></span></span>
 <span class="r-in"><span><span class="co">## Define a power function using these parameters:</span></span></span>
-<span class="r-in"><span><span class="va">PowFun</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">n</span>, <span class="va">delta</span>, <span class="va">sd</span><span class="op">)</span><span class="op">{</span> <span class="co"># power for a t-test at alpha = .05</span></span></span>
+<span class="r-in"><span><span class="va">PowFun</span> <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">n</span>, <span class="va">delta</span>, <span class="va">sd</span><span class="op">)</span><span class="op">{</span> <span class="co"># power for a t-test at alpha = .05</span></span></span>
 <span class="r-in"><span>  <span class="va">ptt</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/power.t.test.html" class="external-link">power.t.test</a></span><span class="op">(</span>n <span class="op">=</span> <span class="va">n</span><span class="op">/</span><span class="fl">2</span>, delta <span class="op">=</span> <span class="va">delta</span>, sd <span class="op">=</span> <span class="va">sd</span>,</span></span>
 <span class="r-in"><span>                     sig.level <span class="op">=</span> <span class="fl">0.05</span><span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="kw"><a href="https://rdrr.io/r/base/function.html" class="external-link">return</a></span><span class="op">(</span><span class="va">ptt</span><span class="op">$</span><span class="va">power</span><span class="op">)</span></span></span>

@@ -393,7 +393,7 @@ PowerPlot(powarr_no_summary,
           target_value = .9, # set target power to 90%, defining the thick line
           example = list(delta = .7) # Highlight the example with arrow
           )
-#> Warning: The object 'x' you supplied to PowerPlot contains individual iterations. For sensible plotting, these were automatically summarized across iterations using the function given in argument `summary_function`.
+#> Warning: The power array you supplied to contains individual iterations. To be used further these were automatically summarized across iterations using the provided summary function
 
 
 #=======================================================

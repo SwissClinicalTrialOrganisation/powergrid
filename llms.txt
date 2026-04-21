@@ -109,6 +109,15 @@ pull request. You may also contact Gilles by
 
   Cut slice from array (typically of class `power_array`)
 
+- [`CheckArrayDim()`](https://swissclinicaltrialorganisation.github.io/powergrid/reference/CheckArrayDim.md)
+  : Check the dimensions of a power array
+
+- [`EnsureSingleFunOut()`](https://swissclinicaltrialorganisation.github.io/powergrid/reference/EnsureSingleFunOut.md)
+  : Ensure a power_array has only a single fun_out value
+
+- [`EnsureSummarized()`](https://swissclinicaltrialorganisation.github.io/powergrid/reference/EnsureSummarized.md)
+  : Ensure a power_array is summarized
+
 - [`Example()`](https://swissclinicaltrialorganisation.github.io/powergrid/reference/Example.md)
   : Find combination of parameters required for achieving a desired
   power (or other objective).
