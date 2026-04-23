@@ -8,10 +8,12 @@ anything about the figure it draws on top off. Therefore, take care your
 figure makes sense, by supplying the same arguments `x` and `slicer`
 that you supplied to the
 [`PowerPlot`](https://swissclinicaltrialorganisation.github.io/powergrid/reference/PowerPlot.md)
-or `link{GridPlot}` you are drawing on top off: With `slicer` you define
-the plotted plain, with `example` the value on the x-axis where the
-arrow starts. To be sure of a sensible result, use the argument
-`example` inside `Powerplot` or `GridPlot`.
+or
+[`GridPlot`](https://swissclinicaltrialorganisation.github.io/powergrid/reference/GridPlot.md)
+you are drawing on top off: With `slicer` you define the plotted plain,
+with `example` the value on the x-axis where the arrow starts. To be
+sure of a sensible result, use the argument `example` inside `PowerPlot`
+or `GridPlot`.
 
 ## Usage
 
