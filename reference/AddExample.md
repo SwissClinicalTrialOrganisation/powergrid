@@ -121,6 +121,7 @@ Gilles Dutilh
 ## Examples
 
 ``` r
+
 ## For more examples, see ?PowerPlot
 
 ## Set up a grid of n, delta and sd:

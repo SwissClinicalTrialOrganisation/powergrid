@@ -18,6 +18,7 @@ sure you explicitly refer to the current release when loading the
 package in your code, using argument `tag` to `install_github`.
 
 ``` r
+
 devtools::install_github("SwissClinicalTrialOrganisation/powergrid",
                          tag = 'v0.5.0', # replace with development version, or
                                          # omit to install the current main
@@ -54,6 +55,7 @@ The strengths of the `powergrid` package are:
 Define a grid of parameters to evaluate a function across:
 
 ``` r
+
 sse_pars <- list( # a simple list
   n = seq(from = 10, to = 60, by = 5), # sample size
   sd = seq(from = 0.1, to = 1, by = 0.1) # standard deviation
@@ -67,6 +69,7 @@ function should take the parameters as input and return a single value
 a t-test:
 
 ``` r
+
 PowFun <- function(n, sd){
   ptt = power.t.test(n = n/2,
                      delta = .6,
@@ -79,12 +82,14 @@ PowFun <- function(n, sd){
 Evaluate the function at each grid node:
 
 ``` r
+
 power <- PowerGrid(pars = sse_pars, fun = PowFun)
 ```
 
 Display the results:
 
 ``` r
+
 PowerPlot(power)
 ```
 

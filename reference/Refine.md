@@ -35,17 +35,24 @@ object of class `power_array`, containing old, extended by `pars` and/or
 
 ## Details
 
-If `pars == NULL`, update extends `old` by adding iterations
-`n_iter_add` to the existing power_array. If `pars` is given, the
-function that was evaluated in `old` (attribute `sim_function`) is
-evaluated at the crossings of `pars`. If argument `pars` is different
-from `attr(old, which = 'pars')`, this means that the function is
-evaluated additional crossings of parameters.
+This function allows extending the number of iterations, as well as
+changing the parameter grid across which the function of interest is
+evaluated. Being able to do both at the same time is handy in cases
+where calculation takes significant time: You may first only evaluate a
+broad grid of parameters with a low number of iterations using
+PowerGrid. Then, using `Refine`, you can zoom in on a certain section of
+the parameter grid (and increase resolution in the focal range), and
+evaluate with a higher number of iterations.
 
-Note that certain combinations of `pars` and `n_iter_add` result in
-arrays where some crossings of parameters include more iterations than
-others. This is a feature, not a bug. May result in less aesthetic
-plotting, however.
+If `pars == NULL`, `Refine` extends `old` by adding iterations
+`n_iter_add` to the existing power_array (applying the original function
+`attr(old, which = 'sim_function'`).
+
+If `pars` is given and different from the original `pars`
+(`attr(old, which = 'pars')`), the function is evaluated at additional
+crossings of parameters. This means that the resulting array may have
+empty cells, or cells with different numbers of iterations. This is a
+feature, not a bug. It may result in less aesthetic plotting, however.
 
 For details about handling the random seed, see
 [`PowerGrid`](https://swissclinicaltrialorganisation.github.io/powergrid/reference/PowerGrid.md).
@@ -150,18 +157,19 @@ summary(power_array_up)
 #>       n 200
 #>   delta 0.5, 0.7, 0.75, 0.8, 0.85, 0.9, 0.95, 1, 1.05,
 #>   delta 1.1, 1.5
-PowerPlot(power_array_up) # that looks funny! It's because the default summary
+PowerPlot(power_array_up)
 #> Warning: The power array you supplied to contains individual iterations. To be used further these were automatically summarized across iterations using the provided summary function
 
-                          # mean does not deal with the empty value in the
-                          # grid. Solution is in illustration below.
+
+## That looks funny! It's because the default summary mean does not deal
+## with the empty value in the grid. Solution is in illustration below.
 
 ## A visual illustration of this zooming in, in three figures
 layout(t(1:3))
 PowerPlot(power_array, title = 'Course grid to start with')
 #> Warning: The power array you supplied to contains individual iterations. To be used further these were automatically summarized across iterations using the provided summary function
 PowerPlot(power_array_up, summary_function = function(x)mean(x, na.rm = TRUE),
-          title = 'Extra samples at finer parameter grid (does not look good)')
+          title = 'Extra samples at finer parameter grid\n(looks a bit funny with large empty cells)')
 #> Warning: The power array you supplied to contains individual iterations. To be used further these were automatically summarized across iterations using the provided summary function
 PowerPlot(power_array_up,
           slicer = list(n = seq(50, 100, 5),

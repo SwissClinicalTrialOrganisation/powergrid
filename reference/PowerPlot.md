@@ -24,6 +24,7 @@ PowerPlot(
   shades_of_grey = TRUE,
   example_text = TRUE,
   title = NULL,
+  axes = TRUE,
   labcex = 1.2,
   par_labels = NULL,
   smooth = NA,
@@ -116,6 +117,10 @@ PowerPlot(
 
   Character string, if not `NULL`, replaces default figure title.
 
+- axes:
+
+  Logical defining whether or not axes are drawn.
+
 - labcex:
 
   Numeric value passed to \`contour, specifying the size of the contour
@@ -184,14 +189,14 @@ to `FALSE`. See Example for more details about `find_lowest` and
 
 #### Graphical parameters
 
-The plot takes the
-[`graphical parameters`](https://rdrr.io/r/graphics/par.html) from
-`par`. If graphical parameters are given as arguments to the function
-they will be passed to the calls generating axes, titles and plotting.
-Grid lines are not modified by graphical parameters to PowerPlot. `lty`
-is only passed to the plotted contours (e.g. to prevent dashed axes).
-For further customisation of the axes `xaxt` and `yaxt` can be set to
-"n", and axes can be added afterwards.
+Graphical parameters that are allowed as input to the functions
+[`graphics::plot`](https://rdrr.io/r/graphics/plot.default.html),
+[`graphics::lines`](https://rdrr.io/r/graphics/lines.html),
+[`graphics::image`](https://rdrr.io/r/graphics/image.html) and
+[`graphics::axis`](https://rdrr.io/r/graphics/axis.html), including all
+parametes available in par() are passed on to these functions
+internally. Not passed through are "x", "y", "z", "type", "at", and
+parameters that are explict arguments to `PowerPlot`.
 
 ## See also
 

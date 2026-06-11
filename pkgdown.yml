@@ -1,9 +1,9 @@
-pandoc: 3.1.11
+pandoc: 3.8.3
 pkgdown: 2.2.0
 pkgdown_sha: ~
 articles:
   powergrid: powergrid.html
-last_built: 2026-04-23T12:17Z
+last_built: 2026-06-11T13:44Z
 urls:
   reference: https://swissclinicaltrialorganisation.github.io/powergrid/reference
   article: https://swissclinicaltrialorganisation.github.io/powergrid/articles

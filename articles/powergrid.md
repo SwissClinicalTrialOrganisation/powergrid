@@ -1,6 +1,7 @@
 # powergrid
 
 ``` r
+
 library(powergrid)
 ```
 
@@ -56,6 +57,7 @@ PowerGrid is in essence similar to `tapply` (or `dplyr::group_by1` +
 `match` + `min` + `which.min`.
 
 ``` r
+
 ## I aim to create an array with the product of three numbers
 
 ## A function taking the product of three numbers:
@@ -156,6 +158,7 @@ I use the function `PowerGrid` to evaluate the situation sketched above.
 This is done as follows
 
 ``` r
+
 ## A function that returns the power as a function of three input parameters
 PowFun <- function(n, delta, sd){
   ptt = power.t.test(n = n/2,
@@ -198,6 +201,7 @@ effect size as small as 1.1, and the best guess for SD = .7. We can
 calculate this example:
 
 ``` r
+
 Example(power,
         example = list(delta = 1.1, sd = .7),
         target_value = .9) # power = 90%
@@ -216,6 +220,7 @@ Example(power,
 ##### Draw a figure with example
 
 ``` r
+
 PowerPlot(power,
           slicer = list(sd = .7),
           example = list(delta = 1.1),
@@ -271,6 +276,7 @@ The code below shows how to plot the interplay between n, delta and sd
 when the goals is the achieve 90% power.
 
 ``` r
+
 GridPlot(power,
          target_value = .9, # you need to choose one target level of power
          example = list(delta = 1, sd = .7)) # defined by two parameters now.
@@ -293,6 +299,7 @@ simple solution to calculate the power: we only have a limited pilot
 data set that looks as follows:
 
 ``` r
+
 pilot_scores = c(2.1, 4.3, 2.3, 5.2, 1.9, 8.3, 7, 2.6, 2.4, 3.2, 2.1, 2.8, 3.4)
 ```
 
@@ -304,6 +311,7 @@ size (somewhere in the range of .5 and 2). The following code my be our
 approach to the exploration of power:
 
 ``` r
+
 sse_pars = list(
   n = seq(10, 100, 20),
   delta = seq(.5, 2, .2)) # only effect size
@@ -328,7 +336,7 @@ summary(power)
 #> summarized by function `summary_function` (for
 #> function definition, see attribute
 #> `summary_function`).
-#>  Range of values: [0.1, 1] 
+#>  Range of values: [0.13, 1] 
 #>  Evaluated at:
 #>       n 10, 30, 50, 70, 90
 #>   delta 0.5, 0.7, 0.9, 1.1, 1.3, 1.5, 1.7, 1.9
@@ -365,6 +373,7 @@ functionality to find the sample size that gives us an expected CI of at
 most that value:
 
 ``` r
+
 CIFun = function(n, delta, sd){
   x1 = rnorm(n, mean = 0, sd = sd)
   x2 = rnorm(n, mean = delta, sd = sd) 
@@ -441,6 +450,7 @@ must be for our study to have desirable power.
   `find_lowest = FALSE`.
 
 ``` r
+
 sse_pars = list(
   n = c(30, 40),
   delta = seq(from = 0.4, to = 1.2, by = 0.01), ## effect size
@@ -475,6 +485,7 @@ Below, inspect the situation in graphic form. Note that the argument
 `par_to_search` is set to “sd”, putting that parameter on the y-axis.
 
 ``` r
+
 PowerPlot(power_array,
           slicer = list(n = 30),
           par_to_search = 'sd',

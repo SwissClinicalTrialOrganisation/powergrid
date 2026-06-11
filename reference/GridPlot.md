@@ -21,6 +21,7 @@ GridPlot(
   col = NULL,
   example_text = TRUE,
   title = NULL,
+  axes = TRUE,
   par_labels = NULL,
   add_legend = TRUE,
   xlim = NULL,
@@ -108,7 +109,11 @@ GridPlot(
 - title:
 
   Character string, if not `NULL`, replaces default figure title.
-  Replaces `main`if sepcifiec by `...`.
+  Replaces `main`if specifiec by `...` .
+
+- axes:
+
+  Logical defining whether or not axes are drawn.
 
 - par_labels:
 
@@ -162,6 +167,17 @@ reaching the margin. This is often correct behavior, when the
 parameter range. In case n is on the y-axis, this may easily be solved
 by adding larger sample sizes to the grid (consider `Update`), and then
 adjusting the y-limit to only include the values of interest.
+
+### Graphical parameters
+
+Graphical parameters that are allowed as input to the functions
+[`graphics::plot`](https://rdrr.io/r/graphics/plot.default.html),
+[`graphics::lines`](https://rdrr.io/r/graphics/lines.html),
+[`graphics::image`](https://rdrr.io/r/graphics/image.html) and
+[`graphics::axis`](https://rdrr.io/r/graphics/axis.html), including all
+parametes available in par() are passed on to these functions
+internally. Not passed through are "x", "y", "z", "type", "at", and
+parameters that are explict arguments to `GridPlot`.
 
 ## See also
 
