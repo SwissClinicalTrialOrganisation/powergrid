@@ -1,11 +1,19 @@
 # Changelog
 
-## powergrid 0.5.2
+## powergrid 0.6.0
 
-Corrected listing in readme and vignette. \# powergrid 0.5.1 Small
-update, making readme in line with CRAN status package. \# powergrid
-0.5.0 - Added Richard Charles Allen as contributor and maintainer. -
-Fixed one typo in description.
+A number of improvements were made - Clearer, more consistent
+documentation across package help files and warning and error
+messages. - fixed the passing on of argument summary_function in the
+following functions: - PowerGrid (call SummarizeIterations) -
+SummarizeIterations (define precise situation and fix summary_function
+name and definition accordingly) - EnsureSummarized (define precise
+situation and fix summary_function name and definition accordingly) -
+PowerPlot (call EnsureSummarized) - GridPlot (call EnsureSummarized) \#
+powergrid 0.5.2 Corrected listing in readme and vignette. \# powergrid
+0.5.1 Small update, making readme in line with CRAN status package. \#
+powergrid 0.5.0 - Added Richard Charles Allen as contributor and
+maintainer. - Fixed one typo in description.
 
 ## powergrid 0.4.0
 

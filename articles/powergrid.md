@@ -333,9 +333,8 @@ power = PowerGrid(pars = sse_pars,
 summary(power)
 #>  Object of class: power_array
 #> Containing summary over 99 iterations,
-#> summarized by function `summary_function` (for
-#> function definition, see attribute
-#> `summary_function`).
+#> summarized by function `mean` (for function
+#> definition, see attribute `summary_function`).
 #>  Range of values: [0.13, 1] 
 #>  Evaluated at:
 #>       n 10, 30, 50, 70, 90
@@ -389,9 +388,8 @@ CI_array = PowerGrid(pars, CIFun, n_iter = 20)
 summary(CI_array)
 #>  Object of class: power_array
 #> Containing summary over 20 iterations,
-#> summarized by function `summary_function` (for
-#> function definition, see attribute
-#> `summary_function`).
+#> summarized by function `mean` (for function
+#> definition, see attribute `summary_function`).
 #>  Range of values: [0.35, 2.04] 
 #>  Evaluated at:
 #>       n 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60

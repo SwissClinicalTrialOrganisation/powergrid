@@ -214,9 +214,8 @@ power_array = PowerGrid(pars = sse_pars, fun = PowFun, n_iter = n_iter)
 summary(power_array)
 #>  Object of class: power_array
 #> Containing summary over 20 iterations,
-#> summarized by function `summary_function` (for
-#> function definition, see attribute
-#> `summary_function`).
+#> summarized by function `mean` (for function
+#> definition, see attribute `summary_function`).
 #>  Range of values: [0.51, 4.52] 
 #>  Evaluated at:
 #>       n 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60

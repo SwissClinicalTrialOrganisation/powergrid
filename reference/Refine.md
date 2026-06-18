@@ -139,7 +139,10 @@ summary(power_array)
 #>       n 10, 50, 100, 200
 #>   delta 0.5, 1, 1.5
 PowerPlot(power_array)
-#> Warning: The power array you supplied to contains individual iterations. To be used further these were automatically summarized across iterations using the provided summary function
+#> Warning: The power array you supplied to contains
+#> individual iterations. To be used further these
+#> were automatically summarized across iterations
+#> by function: mean.
 
 ## Based on figure above, let's look at n between 50 and 100, delta around .9
 # \donttest{
@@ -158,7 +161,10 @@ summary(power_array_up)
 #>   delta 0.5, 0.7, 0.75, 0.8, 0.85, 0.9, 0.95, 1, 1.05,
 #>   delta 1.1, 1.5
 PowerPlot(power_array_up)
-#> Warning: The power array you supplied to contains individual iterations. To be used further these were automatically summarized across iterations using the provided summary function
+#> Warning: The power array you supplied to contains
+#> individual iterations. To be used further these
+#> were automatically summarized across iterations
+#> by function: mean.
 
 
 ## That looks funny! It's because the default summary mean does not deal
@@ -167,16 +173,25 @@ PowerPlot(power_array_up)
 ## A visual illustration of this zooming in, in three figures
 layout(t(1:3))
 PowerPlot(power_array, title = 'Course grid to start with')
-#> Warning: The power array you supplied to contains individual iterations. To be used further these were automatically summarized across iterations using the provided summary function
+#> Warning: The power array you supplied to contains
+#> individual iterations. To be used further these
+#> were automatically summarized across iterations
+#> by function: mean.
 PowerPlot(power_array_up, summary_function = function(x)mean(x, na.rm = TRUE),
           title = 'Extra samples at finer parameter grid\n(looks a bit funny with large empty cells)')
-#> Warning: The power array you supplied to contains individual iterations. To be used further these were automatically summarized across iterations using the provided summary function
+#> Warning: The power array you supplied to contains
+#> individual iterations. To be used further these
+#> were automatically summarized across iterations
+#> by function: anonymous function.
 PowerPlot(power_array_up,
           slicer = list(n = seq(50, 100, 5),
                         delta = seq(.7, 1.1, .05)),
           summary_function = function(x)mean(x, na.rm = TRUE),
           title = 'Zoomed in')
-#> Warning: The power array you supplied to contains individual iterations. To be used further these were automatically summarized across iterations using the provided summary function
+#> Warning: The power array you supplied to contains
+#> individual iterations. To be used further these
+#> were automatically summarized across iterations
+#> by function: anonymous function.
 
 layout(1)
 # }

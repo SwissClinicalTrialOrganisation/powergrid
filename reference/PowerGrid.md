@@ -303,9 +303,8 @@ dimnames(powarr)
 summary(powarr) # indicates that iterations were summarized (not stored)
 #>  Object of class: power_array
 #> Containing summary over 20 iterations,
-#> summarized by function `summary_function` (for
-#> function definition, see attribute
-#> `summary_function`).
+#> summarized by function `mean` (for function
+#> definition, see attribute `summary_function`).
 #>  Range of values: [0, 1] 
 #>  Evaluated at:
 #>       n 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60
@@ -393,7 +392,10 @@ PowerPlot(powarr_no_summary,
           target_value = .9, # set target power to 90%, defining the thick line
           example = list(delta = .7) # Highlight the example with arrow
           )
-#> Warning: The power array you supplied to contains individual iterations. To be used further these were automatically summarized across iterations using the provided summary function
+#> Warning: The power array you supplied to contains
+#> individual iterations. To be used further these
+#> were automatically summarized across iterations
+#> by function: mean.
 
 
 #=======================================================
