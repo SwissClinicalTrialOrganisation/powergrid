@@ -9,11 +9,14 @@ following functions: - PowerGrid (call SummarizeIterations) -
 SummarizeIterations (define precise situation and fix summary_function
 name and definition accordingly) - EnsureSummarized (define precise
 situation and fix summary_function name and definition accordingly) -
-PowerPlot (call EnsureSummarized) - GridPlot (call EnsureSummarized) \#
-powergrid 0.5.2 Corrected listing in readme and vignette. \# powergrid
-0.5.1 Small update, making readme in line with CRAN status package. \#
-powergrid 0.5.0 - Added Richard Charles Allen as contributor and
-maintainer. - Fixed one typo in description.
+PowerPlot (call EnsureSummarized) - GridPlot (call EnsureSummarized) -
+Updated plotting behaviour so that plotting parameters (par) are taken
+from the existing par settings, and can be specified in the relevant
+powergrid plotting functions. \# powergrid 0.5.2 Corrected listing in
+readme and vignette. \# powergrid 0.5.1 Small update, making readme in
+line with CRAN status package. \# powergrid 0.5.0 - Added Richard
+Charles Allen as contributor and maintainer. - Fixed one typo in
+description.
 
 ## powergrid 0.4.0
 
