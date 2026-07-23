@@ -1,22 +1,29 @@
 # Changelog
 
-## powergrid 0.6.0
+## powergrid 0.6.1
 
-A number of improvements were made - Clearer, more consistent
-documentation across package help files and warning and error
-messages. - fixed the passing on of argument summary_function in the
-following functions: - PowerGrid (call SummarizeIterations) -
-SummarizeIterations (define precise situation and fix summary_function
-name and definition accordingly) - EnsureSummarized (define precise
-situation and fix summary_function name and definition accordingly) -
-PowerPlot (call EnsureSummarized) - GridPlot (call EnsureSummarized) -
-Updated plotting behaviour so that plotting parameters (par) are taken
-from the existing par settings, and can be specified in the relevant
-powergrid plotting functions. \# powergrid 0.5.2 Corrected listing in
-readme and vignette. \# powergrid 0.5.1 Small update, making readme in
-line with CRAN status package. \# powergrid 0.5.0 - Added Richard
-Charles Allen as contributor and maintainer. - Fixed one typo in
-description.
+- The behaviour of the idexing method for the power array “\[” was
+  changes so that if a vector is returned it correctly gets the names
+  from he original array. \# powergrid 0.6.0 A number of improvements
+  were made
+- Clearer, more consistent documentation across package help files and
+  warning and error messages.
+- fixed the passing on of argument summary_function in the following
+  functions:
+  - PowerGrid (call SummarizeIterations)
+  - SummarizeIterations (define precise situation and fix
+    summary_function name and definition accordingly)
+  - EnsureSummarized (define precise situation and fix summary_function
+    name and definition accordingly)
+  - PowerPlot (call EnsureSummarized)
+  - GridPlot (call EnsureSummarized)
+- Updated plotting behaviour so that plotting parameters (par) are taken
+  from the existing par settings, and can be specified in the relevant
+  powergrid plotting functions. \# powergrid 0.5.2 Corrected listing in
+  readme and vignette. \# powergrid 0.5.1 Small update, making readme in
+  line with CRAN status package. \# powergrid 0.5.0
+- Added Richard Charles Allen as contributor and maintainer.
+- Fixed one typo in description.
 
 ## powergrid 0.4.0
 
