@@ -14,13 +14,13 @@ Source:
 [`DESCRIPTION`](https://github.com/SwissClinicalTrialOrganisation/powergrid/blob/main/DESCRIPTION)
 
 Dutilh G, Allen R (2026). *powergrid: Power Analysis Across a Grid of
-Assumptions*. R package version 0.6.0,
+Assumptions*. R package version 0.6.1,
 <https://github.com/SwissClinicalTrialOrganisation/powergrid>.
 
     @Manual{,
       title = {powergrid: Power Analysis Across a Grid of Assumptions},
       author = {Gilles Dutilh and Richard Charles Allen},
       year = {2026},
-      note = {R package version 0.6.0},
+      note = {R package version 0.6.1},
       url = {https://github.com/SwissClinicalTrialOrganisation/powergrid},
     }

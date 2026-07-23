@@ -64,13 +64,15 @@ PowFun <- function(n, delta, sd){
 ## Evaluate at each combination of assumptions:
 powarr = PowerGrid(pars = sse_pars, fun = PowFun, n_iter = NA)
 powarr[2, 1, ] # gives the same as
-#> [1] 1.0000000 0.9104815 0.4716852 0.2619313
+#>       0.1       0.4       0.7         1 
+#> 1.0000000 0.9104815 0.4716852 0.2619313 
 #> Array of class `power_array` created using
 #> PowerGrid.
 #>   One resulting dimension (dimension's name was dropped by indexing).
 #> 
 powarr['30', '0.5', ]
-#> [1] 1.0000000 0.9104815 0.4716852 0.2619313
+#>       0.1       0.4       0.7         1 
+#> 1.0000000 0.9104815 0.4716852 0.2619313 
 #> Array of class `power_array` created using
 #> PowerGrid.
 #>   One resulting dimension (dimension's name was dropped by indexing).
