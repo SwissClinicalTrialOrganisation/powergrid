@@ -178,7 +178,7 @@ PowerPlot(power_array, title = 'Course grid to start with')
 #> were automatically summarized across iterations
 #> by function: mean.
 PowerPlot(power_array_up, summary_function = function(x)mean(x, na.rm = TRUE),
-          title = 'Extra samples at finer parameter grid\n(looks a bit funny with large empty cells)')
+          title = 'Extra samples at finer grid\n(looks funny with large empty cells)')
 #> Warning: The power array you supplied to contains
 #> individual iterations. To be used further these
 #> were automatically summarized across iterations

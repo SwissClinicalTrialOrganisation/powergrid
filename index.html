@@ -22,7 +22,7 @@
 
     <a class="navbar-brand me-2" href="index.html">powergrid</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.6.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.6.2</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -51,26 +51,28 @@
 <div class="page-header"><h1 id="powergrid-">powergrid <img src="reference/figures/powergrid_color_floor.png" align="right" width="200"><a class="anchor" aria-label="anchor" href="#powergrid-"></a>
 </h1></div>
 <p>The powergrid package is intended to allow users to easily evaluate a function across a grid of input parameters. The utilities in the package are aimed at performing analyses of <em>power and sample size</em>, allowing for easy search of minimum n (or min/max of any other parameter) to achieve a minimal level of power (or a maximum of any value). Also, plotting functions are included that present the dependency of n and power in relation to further parameters.</p>
-<p>The package (version 0.5.0) is available from <a href="https://CRAN.R-project.org/package=powergrid" class="external-link">CRAN</a> and may be installed through your favorite mirror.</p>
+<p>The package (version 0.6.2) is available from <a href="https://CRAN.R-project.org/package=powergrid" class="external-link">CRAN</a> and may be installed through your favorite mirror.</p>
 <p>Note that the package is developed further here on SCTO’s github. If you want to use a development version (newer than the CRAN version), make sure you explicitly refer to the current release when loading the package in your code, using argument <code>tag</code> to <code>install_github</code>.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"SwissClinicalTrialOrganisation/powergrid"</span>,</span>
-<span>                         tag <span class="op">=</span> <span class="st">'v0.5.0'</span>, <span class="co"># replace with development version, or</span></span>
-<span>                                         <span class="co"># omit to install the current main</span></span>
-<span>                                         <span class="co"># branch.</span></span>
+<span>                         <span class="co">## tag = 'v0.6.2', # replace with a specific</span></span>
+<span>                         <span class="co">## development version, or omit to install the current</span></span>
+<span>                         <span class="co">## release</span></span>
 <span>                         build_vignette <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/SwissClinicalTrialOrganisation/powergrid" class="external-link">powergrid</a></span><span class="op">)</span></span></code></pre></div>
-<p>Powergrid is a package mainly developed by <a href="https://www.gillesdutilh.com/statistics/" class="external-link">Gilles Dutilh</a>, partly funded by a <a href="https://www.sctoplatforms.ch/en/scto-platforms/statistics-methodology-5.html" class="external-link">Statistical programming grant</a> from the SCTO. Valuable contributions have been made by <a href="https://dkf.unibas.ch/de/team-data-analysis-statistik/" class="external-link">Richard Allen</a> of the statistics team at DKF basel.</p>
+<p>Powergrid is a package originally developed by <a href="https://www.gillesdutilh.com/statistics/" class="external-link">Gilles Dutilh</a>, partly funded by a <a href="https://www.scto.ch/clinical-research-tools/platforms/statistics-and-methodology/" class="external-link">Statistical programming grant</a> from the SCTO. Since then, many great contributions have been made by <a href="https://dkf.unibas.ch/de/team-data-analysis-statistik/" class="external-link">Richard Allen</a> of the statistics team at DKF basel.</p>
 <div class="section level2">
 <h2 id="package-highlights">Package highlights<a class="anchor" aria-label="anchor" href="#package-highlights"></a>
 </h2>
 <p>The strengths of the <code>powergrid</code> package are:</p>
 <ul>
-<li>any number of input parameters to search along may be included easily</li>
-<li>any number of output parameters are handled intuitively</li>
-<li>whether performing simulation-based or closed-form power-analyses, the powergrid utilities behave the same way</li>
-<li>the objective may be to achieve at least a certain value (in the case of power), but also at most a certain value (as in the case of expected credence intervals)</li>
-<li>the parameter that is optimized to achieve the objective may be something you want to be small (e.g., n), or allow to be large (e.g., the maximal permissible SD).</li>
+<li>Any number of input parameters to search along may be included easily.</li>
+<li>Any number of output parameters are handled intuitively.</li>
+<li>Thether performing simulation-based or closed-form power-analyses, the powergrid utilities behave the same way.</li>
+<li>The objective may be to achieve at least a certain value (in the case of power), but also at most a certain value (as in the case of expected credence intervals).</li>
+<li>The parameter that is optimized to achieve the objective may be something you want to be small (e.g., n), or allow to be large (e.g., the maximal permissible SD).</li>
+<li>Two different plot function are supplied to show the relation between input parameters and the objective: not only showing a single sample size to achieve a certain power, but an illustration of the dynamics of sample size, power, and other parameters.</li>
+<li>Hassle-free parallel computing.</li>
 </ul>
 </div>
 <div class="section level2">
@@ -97,7 +99,7 @@
 <p>Display the results:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/PowerPlot.html">PowerPlot</a></span><span class="op">(</span><span class="va">power</span><span class="op">)</span></span></code></pre></div>
-<p><img src="reference/figures/readmeplot-1.png" style="display: block; margin: auto;"></p>
+<p><img src="reference/figures/readmeplot-1.png" alt="" style="display: block; margin: auto;"></p>
 <p>See the vignette for more details on how to use the package and its functions.</p>
 <p>Please don’t hesitate making an issue above or contributing through a pull request. You may also contact Gilles by <a href="mailto:info@gillesdutilh.com">email</a>.</p>
 </div>

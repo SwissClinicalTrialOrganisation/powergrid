@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">powergrid</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.6.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.6.2</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -30,14 +30,15 @@
   <main id="main" class="col-md-9"><div class="page-header">
 
       <h1>Changelog</h1>
-      <small>Source: <a href="https://github.com/SwissClinicalTrialOrganisation/powergrid/blob/v0.6.1/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
+      <small>Source: <a href="https://github.com/SwissClinicalTrialOrganisation/powergrid/blob/main/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.6.1" id="powergrid-061">powergrid 0.6.1<a class="anchor" aria-label="anchor" href="#powergrid-061"></a></h2>
-<ul><li>The behaviour of the idexing method for the power array “[” was changes so that if a vector is returned it correctly gets the names from he original array. # powergrid 0.6.0 A number of improvements were made</li>
-<li>Clearer, more consistent documentation across package help files and warning and error messages.</li>
-<li>fixed the passing on of argument summary_function in the following functions:
+<h2 class="pkg-version" data-toc-text="0.6.2" id="powergrid-062">powergrid 0.6.2<a class="anchor" aria-label="anchor" href="#powergrid-062"></a></h2><p class="text-muted">CRAN release: 2026-07-31</p>
+<ul><li>Method import “is” explicit in namespace # powergrid 0.6.1</li>
+<li>The idexing method for the power array “[” was changed so that if a vector is returned it correctly gets the names from he original array. This adjustment was made to assure correct behavior when aperm() is adjusted to be in sync with both its docs and t.default() in an upcoming R update. # powergrid 0.6.0 A number of improvements were made</li>
+<li>Clearer, more consistent documentation across package help files, and warning and error messages.</li>
+<li>Fixed the passing on of argument summary_function in the following functions:
 <ul><li>PowerGrid (call SummarizeIterations)</li>
 <li>SummarizeIterations (define precise situation and fix summary_function name and definition accordingly)</li>
 <li>EnsureSummarized (define precise situation and fix summary_function name and definition accordingly)</li>
