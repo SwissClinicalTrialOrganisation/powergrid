@@ -1,6 +1,6 @@
 Package: powergrid
 Title: Power Analysis Across a Grid of Assumptions
-Version: 0.6.1
+Version: 0.6.2
 Authors@R: c(
     person(given = "Gilles",
       family = "Dutilh", email = "info@gillesdutilh.com", role = c("aut", "cre"),

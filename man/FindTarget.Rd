@@ -37,7 +37,7 @@ a maximum (e.g., the size of a confidence interval)}
 \code{target_value} found. Either \code{'step'}: walking in steps along
 \code{par_to_search} or \code{'lm'}: Interpolating assuming a linear
 relation between \code{par_to_search} and \code{(qnorm(x) + qnorm(1 -
-  0.05)) ^ 2}. Setting 'lm' is inspired on the implementation in the sse
+0.05)) ^ 2}. Setting 'lm' is inspired on the implementation in the sse
 package by Thomas Fabbro.}
 }
 \value{

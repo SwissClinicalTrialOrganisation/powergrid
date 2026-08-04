@@ -63,7 +63,7 @@ uncertainty).}
 needed to achieve \code{target_value}. Either \code{step}: walking in
 steps along \code{par_to_search} or \code{lm}: Interpolating assuming a
 linear relation between \code{par_to_search} and \code{(qnorm(x) + qnorm(1
-  - 0.05)) ^ 2}. The setting \code{lm} is inspired on the implementation in
+- 0.05)) ^ 2}. The setting \code{lm} is inspired on the implementation in
 the \code{sse} package by Thomas Fabbro.}
 
 \item{summary_function}{If \code{x} is an object of class \code{power_array}

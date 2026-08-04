@@ -11,7 +11,7 @@ achieve a minimal level of power (or a maximum of any value). Also,
 plotting functions are included that present the dependency of n and
 power in relation to further parameters.
 
-The package (version 0.5.0) is available from
+The package (version 0.6.2) is available from
 [CRAN](https://CRAN.R-project.org/package=powergrid) and may be
 installed through your favorite mirror.
 
@@ -22,35 +22,40 @@ package in your code, using argument `tag` to `install_github`.
 
 ``` r
 devtools::install_github("SwissClinicalTrialOrganisation/powergrid",
-                         tag = 'v0.5.0', # replace with development version, or
-                                         # omit to install the current main
-                                         # branch.
+                         ## tag = 'v0.6.2', # replace with a specific
+                         ## development version, or omit to install the current
+                         ## release
                          build_vignette = TRUE)
 library(powergrid)
 ```
 
-Powergrid is a package mainly developed by [Gilles
+Powergrid is a package originally developed by [Gilles
 Dutilh](https://www.gillesdutilh.com/statistics/), partly funded by a
 [Statistical programming
-grant](https://www.sctoplatforms.ch/en/scto-platforms/statistics-methodology-5.html)
-from the SCTO. Valuable contributions have been made by [Richard
-Allen](https://dkf.unibas.ch/de/team-data-analysis-statistik/) of the
-statistics team at DKF basel.
+grant](https://www.scto.ch/clinical-research-tools/platforms/statistics-and-methodology/)
+from the SCTO. Since then, many great contributions have been made by
+[Richard Allen](https://dkf.unibas.ch/de/team-data-analysis-statistik/)
+of the statistics team at DKF basel.
 
 ## Package highlights
 
 The strengths of the `powergrid` package are:
 
-- any number of input parameters to search along may be included easily
-- any number of output parameters are handled intuitively
-- whether performing simulation-based or closed-form power-analyses, the
-  powergrid utilities behave the same way
-- the objective may be to achieve at least a certain value (in the case
+- Any number of input parameters to search along may be included easily.
+- Any number of output parameters are handled intuitively.
+- Thether performing simulation-based or closed-form power-analyses, the
+  powergrid utilities behave the same way.
+- The objective may be to achieve at least a certain value (in the case
   of power), but also at most a certain value (as in the case of
-  expected credence intervals)
-- the parameter that is optimized to achieve the objective may be
+  expected credence intervals).
+- The parameter that is optimized to achieve the objective may be
   something you want to be small (e.g., n), or allow to be large (e.g.,
   the maximal permissible SD).
+- Two different plot function are supplied to show the relation between
+  input parameters and the objective: not only showing a single sample
+  size to achieve a certain power, but an illustration of the dynamics
+  of sample size, power, and other parameters.
+- Hassle-free parallel computing.
 
 ## Example usage
 
@@ -91,7 +96,7 @@ Display the results:
 PowerPlot(power)
 ```
 
-<img src="man/figures/readmeplot-1.png" style="display: block; margin: auto;" />
+<img src="man/figures/readmeplot-1.png" alt="" style="display: block; margin: auto;" />
 
 See the vignette for more details on how to use the package and its
 functions.

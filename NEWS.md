@@ -1,11 +1,15 @@
+# powergrid 0.6.2
+- Method import "is" explicit in namespace
 # powergrid 0.6.1
-- The behaviour of the idexing method for the power array "[" was changes so that if
-  a vector is returned it correctly gets the names from he original array.
+- The idexing method for the power array "[" was changed so that if a vector is
+  returned it correctly gets the names from he original array. This adjustment
+  was made to assure correct behavior when aperm() is adjusted to be in sync
+  with both its docs and t.default() in an upcoming R update.
 # powergrid 0.6.0
 A number of improvements were made
-- Clearer, more consistent documentation across package help files and warning
+- Clearer, more consistent documentation across package help files, and warning
   and error messages.
-- fixed the passing on of argument summary_function in the following functions:
+- Fixed the passing on of argument summary_function in the following functions:
   - PowerGrid (call SummarizeIterations)
   - SummarizeIterations (define precise situation and fix summary_function name
     and definition accordingly)

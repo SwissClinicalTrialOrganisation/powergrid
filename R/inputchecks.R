@@ -42,23 +42,24 @@ CheckArrayDim =
 ##' @param condition If array is not summarised should a `warning` or
 ##' `error` be produced. Ignored if required dimensions is NULL.
 ##' @returns A summarised power_array
+##' @importFrom methods is
 EnsureSummarized = function(x, summary_function = NULL, condition = "warning") {
   ## to be sure the summary_function and its name is preserved, we need to
   ## explicitly cover differnt situations, and define what the argument to
   ## SummarizeIterations below is.
-  if (class(summary_function) == 'name') { # function name inherited
+  if (is(summary_function, 'name')) { # function name inherited
     summary_function_name = as.character(summary_function)
     summary_function_arg = summary_function
-  } else if (class(summary_function) == 'call') { # ano function inherited
+  } else if (is(summary_function, 'call')) { # ano function inherited
     summary_function_name = 'anonymous function'
     summary_function_arg = eval(summary_function) ##
-  } else if (class(summary_function) == 'function' &
-             class(substitute(summary_function)) == 'name'
+  } else if (is(summary_function, 'function') &
+             is(substitute(summary_function), 'name')
              ) { # function name in direct EnsureSummarized use
     summary_function_name = as.character(substitute(summary_function))
     summary_function_arg = substitute(summary_function)
-  } else if (class(summary_function) == 'function' &
-             class(substitute(summary_function)) == 'call'
+  } else if (is(summary_function, 'function') &
+             is(substitute(summary_function), 'call')
              ) { # function name in direct EnsureSummarized use
     summary_function_name = 'anonymous function'
     summary_function_arg = substitute(summary_function)

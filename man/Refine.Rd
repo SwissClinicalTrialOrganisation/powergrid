@@ -114,7 +114,7 @@ PowerPlot(power_array_up)
 layout(t(1:3))
 PowerPlot(power_array, title = 'Course grid to start with')
 PowerPlot(power_array_up, summary_function = function(x)mean(x, na.rm = TRUE),
-          title = 'Extra samples at finer parameter grid\n(looks a bit funny with large empty cells)')
+          title = 'Extra samples at finer grid\n(looks funny with large empty cells)')
 PowerPlot(power_array_up,
           slicer = list(n = seq(50, 100, 5),
                         delta = seq(.7, 1.1, .05)),

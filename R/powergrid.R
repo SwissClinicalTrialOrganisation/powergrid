@@ -263,6 +263,7 @@
 ##'           target_value = .9, # set target power to 90%, defining the thick line
 ##'           example = list(delta = .7) # Highlight the example with arrow
 ##'           )
+##' @importFrom methods is
 ##' @export
 PowerGrid = function(pars, fun, more_args = NULL, n_iter = NA,
                      summarize = TRUE, summary_function = mean,
@@ -773,19 +774,19 @@ SummarizeIterations = function(x, summary_function, ...){
   ## explicitly cover differnt situations, and define what the to be evaluated
   ## argument to apply below is. The latter is also the opject stored in
   ## attribute "summary_function".
-  if (class(summary_function) == 'name') { # function name inherited
+  if (is(summary_function, 'name')) { # function name inherited
     summary_function_name = as.character(summary_function)
     summary_function_eval = eval(summary_function)
-  } else if (class(summary_function) == 'call') { # ano function inherited
+  } else if (is(summary_function, 'call')) { # ano function inherited
     summary_function_name = 'anonymous function'
     summary_function_eval = eval(summary_function)
-  } else if (class(summary_function) == 'function' &
-             class(substitute(summary_function)) == 'name'
+  } else if (is(summary_function, 'function') &
+             is(substitute(summary_function), 'name')
              ) { # function name in direct SumarizeIterations use
     summary_function_name = as.character(substitute(summary_function))
     summary_function_eval = summary_function
-  } else if (class(summary_function) == 'function' &
-             class(substitute(summary_function)) == 'call'
+  } else if (is(summary_function, 'function') &
+             is(substitute(summary_function), 'call')
              ) { # function name in direct SumarizeIterations use
     summary_function_name = 'anonymous function'
     summary_function_eval = summary_function

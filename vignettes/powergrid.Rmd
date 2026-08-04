@@ -332,7 +332,6 @@ have some way of decreasing the variability by improving our measurements,
 however. We want to study how small our SD must be for our study to have
 desirable power.
 
-<summary in numbers here>
 * we look for the largest acceptable SD (not the smallest n) where we can
   achieve the target value of .7. Therefore, we set `find_lowest = FALSE`.
 
