@@ -1,3 +1,5 @@
+# powergrid 0.6.3
+
 # powergrid 0.6.2
 - Method import "is" explicit in namespace
 # powergrid 0.6.1
