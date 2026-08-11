@@ -1,5 +1,13 @@
 # powergrid 0.6.3
-
+- Corrected how the [.power_array method deals with non-numeric parameters,
+  not trying to convert them into numerics, as was done in previous versions,
+  resulting in NAs for pars levels.
+- Corrected how Powergrid created a power_array with multiple function
+  outcomes. In previous versions, the parameter levels that define the array
+  dimensions were turned into characters with trailing zeros. Now, these array
+  dimensions are as.charater versions of proper numerics, allowing for clever
+  indexting with either the precise string, or any fitting numeric ("0.1" is
+  matched by 0.1, .1, 0.10 and by "0.1". Not by "0.10").
 # powergrid 0.6.2
 - Method import "is" explicit in namespace
 # powergrid 0.6.1
