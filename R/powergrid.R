@@ -393,7 +393,6 @@ PowerGrid = function(pars, fun, more_args = NULL, n_iter = NA,
 
   ## Route B1) One variable
   if (n_funouts == 1) {
-
     ## Turn grid into array
     out_array = stats::xtabs(
                          stats::as.formula(
@@ -404,7 +403,6 @@ PowerGrid = function(pars, fun, more_args = NULL, n_iter = NA,
   ## Route B2) Multiple variables, with slightly different behaviours based
   ## on where iterations present.
   if (n_funouts > 1) {
-
     ## first take care that pars names and funout names are not confused
     if(any(dimnames(e1d42fl5z7b6)[[1]] %in% names(pars))){
       dimnames(e1d42fl5z7b6)[[1]] =
@@ -425,6 +423,9 @@ PowerGrid = function(pars, fun, more_args = NULL, n_iter = NA,
       apply(pars_grid, 2, rep, n_funouts * nitt))
     ## easiest to set dimnames before xtabs
     colnames(flat)[seq_len(length(var_order)+1)] = c(c('fun_out', 'parscom', 'iter')[var_order], 'value')
+    ## ftable pressess all pars into character form, turn into numeric
+    numeric_pars = names(which(sapply(pars, is.numeric)))
+    flat[, numeric_pars] = sapply(flat[, numeric_pars], as.numeric)
     out_array = stats::xtabs(value ~ ., data = flat[, -1])
     ## Sort such that the first dimensions are the pars
     L = names(dimnames(out_array)) %in% c('fun_out', 'iter')
@@ -518,17 +519,20 @@ PowerGrid = function(pars, fun, more_args = NULL, n_iter = NA,
     the_attributes$dim = dim(x)
     the_attributes$dimnames = dimnames(x)
   }
-
   ## copy the current dimnames to replace the pars, but only those dimensions
   ## the have name that is in pars.
-  the_attributes$pars[
-                   intersect(names(the_attributes$pars),
-                             names(the_attributes$dimnames))] =
-    lapply(
-      the_attributes$dimnames[
-                       intersect(names(the_attributes$pars),
-                                 names(the_attributes$dimnames))],
-      as.numeric)
+  ## numeric parameters are to me known as numerics for clever indexing.
+  pars_to_make_numeric =
+    ## take those dims both in pars and dimnames (for excluding iters)
+    intersect(
+      intersect(names(the_attributes$pars),
+                names(the_attributes$dimnames)),
+        ## but only numeric ones (we don't want character pars to become NAs)
+        names(which(sapply(the_attributes$pars, is.numeric)))
+        )
+  the_attributes$pars[pars_to_make_numeric] =
+    lapply(the_attributes$dimnames[pars_to_make_numeric],
+           as.numeric)
   if (all(names(dimnames(x)) != 'fun_out')){
     the_attributes$sim_function_nval = 1
   } else {the_attributes$sim_function_nval = length(dimnames(x)$fun_out)}
