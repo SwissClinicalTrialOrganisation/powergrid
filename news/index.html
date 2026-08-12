@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">powergrid</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.6.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.6.3</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -34,8 +34,10 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.6.2" id="powergrid-062">powergrid 0.6.2<a class="anchor" aria-label="anchor" href="#powergrid-062"></a></h2><p class="text-muted">CRAN release: 2026-07-31</p>
-<ul><li>Method import “is” explicit in namespace # powergrid 0.6.1</li>
+<h2 class="pkg-version" data-toc-text="0.6.3" id="powergrid-063">powergrid 0.6.3<a class="anchor" aria-label="anchor" href="#powergrid-063"></a></h2>
+<ul><li>Corrected how the [.power_array method deals with non-numeric parameters, not trying to convert them into numerics, as was done in previous versions, resulting in NAs for pars levels.</li>
+<li>Corrected how Powergrid created a power_array with multiple function outcomes. In previous versions, the parameter levels that define the array dimensions were turned into characters with trailing zeros. Now, these array dimensions are as.charater versions of proper numerics, allowing for clever indexting with either the precise string, or any fitting numeric (“0.1” is matched by 0.1, .1, 0.10 and by “0.1”. Not by “0.10”). # powergrid 0.6.2</li>
+<li>Method import “is” explicit in namespace # powergrid 0.6.1</li>
 <li>The idexing method for the power array “[” was changed so that if a vector is returned it correctly gets the names from he original array. This adjustment was made to assure correct behavior when aperm() is adjusted to be in sync with both its docs and t.default() in an upcoming R update. # powergrid 0.6.0 A number of improvements were made</li>
 <li>Clearer, more consistent documentation across package help files, and warning and error messages.</li>
 <li>Fixed the passing on of argument summary_function in the following functions:
