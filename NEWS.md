@@ -28,7 +28,9 @@ A number of improvements were made
   - PowerPlot (call EnsureSummarized)
   - GridPlot (call EnsureSummarized)
 - Updated plotting behaviour so that plotting parameters (par) are taken from the existing
-  par settings, and can be specified in the relevant powergrid plotting functions. 
+  par settings, and can be specified in the relevant powergrid plotting functions.
+- Added functionality to report progress of iterations for both series and parallel
+  computation, implemented using the progressr package. 
 # powergrid 0.5.2
 Corrected listing in readme and vignette.
 # powergrid 0.5.1
