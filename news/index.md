@@ -32,9 +32,12 @@
   - GridPlot (call EnsureSummarized)
 - Updated plotting behaviour so that plotting parameters (par) are taken
   from the existing par settings, and can be specified in the relevant
-  powergrid plotting functions. \# powergrid 0.5.2 Corrected listing in
-  readme and vignette. \# powergrid 0.5.1 Small update, making readme in
-  line with CRAN status package. \# powergrid 0.5.0
+  powergrid plotting functions.
+- Added functionality to report progress of iterations for both series
+  and parallel computation, implemented using the progressr package. \#
+  powergrid 0.5.2 Corrected listing in readme and vignette. \# powergrid
+  0.5.1 Small update, making readme in line with CRAN status package. \#
+  powergrid 0.5.0
 - Added Richard Charles Allen as contributor and maintainer.
 - Fixed one typo in description.
 

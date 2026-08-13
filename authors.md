@@ -11,7 +11,7 @@
 ## Citation
 
 Source:
-[`DESCRIPTION`](https://github.com/SwissClinicalTrialOrganisation/powergrid/blob/v0.6.3/DESCRIPTION)
+[`DESCRIPTION`](https://github.com/SwissClinicalTrialOrganisation/powergrid/blob/main/DESCRIPTION)
 
 Dutilh G, Allen R (2026). *powergrid: Power Analysis Across a Grid of
 Assumptions*. R package version 0.6.3,
