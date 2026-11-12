@@ -68,19 +68,21 @@
 ##'   is aggregated by \code{summary_fun}. Otherwise ignored.
 ##' @param col A vector with the length of \code{l_par} defining the color(s) of
 ##'   the lines.
+##' @param lty A vector of length one or the length of \code{l_par}, defining
+##'   the type of lines to be drawn.
 ##' @param example_text When an example is drawn, should the the required par
 ##'   value, and the line parameter value be printed alongside the arrow(s).
 ##' @param title Character string, if not \code{NULL}, replaces default figure
 ##'   title. Replaces `main`if specifiec by `...` .
 ##' @param axes Logical defining whether or not axes are drawn.
 ##' @param xlim,ylim See \code{?graphics::plot}.
-##' @param add_legend Should the legend be automatically generated
-##' (`default = TRUE`), set to FALSE and add afterwards for more flexibility.
+##' @param add_legend Should the legend be automatically generated (`default =
+##'   TRUE`), set to FALSE and add afterwards for more flexibility.
 ##' @param smooth Logical. If TRUE, a 5th order polynomial is fitted though the
 ##'   points constituting each line for smoothing.
 ##' @param ... Further arguments to \code{\link{par}}, \code{\link{plot}},
-##' \code{\link{axis}} and \code{\link{lines}}. A few exceptions (e.g. `y`)
-##' are ignored with a warning.
+##'   \code{\link{axis}} and \code{\link{lines}}. A few exceptions (e.g. `y`)
+##'   are ignored with a warning.
 ##' @seealso \code{\link{PowerGrid}}, \code{\link{AddExample}},
 ##'   \code{\link{Example}}, \code{\link{PowerPlot}} for similar plotting of
 ##'   just 2 parameters, at multiple power (target value) levels.
@@ -159,6 +161,7 @@ GridPlot = function(x,
                     method = 'step',
                     summary_function = mean,
                     col = NULL,
+                    lty = 1,
                     example_text = TRUE,
                     title = NULL,
                     axes = TRUE,
@@ -220,8 +223,15 @@ GridPlot = function(x,
       stop('Length of argument col must be equal to the number of lines to be drawn, as defined by the levels of dimension `l_par` of `x` after eventual slicing.')
     }
   }
-  names(col) = dimnames(sliced_x)[[l_par]]
-
+  ## define ltys
+  if (length(lty) == 1){
+    lty = rep(lty, length(dimnames(sliced_x)[[l_par]]))
+  } else if (length(lty) != length(dimnames(sliced_x)[[l_par]])) {
+    stop('Length of argument lty must be equal to one or the number of lines to be drawn, as defined by the levels of dimension `l_par` of `x` after eventual slicing.')
+  }
+    
+  names(col) = names(lty) = dimnames(sliced_x)[[l_par]]
+  
   ## order dimensions of input, so that we plot the right dimensions
   ## against each other. Correct attributes while doing so
   attributes_x = attributes(sliced_x)
@@ -351,7 +361,8 @@ GridPlot = function(x,
       plm = stats::lm(ys ~ xs + I(xs^2) + I(xs^3) + I(xs^4) + I(xs^5))
       ys = stats::predict(plm, newdata = data.frame(xs))
     }
-    do.call(graphics::lines, args = append(list(x=xs, y=ys, col = col[i]), lines_dots))
+    do.call(graphics::lines, args = append(list(x=xs, y=ys, col = col[i],
+                                                lty = lty[i]), lines_dots))
   }
 
   ## =================================
@@ -359,7 +370,7 @@ GridPlot = function(x,
   ## =================================
   if(add_legend) {
     do.call(graphics::legend, append(
-      list(x='topright', box.lwd = 0, col = col,
+      list(x='topright', box.lwd = 0, col = col, lty = lty,
            legend = names(col), title = Trans(l_par),
            ncol = min(length(names(col)), 3),
            bg = 'white', inset = .01),

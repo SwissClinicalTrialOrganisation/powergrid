@@ -1,3 +1,7 @@
+# powergrid 0.7.0
+- In GridPlot, lines are now actually drawn in the legend
+- In GridPlot, you can now choose the line type, either giving one single lty,
+  or by giving one lty per line.
 # powergrid 0.6.3
 - Corrected how the [.power_array method deals with non-numeric parameters,
   not trying to convert them into numerics, as was done in previous versions,

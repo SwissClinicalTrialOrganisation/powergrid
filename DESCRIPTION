@@ -1,6 +1,6 @@
 Package: powergrid
 Title: Power Analysis Across a Grid of Assumptions
-Version: 0.6.3
+Version: 0.7.0
 Authors@R: c(
     person(given = "Gilles",
       family = "Dutilh", email = "info@gillesdutilh.com", role = c("aut", "cre"),
@@ -25,5 +25,4 @@ VignetteBuilder: knitr
 Config/testthat/edition: 3
 URL: https://github.com/SwissClinicalTrialOrganisation/powergrid
 BugReports: https://github.com/SwissClinicalTrialOrganisation/powergrid/issues
-Config/roxygen2/version: 8.0.0
-RoxygenNote: 7.3.3
+Config/roxygen2/version: 8.1.1
