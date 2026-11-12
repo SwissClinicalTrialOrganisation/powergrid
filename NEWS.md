@@ -1,3 +1,5 @@
+# powergrid 0.7.0
+
 # powergrid 0.6.3
 - Corrected how the [.power_array method deals with non-numeric parameters,
   not trying to convert them into numerics, as was done in previous versions,
