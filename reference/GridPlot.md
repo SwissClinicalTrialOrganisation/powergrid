@@ -19,6 +19,7 @@ GridPlot(
   method = "step",
   summary_function = mean,
   col = NULL,
+  lty = 1,
   example_text = TRUE,
   title = NULL,
   axes = TRUE,
@@ -100,6 +101,11 @@ GridPlot(
 
   A vector with the length of `l_par` defining the color(s) of the
   lines.
+
+- lty:
+
+  A vector of length one or the length of `l_par`, defining the type of
+  lines to be drawn.
 
 - example_text:
 
