@@ -18,6 +18,7 @@ GridPlot(
   method = "step",
   summary_function = mean,
   col = NULL,
+  lty = 1,
   example_text = TRUE,
   title = NULL,
   axes = TRUE,
@@ -77,6 +78,9 @@ is aggregated by \code{summary_fun}. Otherwise ignored.}
 \item{col}{A vector with the length of \code{l_par} defining the color(s) of
 the lines.}
 
+\item{lty}{A vector of length one or the length of \code{l_par}, defining
+the type of lines to be drawn.}
+
 \item{example_text}{When an example is drawn, should the the required par
 value, and the line parameter value be printed alongside the arrow(s).}
 
@@ -88,8 +92,7 @@ title. Replaces \code{main}if specifiec by \code{...} .}
 \item{par_labels}{Named vector where elements names represent the parameters
 that are plotted, and the values set the desired labels.}
 
-\item{add_legend}{Should the legend be automatically generated
-(\code{default = TRUE}), set to FALSE and add afterwards for more flexibility.}
+\item{add_legend}{Should the legend be automatically generated (\code{default = TRUE}), set to FALSE and add afterwards for more flexibility.}
 
 \item{xlim, ylim}{See \code{?graphics::plot}.}
 
