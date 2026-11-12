@@ -68,19 +68,21 @@
 ##'   is aggregated by \code{summary_fun}. Otherwise ignored.
 ##' @param col A vector with the length of \code{l_par} defining the color(s) of
 ##'   the lines.
+##' @param lty A vector of length one or the length of \code{l_par}, defining
+##'   the type of lines to be drawn.
 ##' @param example_text When an example is drawn, should the the required par
 ##'   value, and the line parameter value be printed alongside the arrow(s).
 ##' @param title Character string, if not \code{NULL}, replaces default figure
 ##'   title. Replaces `main`if specifiec by `...` .
 ##' @param axes Logical defining whether or not axes are drawn.
 ##' @param xlim,ylim See \code{?graphics::plot}.
-##' @param add_legend Should the legend be automatically generated
-##' (`default = TRUE`), set to FALSE and add afterwards for more flexibility.
+##' @param add_legend Should the legend be automatically generated (`default =
+##'   TRUE`), set to FALSE and add afterwards for more flexibility.
 ##' @param smooth Logical. If TRUE, a 5th order polynomial is fitted though the
 ##'   points constituting each line for smoothing.
 ##' @param ... Further arguments to \code{\link{par}}, \code{\link{plot}},
-##' \code{\link{axis}} and \code{\link{lines}}. A few exceptions (e.g. `y`)
-##' are ignored with a warning.
+##'   \code{\link{axis}} and \code{\link{lines}}. A few exceptions (e.g. `y`)
+##'   are ignored with a warning.
 ##' @seealso \code{\link{PowerGrid}}, \code{\link{AddExample}},
 ##'   \code{\link{Example}}, \code{\link{PowerPlot}} for similar plotting of
 ##'   just 2 parameters, at multiple power (target value) levels.
