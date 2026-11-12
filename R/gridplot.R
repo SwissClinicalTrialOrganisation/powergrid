@@ -159,6 +159,7 @@ GridPlot = function(x,
                     method = 'step',
                     summary_function = mean,
                     col = NULL,
+                    lty = 1,
                     example_text = TRUE,
                     title = NULL,
                     axes = TRUE,
@@ -220,8 +221,15 @@ GridPlot = function(x,
       stop('Length of argument col must be equal to the number of lines to be drawn, as defined by the levels of dimension `l_par` of `x` after eventual slicing.')
     }
   }
-  names(col) = dimnames(sliced_x)[[l_par]]
-
+  ## define ltys
+  if (length(lty) == 1){
+    lty = rep(lty, length(dimnames(sliced_x)[[l_par]]))
+  } else if (length(lty) != length(dimnames(sliced_x)[[l_par]])) {
+    stop('Length of argument lty must be equal to one or the number of lines to be drawn, as defined by the levels of dimension `l_par` of `x` after eventual slicing.')
+  }
+    
+  names(col) = names(lty) = dimnames(sliced_x)[[l_par]]
+  
   ## order dimensions of input, so that we plot the right dimensions
   ## against each other. Correct attributes while doing so
   attributes_x = attributes(sliced_x)
@@ -351,7 +359,8 @@ GridPlot = function(x,
       plm = stats::lm(ys ~ xs + I(xs^2) + I(xs^3) + I(xs^4) + I(xs^5))
       ys = stats::predict(plm, newdata = data.frame(xs))
     }
-    do.call(graphics::lines, args = append(list(x=xs, y=ys, col = col[i]), lines_dots))
+    do.call(graphics::lines, args = append(list(x=xs, y=ys, col = col[i],
+                                                lty = lty[i]), lines_dots))
   }
 
   ## =================================
@@ -359,7 +368,7 @@ GridPlot = function(x,
   ## =================================
   if(add_legend) {
     do.call(graphics::legend, append(
-      list(x='topright', box.lwd = 0, col = col,
+      list(x='topright', box.lwd = 0, col = col, lty = lty,
            legend = names(col), title = Trans(l_par),
            ncol = min(length(names(col)), 3),
            bg = 'white', inset = .01),
